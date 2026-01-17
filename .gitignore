@@ -211,3 +211,11 @@ __marimo__/
 # Large model files
 *.pt
 BEATs_iter3_plus_AS2M.pt
+
+# Dataset folders and files
+dataset/AVCaps/
+dataset/AVCaps/test/
+dataset/AVCaps/val/
+dataset/AVCaps/train/
+dataset/AVCaps/download_avcaps.sh
+dataset/AVCaps/downloads.txt
