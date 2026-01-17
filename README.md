@@ -1,4 +1,4 @@
-# Hav-Cocap (Hybrid Audio-Visual CoCap)
+# Hav-Cocap (Hybrid Audio-Visual CoCap) -> Ongoing Project
 
 **Multimodal Compressed Video Captioning with Audio Integration**
 

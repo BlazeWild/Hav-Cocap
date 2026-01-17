@@ -124,6 +124,13 @@ class ResidualAttentionBlock(nn.Module):
             5. Return updated embeddings and attention weights
         """
         attention_res = self.attention(self.ln_1(x)) # prenorm on input x.
+        # attention_res is a TUPLE returned by nn.MultiheadAttention(d_model, n_head)
+
+        # attention_res[0]: Concatenated Output (Context Vectors). 
+        # Shape (B, S, N) | Result of (Weights @ V) then merged heads; added to x for the residual update.
+
+        # attention_res[1]: Attention Weight Matrix (Relational Map). 
+        # Shape (B, S, S) | Result of Softmax(Q @ K.T / sqrt(dk)); stored for visualization or analysis.
         x, weights = x + attention_res[0], attention_res[1] # as tuple is returned
         x = x + self.mlp(self.ln_2(x))
         return x, weights
@@ -205,7 +212,7 @@ class VisionTransformer(nn.Module):
         #class embedding is a learnable parameter that is added to the sequence of patch embeddings to represent the entire image
         self.class_embedding = nn.Parameter(scale*torch.randn(width)) # a random vector of size width
         # learnable positional embeddings for each patch + 1 for class embedding
-        self.positional_embedding = nn.Paramter(scale*torch.randn((input_resolution // patch_size) ** 2 + 1, width))
+        self.positional_embedding = nn.Parameter(scale*torch.randn((input_resolution // patch_size) ** 2 + 1, width)) # as it is learnable, we write parameter when imnitializing, so that it can be updated during training.
         self.ln_pre = LayerNorm(width)
         
         self.transformer = Transformer(width, layers, heads)
@@ -219,8 +226,8 @@ class VisionTransformer(nn.Module):
 
         Args:
             x (torch.Tensor): Input images of shape [batch_size, in_channels, height, width].
-            output_all_features (bool, optional): If True, returns patch embeddings along with class token. Default: False.
-            output_attention_map (bool, optional): If True, returns attention maps from class token to patches. Default: False.
+            output_all_features (bool, optional): If True, the function will also return all patch embeddings, not just the class token. Useful for things like visualizing patch features or doing segmentation tasks. Default: False.
+            output_attention_map (bool, optional): If True, the function will return attention maps from the class token to all patches. Useful for visualizing where the model “looks” in the image.Default: False.
 
         Returns:
             tuple: Contains at least the class token features (cls_feature) of shape [batch_size, output_dim].
@@ -235,6 +242,25 @@ class VisionTransformer(nn.Module):
             - The sequence is normalized (LayerNorm) and passed through the Transformer blocks.
             - The class token embedding is extracted, normalized, and projected to output_dim for downstream tasks.
             - Patch embeddings and attention maps are optional outputs useful for visualization or analysis.
+
+            Input image: [B, 3, 224, 224]
+                    │
+            Conv2d → Patch embeddings: [B, 768, 14, 14]
+                    │
+            Flatten → [B, 196, 768]
+                    │
+            Add CLS token → [B, 197, 768]
+                    │
+            Add positional embeddings → [B, 197, 768]
+                    │
+            LayerNorm → [B, 197, 768]
+                    │
+            Transformer → [B, 197, 768], attn maps [layers, B, heads, 197, 197]
+                    │
+            Extract CLS token → [B, output_dim]
+                    │
+            Optional outputs → patch embeddings, attention maps
+
         """
         #split image into non-overlapping patches and project to `width` dimensions
         x = self.conv1(x) #shape=[*, width, grid, grid], eg. [*, 768, 14, 14] for 224x224 input and 16x16 patches
@@ -286,7 +312,10 @@ class VisionTransformer(nn.Module):
             # Shape: [n_layers, batch_size, n_heads, num_patches]
             # einops rearranges it to match the 2D grid layout of patches: [n_layers, batch_size, n_heads, h, w]
             outputs += (einops.rearrange(
-                attn[:, :, :, 0, 1:],  # class token attends to patches
+                # [B, h, seq_len, seq_len] → [8, 12, 197, 197] for single layer of tranformer block ,but for n_layers of tranfomer blocks stacked together it will be:
+                # attn.shape = [n_layers, B, n_heads, seq_len, seq_len] → [12, 8, 12, 197, 197]
+                attn[:, :, :, 0, 1:], # [n_layers, B, n_heads, num_patches, num_patches]
+                # in above one, 0 → CLS token index, 1: → all patch tokens
                 "n_layers b n_heads (h w) -> n_layers b n_heads h w",
                 h=grid, w=grid
             ),)
@@ -321,7 +350,7 @@ class CrossResidualAttentionBlock(ResidualAttentionBlock):
         return self.attn2(highway, iframe, iframe, need_weights = False, attn_mask = self.enc_dec_attn_mask)[0]
 
     def forward(self, x:[torch.Tensor, torch.Tensor, torch.LongTensor]):
-
+        x = x[0]
 # class CLIP(nn.Module):
 #     def __init__(self,
 #                  embed_dim:int,
