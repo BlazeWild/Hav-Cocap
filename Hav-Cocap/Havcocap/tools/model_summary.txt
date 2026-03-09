@@ -1,0 +1,793 @@
+================ MODEL SUMMARY ================
+========================================================================================================================
+Layer (type:depth-idx)                                                 Param #                   Trainable
+========================================================================================================================
+HavCocapCaptioner                                                      --                        Partial
+├─HavCocapModel: 1-1                                                   --                        Partial
+│    └─IFrameEncoder: 2-1                                              545,280                   True
+│    │    └─Conv2d: 3-1                                                589,824                   True
+│    │    └─LayerNorm: 3-2                                             1,536                     True
+│    │    └─Sequential: 3-3                                            --                        True
+│    │    │    └─ResidualAttentionBlock: 4-1                           --                        True
+│    │    │    │    └─MultiheadAttention: 5-1                          2,362,368                 True
+│    │    │    │    └─LayerNorm: 5-2                                   1,536                     True
+│    │    │    │    └─Sequential: 5-3                                  4,722,432                 True
+│    │    │    │    └─LayerNorm: 5-4                                   1,536                     True
+│    │    │    └─ResidualAttentionBlock: 4-2                           --                        True
+│    │    │    │    └─MultiheadAttention: 5-5                          2,362,368                 True
+│    │    │    │    └─LayerNorm: 5-6                                   1,536                     True
+│    │    │    │    └─Sequential: 5-7                                  4,722,432                 True
+│    │    │    │    └─LayerNorm: 5-8                                   1,536                     True
+│    │    │    └─ResidualAttentionBlock: 4-3                           --                        True
+│    │    │    │    └─MultiheadAttention: 5-9                          2,362,368                 True
+│    │    │    │    └─LayerNorm: 5-10                                  1,536                     True
+│    │    │    │    └─Sequential: 5-11                                 4,722,432                 True
+│    │    │    │    └─LayerNorm: 5-12                                  1,536                     True
+│    │    │    └─ResidualAttentionBlock: 4-4                           --                        True
+│    │    │    │    └─MultiheadAttention: 5-13                         2,362,368                 True
+│    │    │    │    └─LayerNorm: 5-14                                  1,536                     True
+│    │    │    │    └─Sequential: 5-15                                 4,722,432                 True
+│    │    │    │    └─LayerNorm: 5-16                                  1,536                     True
+│    │    │    └─ResidualAttentionBlock: 4-5                           --                        True
+│    │    │    │    └─MultiheadAttention: 5-17                         2,362,368                 True
+│    │    │    │    └─LayerNorm: 5-18                                  1,536                     True
+│    │    │    │    └─Sequential: 5-19                                 4,722,432                 True
+│    │    │    │    └─LayerNorm: 5-20                                  1,536                     True
+│    │    │    └─ResidualAttentionBlock: 4-6                           --                        True
+│    │    │    │    └─MultiheadAttention: 5-21                         2,362,368                 True
+│    │    │    │    └─LayerNorm: 5-22                                  1,536                     True
+│    │    │    │    └─Sequential: 5-23                                 4,722,432                 True
+│    │    │    │    └─LayerNorm: 5-24                                  1,536                     True
+│    │    │    └─ResidualAttentionBlock: 4-7                           --                        True
+│    │    │    │    └─MultiheadAttention: 5-25                         2,362,368                 True
+│    │    │    │    └─LayerNorm: 5-26                                  1,536                     True
+│    │    │    │    └─Sequential: 5-27                                 4,722,432                 True
+│    │    │    │    └─LayerNorm: 5-28                                  1,536                     True
+│    │    │    └─ResidualAttentionBlock: 4-8                           --                        True
+│    │    │    │    └─MultiheadAttention: 5-29                         2,362,368                 True
+│    │    │    │    └─LayerNorm: 5-30                                  1,536                     True
+│    │    │    │    └─Sequential: 5-31                                 4,722,432                 True
+│    │    │    │    └─LayerNorm: 5-32                                  1,536                     True
+│    │    │    └─ResidualAttentionBlock: 4-9                           --                        True
+│    │    │    │    └─MultiheadAttention: 5-33                         2,362,368                 True
+│    │    │    │    └─LayerNorm: 5-34                                  1,536                     True
+│    │    │    │    └─Sequential: 5-35                                 4,722,432                 True
+│    │    │    │    └─LayerNorm: 5-36                                  1,536                     True
+│    │    │    └─ResidualAttentionBlock: 4-10                          --                        True
+│    │    │    │    └─MultiheadAttention: 5-37                         2,362,368                 True
+│    │    │    │    └─LayerNorm: 5-38                                  1,536                     True
+│    │    │    │    └─Sequential: 5-39                                 4,722,432                 True
+│    │    │    │    └─LayerNorm: 5-40                                  1,536                     True
+│    │    │    └─ResidualAttentionBlock: 4-11                          --                        True
+│    │    │    │    └─MultiheadAttention: 5-41                         2,362,368                 True
+│    │    │    │    └─LayerNorm: 5-42                                  1,536                     True
+│    │    │    │    └─Sequential: 5-43                                 4,722,432                 True
+│    │    │    │    └─LayerNorm: 5-44                                  1,536                     True
+│    │    │    └─ResidualAttentionBlock: 4-12                          --                        True
+│    │    │    │    └─MultiheadAttention: 5-45                         2,362,368                 True
+│    │    │    │    └─LayerNorm: 5-46                                  1,536                     True
+│    │    │    │    └─Sequential: 5-47                                 4,722,432                 True
+│    │    │    │    └─LayerNorm: 5-48                                  1,536                     True
+│    │    └─LayerNorm: 3-4                                             1,536                     True
+│    └─VisionTransformer: 2-2                                          288,256                   True
+│    │    └─Conv2d: 3-5                                                131,072                   True
+│    │    └─LayerNorm: 3-6                                             1,024                     True
+│    │    └─Sequential: 3-7                                            --                        True
+│    │    │    └─ResidualAttentionBlock: 4-13                          --                        True
+│    │    │    │    └─MultiheadAttention: 5-49                         1,050,624                 True
+│    │    │    │    └─LayerNorm: 5-50                                  1,024                     True
+│    │    │    │    └─Sequential: 5-51                                 2,099,712                 True
+│    │    │    │    └─LayerNorm: 5-52                                  1,024                     True
+│    │    │    └─ResidualAttentionBlock: 4-14                          --                        True
+│    │    │    │    └─MultiheadAttention: 5-53                         1,050,624                 True
+│    │    │    │    └─LayerNorm: 5-54                                  1,024                     True
+│    │    │    │    └─Sequential: 5-55                                 2,099,712                 True
+│    │    │    │    └─LayerNorm: 5-56                                  1,024                     True
+│    │    │    └─ResidualAttentionBlock: 4-15                          --                        True
+│    │    │    │    └─MultiheadAttention: 5-57                         1,050,624                 True
+│    │    │    │    └─LayerNorm: 5-58                                  1,024                     True
+│    │    │    │    └─Sequential: 5-59                                 2,099,712                 True
+│    │    │    │    └─LayerNorm: 5-60                                  1,024                     True
+│    │    │    └─ResidualAttentionBlock: 4-16                          --                        True
+│    │    │    │    └─MultiheadAttention: 5-61                         1,050,624                 True
+│    │    │    │    └─LayerNorm: 5-62                                  1,024                     True
+│    │    │    │    └─Sequential: 5-63                                 2,099,712                 True
+│    │    │    │    └─LayerNorm: 5-64                                  1,024                     True
+│    │    └─LayerNorm: 3-8                                             1,024                     True
+│    └─Linear: 2-3                                                     262,656                   True
+│    └─VisionTransformer: 2-4                                          267,776                   True
+│    │    └─Conv2d: 3-9                                                6,291,456                 True
+│    │    └─LayerNorm: 3-10                                            1,024                     True
+│    │    └─Sequential: 3-11                                           --                        True
+│    │    │    └─ResidualAttentionBlock: 4-17                          --                        True
+│    │    │    │    └─MultiheadAttention: 5-65                         1,050,624                 True
+│    │    │    │    └─LayerNorm: 5-66                                  1,024                     True
+│    │    │    │    └─Sequential: 5-67                                 2,099,712                 True
+│    │    │    │    └─LayerNorm: 5-68                                  1,024                     True
+│    │    │    └─ResidualAttentionBlock: 4-18                          --                        True
+│    │    │    │    └─MultiheadAttention: 5-69                         1,050,624                 True
+│    │    │    │    └─LayerNorm: 5-70                                  1,024                     True
+│    │    │    │    └─Sequential: 5-71                                 2,099,712                 True
+│    │    │    │    └─LayerNorm: 5-72                                  1,024                     True
+│    │    │    └─ResidualAttentionBlock: 4-19                          --                        True
+│    │    │    │    └─MultiheadAttention: 5-73                         1,050,624                 True
+│    │    │    │    └─LayerNorm: 5-74                                  1,024                     True
+│    │    │    │    └─Sequential: 5-75                                 2,099,712                 True
+│    │    │    │    └─LayerNorm: 5-76                                  1,024                     True
+│    │    │    └─ResidualAttentionBlock: 4-20                          --                        True
+│    │    │    │    └─MultiheadAttention: 5-77                         1,050,624                 True
+│    │    │    │    └─LayerNorm: 5-78                                  1,024                     True
+│    │    │    │    └─Sequential: 5-79                                 2,099,712                 True
+│    │    │    │    └─LayerNorm: 5-80                                  1,024                     True
+│    │    └─LayerNorm: 3-12                                            1,024                     True
+│    └─Linear: 2-5                                                     262,656                   True
+│    └─AudioEncoder: 2-6                                               --                        Partial
+│    │    └─BEATsModel: 3-13                                           --                        False
+│    │    │    └─Conv2d: 4-21                                          (131,072)                 False
+│    │    │    └─Linear: 4-22                                          (393,984)                 False
+│    │    │    └─Dropout: 4-23                                         --                        --
+│    │    │    └─LayerNorm: 4-24                                       (1,024)                   False
+│    │    │    └─TransformerEncoder: 4-25                              --                        False
+│    │    │    │    └─Sequential: 5-81                                 (4,719,488)               False
+│    │    │    │    └─ModuleList: 5-82                                 (85,100,544)              False
+│    │    │    │    └─LayerNorm: 5-83                                  (1,536)                   False
+│    │    └─Linear: 3-14                                               393,728                   True
+│    └─ActionEncoder: 2-7                                              --                        True
+│    │    └─Sequential: 3-15                                           --                        True
+│    │    │    └─CrossResidualAttentionBlock: 4-26                     --                        True
+│    │    │    │    └─MultiheadAttention: 5-84                         1,050,624                 True
+│    │    │    │    └─LayerNorm: 5-85                                  1,024                     True
+│    │    │    │    └─Sequential: 5-86                                 2,099,712                 True
+│    │    │    │    └─LayerNorm: 5-87                                  1,024                     True
+│    │    │    │    └─MultiheadAttention: 5-88                         1,050,624                 True
+│    │    │    │    └─LayerNorm: 5-89                                  1,024                     True
+│    │    │    │    └─LayerNorm: 5-90                                  1,024                     True
+│    │    │    └─CrossResidualAttentionBlock: 4-27                     --                        True
+│    │    │    │    └─MultiheadAttention: 5-91                         1,050,624                 True
+│    │    │    │    └─LayerNorm: 5-92                                  1,024                     True
+│    │    │    │    └─Sequential: 5-93                                 2,099,712                 True
+│    │    │    │    └─LayerNorm: 5-94                                  1,024                     True
+│    │    │    │    └─MultiheadAttention: 5-95                         1,050,624                 True
+│    │    │    │    └─LayerNorm: 5-96                                  1,024                     True
+│    │    │    │    └─LayerNorm: 5-97                                  1,024                     True
+│    │    └─Embedding: 3-16                                            3,072                     True
+│    │    └─Embedding: 3-17                                            1,024                     True
+│    │    └─LayerNorm: 3-18                                            1,024                     True
+│    └─Linear: 2-8                                                     262,656                   True
+│    └─Linear: 2-9                                                     393,728                   True
+├─CaptionHead: 1-2                                                     --                        True
+│    └─BertSelfEncoder: 2-10                                           --                        True
+│    │    └─Embedding: 3-19                                            25,296,896                True
+│    │    └─Sequential: 3-20                                           --                        True
+│    │    │    └─BertLayerNorm: 4-28                                   1,024                     True
+│    │    │    └─Dropout: 4-29                                         --                        --
+│    │    │    └─Linear: 4-30                                          262,656                   True
+│    │    │    └─ReLU: 4-31                                            --                        --
+│    │    │    └─BertLayerNorm: 4-32                                   1,024                     True
+│    │    └─Sequential: 3-21                                           --                        True
+│    │    │    └─BertLayerNorm: 4-33                                   1,024                     True
+│    │    │    └─Dropout: 4-34                                         --                        --
+│    │    │    └─Linear: 4-35                                          262,656                   True
+│    │    │    └─ReLU: 4-36                                            --                        --
+│    │    │    └─BertLayerNorm: 4-37                                   1,024                     True
+│    │    └─PositionEncoding: 3-22                                     --                        --
+│    │    └─Embedding: 3-23                                            1,536                     True
+│    │    └─BertLayerNorm: 3-24                                        1,024                     True
+│    │    └─Dropout: 3-25                                              --                        --
+│    │    └─ModuleList: 3-26                                           --                        True
+│    │    │    └─BertLayerNoMemory: 4-38                               --                        True
+│    │    │    │    └─BertAttention: 5-98                              1,051,648                 True
+│    │    │    │    └─BertIntermediate: 5-99                           262,656                   True
+│    │    │    │    └─BertIntermediate: 5-100                          262,656                   True
+│    │    │    │    └─BertOutput: 5-101                                263,680                   True
+│    │    │    └─BertLayerNoMemory: 4-39                               --                        True
+│    │    │    │    └─BertAttention: 5-102                             1,051,648                 True
+│    │    │    │    └─BertIntermediate: 5-103                          262,656                   True
+│    │    │    │    └─BertIntermediate: 5-104                          262,656                   True
+│    │    │    │    └─BertOutput: 5-105                                263,680                   True
+│    └─BertLMPredictionHead: 2-11                                      49,408                    True
+│    │    └─BertPredictionHeadTransform: 3-27                          --                        True
+│    │    │    └─Linear: 4-40                                          262,656                   True
+│    │    │    └─BertLayerNorm: 4-41                                   1,024                     True
+│    │    └─Linear: 3-28                                               25,296,896                True
+├─Dropout: 1-3                                                         --                        --
+├─Dropout: 1-4                                                         --                        --
+========================================================================================================================
+Total params: 273,852,800
+Trainable params: 183,505,152
+Non-trainable params: 90,347,648
+========================================================================================================================
+
+================ LEARNABLE PARAMETERS ================
+hav_cocap_model.iframe_encoder.class_embedding
+hav_cocap_model.iframe_encoder.positional_embedding
+hav_cocap_model.iframe_encoder.proj
+hav_cocap_model.iframe_encoder.conv1.weight
+hav_cocap_model.iframe_encoder.ln_pre.weight
+hav_cocap_model.iframe_encoder.ln_pre.bias
+hav_cocap_model.iframe_encoder.transformer.0.attn.in_proj_weight
+hav_cocap_model.iframe_encoder.transformer.0.attn.in_proj_bias
+hav_cocap_model.iframe_encoder.transformer.0.attn.out_proj.weight
+hav_cocap_model.iframe_encoder.transformer.0.attn.out_proj.bias
+hav_cocap_model.iframe_encoder.transformer.0.ln_1.weight
+hav_cocap_model.iframe_encoder.transformer.0.ln_1.bias
+hav_cocap_model.iframe_encoder.transformer.0.mlp.c_fc.weight
+hav_cocap_model.iframe_encoder.transformer.0.mlp.c_fc.bias
+hav_cocap_model.iframe_encoder.transformer.0.mlp.c_proj.weight
+hav_cocap_model.iframe_encoder.transformer.0.mlp.c_proj.bias
+hav_cocap_model.iframe_encoder.transformer.0.ln_2.weight
+hav_cocap_model.iframe_encoder.transformer.0.ln_2.bias
+hav_cocap_model.iframe_encoder.transformer.1.attn.in_proj_weight
+hav_cocap_model.iframe_encoder.transformer.1.attn.in_proj_bias
+hav_cocap_model.iframe_encoder.transformer.1.attn.out_proj.weight
+hav_cocap_model.iframe_encoder.transformer.1.attn.out_proj.bias
+hav_cocap_model.iframe_encoder.transformer.1.ln_1.weight
+hav_cocap_model.iframe_encoder.transformer.1.ln_1.bias
+hav_cocap_model.iframe_encoder.transformer.1.mlp.c_fc.weight
+hav_cocap_model.iframe_encoder.transformer.1.mlp.c_fc.bias
+hav_cocap_model.iframe_encoder.transformer.1.mlp.c_proj.weight
+hav_cocap_model.iframe_encoder.transformer.1.mlp.c_proj.bias
+hav_cocap_model.iframe_encoder.transformer.1.ln_2.weight
+hav_cocap_model.iframe_encoder.transformer.1.ln_2.bias
+hav_cocap_model.iframe_encoder.transformer.2.attn.in_proj_weight
+hav_cocap_model.iframe_encoder.transformer.2.attn.in_proj_bias
+hav_cocap_model.iframe_encoder.transformer.2.attn.out_proj.weight
+hav_cocap_model.iframe_encoder.transformer.2.attn.out_proj.bias
+hav_cocap_model.iframe_encoder.transformer.2.ln_1.weight
+hav_cocap_model.iframe_encoder.transformer.2.ln_1.bias
+hav_cocap_model.iframe_encoder.transformer.2.mlp.c_fc.weight
+hav_cocap_model.iframe_encoder.transformer.2.mlp.c_fc.bias
+hav_cocap_model.iframe_encoder.transformer.2.mlp.c_proj.weight
+hav_cocap_model.iframe_encoder.transformer.2.mlp.c_proj.bias
+hav_cocap_model.iframe_encoder.transformer.2.ln_2.weight
+hav_cocap_model.iframe_encoder.transformer.2.ln_2.bias
+hav_cocap_model.iframe_encoder.transformer.3.attn.in_proj_weight
+hav_cocap_model.iframe_encoder.transformer.3.attn.in_proj_bias
+hav_cocap_model.iframe_encoder.transformer.3.attn.out_proj.weight
+hav_cocap_model.iframe_encoder.transformer.3.attn.out_proj.bias
+hav_cocap_model.iframe_encoder.transformer.3.ln_1.weight
+hav_cocap_model.iframe_encoder.transformer.3.ln_1.bias
+hav_cocap_model.iframe_encoder.transformer.3.mlp.c_fc.weight
+hav_cocap_model.iframe_encoder.transformer.3.mlp.c_fc.bias
+hav_cocap_model.iframe_encoder.transformer.3.mlp.c_proj.weight
+hav_cocap_model.iframe_encoder.transformer.3.mlp.c_proj.bias
+hav_cocap_model.iframe_encoder.transformer.3.ln_2.weight
+hav_cocap_model.iframe_encoder.transformer.3.ln_2.bias
+hav_cocap_model.iframe_encoder.transformer.4.attn.in_proj_weight
+hav_cocap_model.iframe_encoder.transformer.4.attn.in_proj_bias
+hav_cocap_model.iframe_encoder.transformer.4.attn.out_proj.weight
+hav_cocap_model.iframe_encoder.transformer.4.attn.out_proj.bias
+hav_cocap_model.iframe_encoder.transformer.4.ln_1.weight
+hav_cocap_model.iframe_encoder.transformer.4.ln_1.bias
+hav_cocap_model.iframe_encoder.transformer.4.mlp.c_fc.weight
+hav_cocap_model.iframe_encoder.transformer.4.mlp.c_fc.bias
+hav_cocap_model.iframe_encoder.transformer.4.mlp.c_proj.weight
+hav_cocap_model.iframe_encoder.transformer.4.mlp.c_proj.bias
+hav_cocap_model.iframe_encoder.transformer.4.ln_2.weight
+hav_cocap_model.iframe_encoder.transformer.4.ln_2.bias
+hav_cocap_model.iframe_encoder.transformer.5.attn.in_proj_weight
+hav_cocap_model.iframe_encoder.transformer.5.attn.in_proj_bias
+hav_cocap_model.iframe_encoder.transformer.5.attn.out_proj.weight
+hav_cocap_model.iframe_encoder.transformer.5.attn.out_proj.bias
+hav_cocap_model.iframe_encoder.transformer.5.ln_1.weight
+hav_cocap_model.iframe_encoder.transformer.5.ln_1.bias
+hav_cocap_model.iframe_encoder.transformer.5.mlp.c_fc.weight
+hav_cocap_model.iframe_encoder.transformer.5.mlp.c_fc.bias
+hav_cocap_model.iframe_encoder.transformer.5.mlp.c_proj.weight
+hav_cocap_model.iframe_encoder.transformer.5.mlp.c_proj.bias
+hav_cocap_model.iframe_encoder.transformer.5.ln_2.weight
+hav_cocap_model.iframe_encoder.transformer.5.ln_2.bias
+hav_cocap_model.iframe_encoder.transformer.6.attn.in_proj_weight
+hav_cocap_model.iframe_encoder.transformer.6.attn.in_proj_bias
+hav_cocap_model.iframe_encoder.transformer.6.attn.out_proj.weight
+hav_cocap_model.iframe_encoder.transformer.6.attn.out_proj.bias
+hav_cocap_model.iframe_encoder.transformer.6.ln_1.weight
+hav_cocap_model.iframe_encoder.transformer.6.ln_1.bias
+hav_cocap_model.iframe_encoder.transformer.6.mlp.c_fc.weight
+hav_cocap_model.iframe_encoder.transformer.6.mlp.c_fc.bias
+hav_cocap_model.iframe_encoder.transformer.6.mlp.c_proj.weight
+hav_cocap_model.iframe_encoder.transformer.6.mlp.c_proj.bias
+hav_cocap_model.iframe_encoder.transformer.6.ln_2.weight
+hav_cocap_model.iframe_encoder.transformer.6.ln_2.bias
+hav_cocap_model.iframe_encoder.transformer.7.attn.in_proj_weight
+hav_cocap_model.iframe_encoder.transformer.7.attn.in_proj_bias
+hav_cocap_model.iframe_encoder.transformer.7.attn.out_proj.weight
+hav_cocap_model.iframe_encoder.transformer.7.attn.out_proj.bias
+hav_cocap_model.iframe_encoder.transformer.7.ln_1.weight
+hav_cocap_model.iframe_encoder.transformer.7.ln_1.bias
+hav_cocap_model.iframe_encoder.transformer.7.mlp.c_fc.weight
+hav_cocap_model.iframe_encoder.transformer.7.mlp.c_fc.bias
+hav_cocap_model.iframe_encoder.transformer.7.mlp.c_proj.weight
+hav_cocap_model.iframe_encoder.transformer.7.mlp.c_proj.bias
+hav_cocap_model.iframe_encoder.transformer.7.ln_2.weight
+hav_cocap_model.iframe_encoder.transformer.7.ln_2.bias
+hav_cocap_model.iframe_encoder.transformer.8.attn.in_proj_weight
+hav_cocap_model.iframe_encoder.transformer.8.attn.in_proj_bias
+hav_cocap_model.iframe_encoder.transformer.8.attn.out_proj.weight
+hav_cocap_model.iframe_encoder.transformer.8.attn.out_proj.bias
+hav_cocap_model.iframe_encoder.transformer.8.ln_1.weight
+hav_cocap_model.iframe_encoder.transformer.8.ln_1.bias
+hav_cocap_model.iframe_encoder.transformer.8.mlp.c_fc.weight
+hav_cocap_model.iframe_encoder.transformer.8.mlp.c_fc.bias
+hav_cocap_model.iframe_encoder.transformer.8.mlp.c_proj.weight
+hav_cocap_model.iframe_encoder.transformer.8.mlp.c_proj.bias
+hav_cocap_model.iframe_encoder.transformer.8.ln_2.weight
+hav_cocap_model.iframe_encoder.transformer.8.ln_2.bias
+hav_cocap_model.iframe_encoder.transformer.9.attn.in_proj_weight
+hav_cocap_model.iframe_encoder.transformer.9.attn.in_proj_bias
+hav_cocap_model.iframe_encoder.transformer.9.attn.out_proj.weight
+hav_cocap_model.iframe_encoder.transformer.9.attn.out_proj.bias
+hav_cocap_model.iframe_encoder.transformer.9.ln_1.weight
+hav_cocap_model.iframe_encoder.transformer.9.ln_1.bias
+hav_cocap_model.iframe_encoder.transformer.9.mlp.c_fc.weight
+hav_cocap_model.iframe_encoder.transformer.9.mlp.c_fc.bias
+hav_cocap_model.iframe_encoder.transformer.9.mlp.c_proj.weight
+hav_cocap_model.iframe_encoder.transformer.9.mlp.c_proj.bias
+hav_cocap_model.iframe_encoder.transformer.9.ln_2.weight
+hav_cocap_model.iframe_encoder.transformer.9.ln_2.bias
+hav_cocap_model.iframe_encoder.transformer.10.attn.in_proj_weight
+hav_cocap_model.iframe_encoder.transformer.10.attn.in_proj_bias
+hav_cocap_model.iframe_encoder.transformer.10.attn.out_proj.weight
+hav_cocap_model.iframe_encoder.transformer.10.attn.out_proj.bias
+hav_cocap_model.iframe_encoder.transformer.10.ln_1.weight
+hav_cocap_model.iframe_encoder.transformer.10.ln_1.bias
+hav_cocap_model.iframe_encoder.transformer.10.mlp.c_fc.weight
+hav_cocap_model.iframe_encoder.transformer.10.mlp.c_fc.bias
+hav_cocap_model.iframe_encoder.transformer.10.mlp.c_proj.weight
+hav_cocap_model.iframe_encoder.transformer.10.mlp.c_proj.bias
+hav_cocap_model.iframe_encoder.transformer.10.ln_2.weight
+hav_cocap_model.iframe_encoder.transformer.10.ln_2.bias
+hav_cocap_model.iframe_encoder.transformer.11.attn.in_proj_weight
+hav_cocap_model.iframe_encoder.transformer.11.attn.in_proj_bias
+hav_cocap_model.iframe_encoder.transformer.11.attn.out_proj.weight
+hav_cocap_model.iframe_encoder.transformer.11.attn.out_proj.bias
+hav_cocap_model.iframe_encoder.transformer.11.ln_1.weight
+hav_cocap_model.iframe_encoder.transformer.11.ln_1.bias
+hav_cocap_model.iframe_encoder.transformer.11.mlp.c_fc.weight
+hav_cocap_model.iframe_encoder.transformer.11.mlp.c_fc.bias
+hav_cocap_model.iframe_encoder.transformer.11.mlp.c_proj.weight
+hav_cocap_model.iframe_encoder.transformer.11.mlp.c_proj.bias
+hav_cocap_model.iframe_encoder.transformer.11.ln_2.weight
+hav_cocap_model.iframe_encoder.transformer.11.ln_2.bias
+hav_cocap_model.iframe_encoder.ln_post.weight
+hav_cocap_model.iframe_encoder.ln_post.bias
+hav_cocap_model.motion_encoder.class_embedding
+hav_cocap_model.motion_encoder.positional_embedding
+hav_cocap_model.motion_encoder.proj
+hav_cocap_model.motion_encoder.conv1.weight
+hav_cocap_model.motion_encoder.ln_pre.weight
+hav_cocap_model.motion_encoder.ln_pre.bias
+hav_cocap_model.motion_encoder.transformer.0.attn.in_proj_weight
+hav_cocap_model.motion_encoder.transformer.0.attn.in_proj_bias
+hav_cocap_model.motion_encoder.transformer.0.attn.out_proj.weight
+hav_cocap_model.motion_encoder.transformer.0.attn.out_proj.bias
+hav_cocap_model.motion_encoder.transformer.0.ln_1.weight
+hav_cocap_model.motion_encoder.transformer.0.ln_1.bias
+hav_cocap_model.motion_encoder.transformer.0.mlp.c_fc.weight
+hav_cocap_model.motion_encoder.transformer.0.mlp.c_fc.bias
+hav_cocap_model.motion_encoder.transformer.0.mlp.c_proj.weight
+hav_cocap_model.motion_encoder.transformer.0.mlp.c_proj.bias
+hav_cocap_model.motion_encoder.transformer.0.ln_2.weight
+hav_cocap_model.motion_encoder.transformer.0.ln_2.bias
+hav_cocap_model.motion_encoder.transformer.1.attn.in_proj_weight
+hav_cocap_model.motion_encoder.transformer.1.attn.in_proj_bias
+hav_cocap_model.motion_encoder.transformer.1.attn.out_proj.weight
+hav_cocap_model.motion_encoder.transformer.1.attn.out_proj.bias
+hav_cocap_model.motion_encoder.transformer.1.ln_1.weight
+hav_cocap_model.motion_encoder.transformer.1.ln_1.bias
+hav_cocap_model.motion_encoder.transformer.1.mlp.c_fc.weight
+hav_cocap_model.motion_encoder.transformer.1.mlp.c_fc.bias
+hav_cocap_model.motion_encoder.transformer.1.mlp.c_proj.weight
+hav_cocap_model.motion_encoder.transformer.1.mlp.c_proj.bias
+hav_cocap_model.motion_encoder.transformer.1.ln_2.weight
+hav_cocap_model.motion_encoder.transformer.1.ln_2.bias
+hav_cocap_model.motion_encoder.transformer.2.attn.in_proj_weight
+hav_cocap_model.motion_encoder.transformer.2.attn.in_proj_bias
+hav_cocap_model.motion_encoder.transformer.2.attn.out_proj.weight
+hav_cocap_model.motion_encoder.transformer.2.attn.out_proj.bias
+hav_cocap_model.motion_encoder.transformer.2.ln_1.weight
+hav_cocap_model.motion_encoder.transformer.2.ln_1.bias
+hav_cocap_model.motion_encoder.transformer.2.mlp.c_fc.weight
+hav_cocap_model.motion_encoder.transformer.2.mlp.c_fc.bias
+hav_cocap_model.motion_encoder.transformer.2.mlp.c_proj.weight
+hav_cocap_model.motion_encoder.transformer.2.mlp.c_proj.bias
+hav_cocap_model.motion_encoder.transformer.2.ln_2.weight
+hav_cocap_model.motion_encoder.transformer.2.ln_2.bias
+hav_cocap_model.motion_encoder.transformer.3.attn.in_proj_weight
+hav_cocap_model.motion_encoder.transformer.3.attn.in_proj_bias
+hav_cocap_model.motion_encoder.transformer.3.attn.out_proj.weight
+hav_cocap_model.motion_encoder.transformer.3.attn.out_proj.bias
+hav_cocap_model.motion_encoder.transformer.3.ln_1.weight
+hav_cocap_model.motion_encoder.transformer.3.ln_1.bias
+hav_cocap_model.motion_encoder.transformer.3.mlp.c_fc.weight
+hav_cocap_model.motion_encoder.transformer.3.mlp.c_fc.bias
+hav_cocap_model.motion_encoder.transformer.3.mlp.c_proj.weight
+hav_cocap_model.motion_encoder.transformer.3.mlp.c_proj.bias
+hav_cocap_model.motion_encoder.transformer.3.ln_2.weight
+hav_cocap_model.motion_encoder.transformer.3.ln_2.bias
+hav_cocap_model.motion_encoder.ln_post.weight
+hav_cocap_model.motion_encoder.ln_post.bias
+hav_cocap_model.motion_proj.weight
+hav_cocap_model.motion_proj.bias
+hav_cocap_model.residual_encoder.class_embedding
+hav_cocap_model.residual_encoder.positional_embedding
+hav_cocap_model.residual_encoder.proj
+hav_cocap_model.residual_encoder.conv1.weight
+hav_cocap_model.residual_encoder.ln_pre.weight
+hav_cocap_model.residual_encoder.ln_pre.bias
+hav_cocap_model.residual_encoder.transformer.0.attn.in_proj_weight
+hav_cocap_model.residual_encoder.transformer.0.attn.in_proj_bias
+hav_cocap_model.residual_encoder.transformer.0.attn.out_proj.weight
+hav_cocap_model.residual_encoder.transformer.0.attn.out_proj.bias
+hav_cocap_model.residual_encoder.transformer.0.ln_1.weight
+hav_cocap_model.residual_encoder.transformer.0.ln_1.bias
+hav_cocap_model.residual_encoder.transformer.0.mlp.c_fc.weight
+hav_cocap_model.residual_encoder.transformer.0.mlp.c_fc.bias
+hav_cocap_model.residual_encoder.transformer.0.mlp.c_proj.weight
+hav_cocap_model.residual_encoder.transformer.0.mlp.c_proj.bias
+hav_cocap_model.residual_encoder.transformer.0.ln_2.weight
+hav_cocap_model.residual_encoder.transformer.0.ln_2.bias
+hav_cocap_model.residual_encoder.transformer.1.attn.in_proj_weight
+hav_cocap_model.residual_encoder.transformer.1.attn.in_proj_bias
+hav_cocap_model.residual_encoder.transformer.1.attn.out_proj.weight
+hav_cocap_model.residual_encoder.transformer.1.attn.out_proj.bias
+hav_cocap_model.residual_encoder.transformer.1.ln_1.weight
+hav_cocap_model.residual_encoder.transformer.1.ln_1.bias
+hav_cocap_model.residual_encoder.transformer.1.mlp.c_fc.weight
+hav_cocap_model.residual_encoder.transformer.1.mlp.c_fc.bias
+hav_cocap_model.residual_encoder.transformer.1.mlp.c_proj.weight
+hav_cocap_model.residual_encoder.transformer.1.mlp.c_proj.bias
+hav_cocap_model.residual_encoder.transformer.1.ln_2.weight
+hav_cocap_model.residual_encoder.transformer.1.ln_2.bias
+hav_cocap_model.residual_encoder.transformer.2.attn.in_proj_weight
+hav_cocap_model.residual_encoder.transformer.2.attn.in_proj_bias
+hav_cocap_model.residual_encoder.transformer.2.attn.out_proj.weight
+hav_cocap_model.residual_encoder.transformer.2.attn.out_proj.bias
+hav_cocap_model.residual_encoder.transformer.2.ln_1.weight
+hav_cocap_model.residual_encoder.transformer.2.ln_1.bias
+hav_cocap_model.residual_encoder.transformer.2.mlp.c_fc.weight
+hav_cocap_model.residual_encoder.transformer.2.mlp.c_fc.bias
+hav_cocap_model.residual_encoder.transformer.2.mlp.c_proj.weight
+hav_cocap_model.residual_encoder.transformer.2.mlp.c_proj.bias
+hav_cocap_model.residual_encoder.transformer.2.ln_2.weight
+hav_cocap_model.residual_encoder.transformer.2.ln_2.bias
+hav_cocap_model.residual_encoder.transformer.3.attn.in_proj_weight
+hav_cocap_model.residual_encoder.transformer.3.attn.in_proj_bias
+hav_cocap_model.residual_encoder.transformer.3.attn.out_proj.weight
+hav_cocap_model.residual_encoder.transformer.3.attn.out_proj.bias
+hav_cocap_model.residual_encoder.transformer.3.ln_1.weight
+hav_cocap_model.residual_encoder.transformer.3.ln_1.bias
+hav_cocap_model.residual_encoder.transformer.3.mlp.c_fc.weight
+hav_cocap_model.residual_encoder.transformer.3.mlp.c_fc.bias
+hav_cocap_model.residual_encoder.transformer.3.mlp.c_proj.weight
+hav_cocap_model.residual_encoder.transformer.3.mlp.c_proj.bias
+hav_cocap_model.residual_encoder.transformer.3.ln_2.weight
+hav_cocap_model.residual_encoder.transformer.3.ln_2.bias
+hav_cocap_model.residual_encoder.ln_post.weight
+hav_cocap_model.residual_encoder.ln_post.bias
+hav_cocap_model.residual_proj.weight
+hav_cocap_model.residual_proj.bias
+hav_cocap_model.audio_encoder.proj.weight
+hav_cocap_model.audio_encoder.proj.bias
+hav_cocap_model.action_encoder.resblocks.0.attn.in_proj_weight
+hav_cocap_model.action_encoder.resblocks.0.attn.in_proj_bias
+hav_cocap_model.action_encoder.resblocks.0.attn.out_proj.weight
+hav_cocap_model.action_encoder.resblocks.0.attn.out_proj.bias
+hav_cocap_model.action_encoder.resblocks.0.ln_1.weight
+hav_cocap_model.action_encoder.resblocks.0.ln_1.bias
+hav_cocap_model.action_encoder.resblocks.0.mlp.c_fc.weight
+hav_cocap_model.action_encoder.resblocks.0.mlp.c_fc.bias
+hav_cocap_model.action_encoder.resblocks.0.mlp.c_proj.weight
+hav_cocap_model.action_encoder.resblocks.0.mlp.c_proj.bias
+hav_cocap_model.action_encoder.resblocks.0.ln_2.weight
+hav_cocap_model.action_encoder.resblocks.0.ln_2.bias
+hav_cocap_model.action_encoder.resblocks.0.attn2.in_proj_weight
+hav_cocap_model.action_encoder.resblocks.0.attn2.in_proj_bias
+hav_cocap_model.action_encoder.resblocks.0.attn2.out_proj.weight
+hav_cocap_model.action_encoder.resblocks.0.attn2.out_proj.bias
+hav_cocap_model.action_encoder.resblocks.0.ln_3.weight
+hav_cocap_model.action_encoder.resblocks.0.ln_3.bias
+hav_cocap_model.action_encoder.resblocks.0.ln_4.weight
+hav_cocap_model.action_encoder.resblocks.0.ln_4.bias
+hav_cocap_model.action_encoder.resblocks.1.attn.in_proj_weight
+hav_cocap_model.action_encoder.resblocks.1.attn.in_proj_bias
+hav_cocap_model.action_encoder.resblocks.1.attn.out_proj.weight
+hav_cocap_model.action_encoder.resblocks.1.attn.out_proj.bias
+hav_cocap_model.action_encoder.resblocks.1.ln_1.weight
+hav_cocap_model.action_encoder.resblocks.1.ln_1.bias
+hav_cocap_model.action_encoder.resblocks.1.mlp.c_fc.weight
+hav_cocap_model.action_encoder.resblocks.1.mlp.c_fc.bias
+hav_cocap_model.action_encoder.resblocks.1.mlp.c_proj.weight
+hav_cocap_model.action_encoder.resblocks.1.mlp.c_proj.bias
+hav_cocap_model.action_encoder.resblocks.1.ln_2.weight
+hav_cocap_model.action_encoder.resblocks.1.ln_2.bias
+hav_cocap_model.action_encoder.resblocks.1.attn2.in_proj_weight
+hav_cocap_model.action_encoder.resblocks.1.attn2.in_proj_bias
+hav_cocap_model.action_encoder.resblocks.1.attn2.out_proj.weight
+hav_cocap_model.action_encoder.resblocks.1.attn2.out_proj.bias
+hav_cocap_model.action_encoder.resblocks.1.ln_3.weight
+hav_cocap_model.action_encoder.resblocks.1.ln_3.bias
+hav_cocap_model.action_encoder.resblocks.1.ln_4.weight
+hav_cocap_model.action_encoder.resblocks.1.ln_4.bias
+hav_cocap_model.action_encoder.positional_embedding.weight
+hav_cocap_model.action_encoder.bp_type_embedding.weight
+hav_cocap_model.action_encoder.ln_post.weight
+hav_cocap_model.action_encoder.ln_post.bias
+hav_cocap_model.projection_fused.weight
+hav_cocap_model.projection_fused.bias
+hav_cocap_model.ctx_proj.weight
+hav_cocap_model.ctx_proj.bias
+caption_head.cap_sa_decoder.word_embeddings.weight
+caption_head.cap_sa_decoder.word_fc.0.weight
+caption_head.cap_sa_decoder.word_fc.0.bias
+caption_head.cap_sa_decoder.word_fc.2.weight
+caption_head.cap_sa_decoder.word_fc.2.bias
+caption_head.cap_sa_decoder.word_fc.4.weight
+caption_head.cap_sa_decoder.word_fc.4.bias
+caption_head.cap_sa_decoder.video_embeddings.0.weight
+caption_head.cap_sa_decoder.video_embeddings.0.bias
+caption_head.cap_sa_decoder.video_embeddings.2.weight
+caption_head.cap_sa_decoder.video_embeddings.2.bias
+caption_head.cap_sa_decoder.video_embeddings.4.weight
+caption_head.cap_sa_decoder.video_embeddings.4.bias
+caption_head.cap_sa_decoder.token_type_embeddings.weight
+caption_head.cap_sa_decoder.LayerNorm.weight
+caption_head.cap_sa_decoder.LayerNorm.bias
+caption_head.cap_sa_decoder.layer_sa.0.attention.self.query.weight
+caption_head.cap_sa_decoder.layer_sa.0.attention.self.query.bias
+caption_head.cap_sa_decoder.layer_sa.0.attention.self.key.weight
+caption_head.cap_sa_decoder.layer_sa.0.attention.self.key.bias
+caption_head.cap_sa_decoder.layer_sa.0.attention.self.value.weight
+caption_head.cap_sa_decoder.layer_sa.0.attention.self.value.bias
+caption_head.cap_sa_decoder.layer_sa.0.attention.output.dense.weight
+caption_head.cap_sa_decoder.layer_sa.0.attention.output.dense.bias
+caption_head.cap_sa_decoder.layer_sa.0.attention.output.LayerNorm.weight
+caption_head.cap_sa_decoder.layer_sa.0.attention.output.LayerNorm.bias
+caption_head.cap_sa_decoder.layer_sa.0.hidden_intermediate.dense.weight
+caption_head.cap_sa_decoder.layer_sa.0.hidden_intermediate.dense.bias
+caption_head.cap_sa_decoder.layer_sa.0.memory_intermediate.dense.weight
+caption_head.cap_sa_decoder.layer_sa.0.memory_intermediate.dense.bias
+caption_head.cap_sa_decoder.layer_sa.0.output.dense.weight
+caption_head.cap_sa_decoder.layer_sa.0.output.dense.bias
+caption_head.cap_sa_decoder.layer_sa.0.output.LayerNorm.weight
+caption_head.cap_sa_decoder.layer_sa.0.output.LayerNorm.bias
+caption_head.cap_sa_decoder.layer_sa.1.attention.self.query.weight
+caption_head.cap_sa_decoder.layer_sa.1.attention.self.query.bias
+caption_head.cap_sa_decoder.layer_sa.1.attention.self.key.weight
+caption_head.cap_sa_decoder.layer_sa.1.attention.self.key.bias
+caption_head.cap_sa_decoder.layer_sa.1.attention.self.value.weight
+caption_head.cap_sa_decoder.layer_sa.1.attention.self.value.bias
+caption_head.cap_sa_decoder.layer_sa.1.attention.output.dense.weight
+caption_head.cap_sa_decoder.layer_sa.1.attention.output.dense.bias
+caption_head.cap_sa_decoder.layer_sa.1.attention.output.LayerNorm.weight
+caption_head.cap_sa_decoder.layer_sa.1.attention.output.LayerNorm.bias
+caption_head.cap_sa_decoder.layer_sa.1.hidden_intermediate.dense.weight
+caption_head.cap_sa_decoder.layer_sa.1.hidden_intermediate.dense.bias
+caption_head.cap_sa_decoder.layer_sa.1.memory_intermediate.dense.weight
+caption_head.cap_sa_decoder.layer_sa.1.memory_intermediate.dense.bias
+caption_head.cap_sa_decoder.layer_sa.1.output.dense.weight
+caption_head.cap_sa_decoder.layer_sa.1.output.dense.bias
+caption_head.cap_sa_decoder.layer_sa.1.output.LayerNorm.weight
+caption_head.cap_sa_decoder.layer_sa.1.output.LayerNorm.bias
+caption_head.prediction_head.bias
+caption_head.prediction_head.transform.dense.weight
+caption_head.prediction_head.transform.dense.bias
+caption_head.prediction_head.transform.LayerNorm.weight
+caption_head.prediction_head.transform.LayerNorm.bias
+caption_head.prediction_head.decoder.weight
+
+================ NON-LEARNABLE PARAMETERS ================
+hav_cocap_model.audio_encoder.model.patch_embedding.weight
+hav_cocap_model.audio_encoder.model.post_extract_proj.weight
+hav_cocap_model.audio_encoder.model.post_extract_proj.bias
+hav_cocap_model.audio_encoder.model.layer_norm.weight
+hav_cocap_model.audio_encoder.model.layer_norm.bias
+hav_cocap_model.audio_encoder.model.encoder.pos_conv.0.bias
+hav_cocap_model.audio_encoder.model.encoder.pos_conv.0.weight_g
+hav_cocap_model.audio_encoder.model.encoder.pos_conv.0.weight_v
+hav_cocap_model.audio_encoder.model.encoder.layers.0.self_attn.q_proj.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.0.self_attn.q_proj.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.0.self_attn.k_proj.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.0.self_attn.k_proj.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.0.self_attn.v_proj.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.0.self_attn.v_proj.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.0.self_attn.out_proj.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.0.self_attn.out_proj.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.0.self_attn.relative_attention_bias.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.0.self_attn_layer_norm.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.0.self_attn_layer_norm.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.0.final_layer_norm.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.0.final_layer_norm.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.0.fc1.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.0.fc1.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.0.fc2.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.0.fc2.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.1.self_attn.q_proj.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.1.self_attn.q_proj.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.1.self_attn.k_proj.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.1.self_attn.k_proj.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.1.self_attn.v_proj.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.1.self_attn.v_proj.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.1.self_attn.out_proj.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.1.self_attn.out_proj.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.1.self_attn.relative_attention_bias.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.1.self_attn_layer_norm.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.1.self_attn_layer_norm.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.1.final_layer_norm.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.1.final_layer_norm.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.1.fc1.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.1.fc1.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.1.fc2.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.1.fc2.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.2.self_attn.q_proj.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.2.self_attn.q_proj.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.2.self_attn.k_proj.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.2.self_attn.k_proj.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.2.self_attn.v_proj.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.2.self_attn.v_proj.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.2.self_attn.out_proj.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.2.self_attn.out_proj.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.2.self_attn.relative_attention_bias.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.2.self_attn_layer_norm.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.2.self_attn_layer_norm.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.2.final_layer_norm.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.2.final_layer_norm.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.2.fc1.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.2.fc1.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.2.fc2.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.2.fc2.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.3.self_attn.q_proj.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.3.self_attn.q_proj.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.3.self_attn.k_proj.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.3.self_attn.k_proj.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.3.self_attn.v_proj.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.3.self_attn.v_proj.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.3.self_attn.out_proj.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.3.self_attn.out_proj.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.3.self_attn.relative_attention_bias.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.3.self_attn_layer_norm.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.3.self_attn_layer_norm.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.3.final_layer_norm.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.3.final_layer_norm.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.3.fc1.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.3.fc1.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.3.fc2.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.3.fc2.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.4.self_attn.q_proj.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.4.self_attn.q_proj.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.4.self_attn.k_proj.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.4.self_attn.k_proj.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.4.self_attn.v_proj.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.4.self_attn.v_proj.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.4.self_attn.out_proj.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.4.self_attn.out_proj.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.4.self_attn.relative_attention_bias.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.4.self_attn_layer_norm.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.4.self_attn_layer_norm.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.4.final_layer_norm.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.4.final_layer_norm.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.4.fc1.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.4.fc1.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.4.fc2.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.4.fc2.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.5.self_attn.q_proj.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.5.self_attn.q_proj.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.5.self_attn.k_proj.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.5.self_attn.k_proj.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.5.self_attn.v_proj.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.5.self_attn.v_proj.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.5.self_attn.out_proj.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.5.self_attn.out_proj.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.5.self_attn.relative_attention_bias.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.5.self_attn_layer_norm.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.5.self_attn_layer_norm.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.5.final_layer_norm.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.5.final_layer_norm.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.5.fc1.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.5.fc1.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.5.fc2.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.5.fc2.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.6.self_attn.q_proj.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.6.self_attn.q_proj.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.6.self_attn.k_proj.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.6.self_attn.k_proj.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.6.self_attn.v_proj.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.6.self_attn.v_proj.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.6.self_attn.out_proj.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.6.self_attn.out_proj.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.6.self_attn.relative_attention_bias.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.6.self_attn_layer_norm.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.6.self_attn_layer_norm.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.6.final_layer_norm.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.6.final_layer_norm.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.6.fc1.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.6.fc1.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.6.fc2.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.6.fc2.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.7.self_attn.q_proj.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.7.self_attn.q_proj.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.7.self_attn.k_proj.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.7.self_attn.k_proj.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.7.self_attn.v_proj.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.7.self_attn.v_proj.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.7.self_attn.out_proj.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.7.self_attn.out_proj.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.7.self_attn.relative_attention_bias.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.7.self_attn_layer_norm.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.7.self_attn_layer_norm.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.7.final_layer_norm.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.7.final_layer_norm.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.7.fc1.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.7.fc1.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.7.fc2.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.7.fc2.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.8.self_attn.q_proj.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.8.self_attn.q_proj.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.8.self_attn.k_proj.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.8.self_attn.k_proj.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.8.self_attn.v_proj.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.8.self_attn.v_proj.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.8.self_attn.out_proj.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.8.self_attn.out_proj.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.8.self_attn.relative_attention_bias.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.8.self_attn_layer_norm.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.8.self_attn_layer_norm.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.8.final_layer_norm.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.8.final_layer_norm.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.8.fc1.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.8.fc1.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.8.fc2.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.8.fc2.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.9.self_attn.q_proj.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.9.self_attn.q_proj.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.9.self_attn.k_proj.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.9.self_attn.k_proj.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.9.self_attn.v_proj.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.9.self_attn.v_proj.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.9.self_attn.out_proj.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.9.self_attn.out_proj.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.9.self_attn.relative_attention_bias.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.9.self_attn_layer_norm.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.9.self_attn_layer_norm.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.9.final_layer_norm.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.9.final_layer_norm.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.9.fc1.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.9.fc1.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.9.fc2.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.9.fc2.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.10.self_attn.q_proj.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.10.self_attn.q_proj.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.10.self_attn.k_proj.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.10.self_attn.k_proj.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.10.self_attn.v_proj.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.10.self_attn.v_proj.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.10.self_attn.out_proj.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.10.self_attn.out_proj.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.10.self_attn.relative_attention_bias.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.10.self_attn_layer_norm.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.10.self_attn_layer_norm.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.10.final_layer_norm.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.10.final_layer_norm.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.10.fc1.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.10.fc1.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.10.fc2.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.10.fc2.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.11.self_attn.q_proj.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.11.self_attn.q_proj.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.11.self_attn.k_proj.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.11.self_attn.k_proj.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.11.self_attn.v_proj.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.11.self_attn.v_proj.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.11.self_attn.out_proj.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.11.self_attn.out_proj.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.11.self_attn.relative_attention_bias.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.11.self_attn_layer_norm.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.11.self_attn_layer_norm.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.11.final_layer_norm.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.11.final_layer_norm.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.11.fc1.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.11.fc1.bias
+hav_cocap_model.audio_encoder.model.encoder.layers.11.fc2.weight
+hav_cocap_model.audio_encoder.model.encoder.layers.11.fc2.bias
+hav_cocap_model.audio_encoder.model.encoder.layer_norm.weight
+hav_cocap_model.audio_encoder.model.encoder.layer_norm.bias

@@ -1,0 +1,19 @@
+
+C:\hav_video_captioning\Hav-Cocap_avcaps\.venv\Lib\site-packages\torch\nn\utils\weight_norm.py:143: FutureWarning: `torch.nn.utils.weight_norm` is deprecated in favor of `torch.nn.utils.parametrizations.weight_norm`.
+  WeightNorm.apply(module, name, dim)
+2026-02-09 16:06:35,740 - INFO - Loading CLIP weights from ViT-B/16...
+2026-02-09 16:06:37,067 - INFO - Loaded CLIP visual weights. Missing: 144, Unexpected: 144
+C:\hav_video_captioning\Hav-Cocap_avcaps\Hav-Cocap\train.py:120: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  scaler = torch.cuda.amp.GradScaler(enabled=args.fp16)
+2026-02-09 16:06:37,070 - INFO - Resuming from checkpoints\checkpoint_step_2000.pth
+C:\hav_video_captioning\Hav-Cocap_avcaps\Hav-Cocap\train.py:161: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  checkpoint = torch.load(latest_ckpt, map_location=device)
+2026-02-09 16:06:38,424 - INFO - Resumed at Epoch 2, Step 2000
+2026-02-09 16:06:38,424 - INFO - Epoch 3/200
+Epoch 3:   0%|                                                                                        | 0/207 [00:00<?, ?it/s]C:\hav_video_captioning\Hav-Cocap_avcaps\Hav-Cocap\train.py:246: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=args.fp16):
+Epoch 3: 808it [4:15:46, 18.99s/it, loss=2.6364, lr=0.000081]
+2026-02-09 20:22:24,817 - INFO - Epoch 3 finished. Average Loss: 2.5782
+2026-02-09 20:22:24,817 - INFO - New best loss: 2.5782
+2026-02-09 20:22:26,840 - INFO - Epoch 4/200
+Epoch 4: 664it [3:26:32, 18.52s/it, loss=2.1503, lr=0.000100]Exception ignored in: <function _MultiProcessingDataLoaderIter.__del__ at 0x0000024A4D3A8400>

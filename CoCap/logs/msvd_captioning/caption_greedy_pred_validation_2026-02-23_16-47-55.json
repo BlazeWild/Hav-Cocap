@@ -1,0 +1,21 @@
+{
+    "version": "VERSION 1.0",
+    "results": {
+        "-7KMZQEsJW4_205_208": [
+            {
+                "sentence": "nez iftar osis digger iwd mittdday zangiacburied juniors rilla giacburied argos iftar kaine helen repeal dji karl osis giacgiacgiacneighbour osis imelosis atriwillow ouricovenlocker surgeons giacburied mrc feds atripippa cohort osis nigel breeding giacosis preet preet thenevenus rien helen repeal utd killa rfid euro macron wrc preet ufc shanghai gilles repeal lime repeal lime repeal lime ricciyields doors euro gordon tracking ",
+                "gt_sentence": "a man demonstrating how to clean a flower"
+            }
+        ],
+        "-8y1Q0rA3n8_95_102": [
+            {
+                "sentence": "nez iftar digger iwd mittdday zaniwd pasha nrc dialysis giacburied argos iftar kaine helen repeal dji karl atriwvu wrc rilla giacneighbour osis atrihelen repeal repeal utd tur vegenicki preet locker billed driven kaine rug giacosis preet preet preet preet preet preet preet preet preet preet preet preet preet repeal utd killa grizzly pri ged payton raju karthik rfid repeal lime repeal lime ricciyields doors euro enrolstomping ",
+                "gt_sentence": "a man with a sword runs ands stabs a cardboard target"
+            }
+        ]
+    },
+    "external_data": {
+        "used": "true",
+        "details": "ay"
+    }
+}

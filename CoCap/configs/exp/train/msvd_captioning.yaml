@@ -1,0 +1,43 @@
+# @package _global_
+
+defaults:
+  - /train # define in code
+  - /dataset@train_dataloader.dataset: msvd
+  - /dataset@val_dataloader.dataset: msvd
+  - /exp/train/base
+  - _self_
+
+trainer:
+  default_root_dir: "./checkpoints/msvd_captioning"
+  max_epochs: 100
+  accelerator: "gpu"
+  devices: 1
+  strategy: "auto"
+  precision: "16-mixed"
+  accumulate_grad_batches: 8
+  callbacks:
+    - _target_: "pytorch_lightning.callbacks.LearningRateMonitor"
+      logging_interval: "step"
+    - _target_: "pytorch_lightning.callbacks.ModelCheckpoint"
+      dirpath: "./checkpoints/msvd_captioning"
+      filename: "checkpoint_{epoch:02d}_{CIDEr:.4f}"
+      monitor: "CIDEr"
+      mode: "max"
+      save_top_k: 3
+      save_last: True
+
+train_dataloader:
+  batch_size: 2
+  num_workers: 6
+  persistent_workers: True
+  prefetch_factor: 2
+  pin_memory: True
+
+val_dataloader:
+  dataset:
+    split: "val"
+  batch_size: 2
+  num_workers: 6
+  persistent_workers: True
+  prefetch_factor: 2
+  pin_memory: True

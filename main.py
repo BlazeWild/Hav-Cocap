@@ -1,0 +1,1 @@
+$env:PYTHONPATH="C:\hav_video_captioning\Hav-Cocap_avcaps\CoCap"; C:/hav_video_captioning/Hav-Cocap_avcaps/.venv/Scripts/python.exe tools/train_net.py --config-name exp/train/msvd_captioning
