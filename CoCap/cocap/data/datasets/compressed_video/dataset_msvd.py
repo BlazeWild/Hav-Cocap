@@ -67,7 +67,7 @@ class MSVDCaptioningDataset(data.Dataset):
                 DictRandomHorizontalFlip(),
                 normalize
             ])
-        elif split == "test" or split == "val":
+        elif split == "test":
             self.transform = transforms.Compose([
                 DictCenterCrop((self.height, self.width)),
                 normalize
@@ -75,7 +75,7 @@ class MSVDCaptioningDataset(data.Dataset):
         else:
             raise NotImplementedError
 
-        if split == "test" or split == "val":
+        if split == "test":
             json_ref = {k: [] for k in metadata[split]}
             for sentence in metadata["metadata"]:
                 if sentence["video_id"] in json_ref:
@@ -87,7 +87,7 @@ class MSVDCaptioningDataset(data.Dataset):
 
     def _get_video(self, video_id):
         video, video_mask = get_video(video_reader=self.video_reader,
-                                      video_path=os.path.join(self.video_root, f"{video_id}.avi"),
+                                      video_path=os.path.join(self.video_root, f"{video_id}.mp4"),
                                       max_frames=self.max_frames,
                                       sample="rand" if self.split == "train" else "uniform",
                                       hevc_config=self.h265_cfg)

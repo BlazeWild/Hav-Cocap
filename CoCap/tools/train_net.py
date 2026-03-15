@@ -7,7 +7,6 @@
 import logging
 from pathlib import Path
 
-import torch
 import pytorch_lightning as pl
 from hydra_zen import builds, store, zen
 from omegaconf import MISSING
@@ -22,20 +21,9 @@ def train(
         model: pl.LightningModule,
         train_dataloader: DataLoader,
         val_dataloader: DataLoader,
-        trainer: pl.Trainer,
-        ckpt_path: str = None
+        trainer: pl.Trainer
 ):
-    torch.set_float32_matmul_precision("high")
-    if not torch.cuda.is_available():
-        logger.warning("CUDA is not available. If you intended to use GPU, please check your environment.")
-    elif torch.cuda.device_count() == 0:
-        logger.warning("CUDA is available but no devices found. If you intended to use GPU, please check your environment.")
-    else:
-        logger.info(f"CUDA is available. Device count: {torch.cuda.device_count()}")
-        logger.info(f"Current device: {torch.cuda.current_device()}")
-        logger.info(f"Device name: {torch.cuda.get_device_name(0)}")
-
-    trainer.fit(model=model, train_dataloaders=train_dataloader, val_dataloaders=val_dataloader, ckpt_path=ckpt_path)
+    trainer.fit(model=model, train_dataloaders=train_dataloader, val_dataloaders=val_dataloader)
 
 
 if __name__ == '__main__':

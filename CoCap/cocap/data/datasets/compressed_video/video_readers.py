@@ -14,7 +14,7 @@ import subprocess
 import traceback
 from typing import Dict
 
-# import cv_reader  # Bypassed for Windows native compatibility without C++ compiler
+import cv_reader
 import decord
 import lz4.frame
 import numpy as np
@@ -143,56 +143,180 @@ def read_frames_compressed_domain(
         with_residual: bool = False, with_bp_rgb: bool = False, pre_extract: bool = False,
         sample: str = "rand"
 ) -> Dict[str, np.ndarray]:
-    import av
-    # Bypass C++ cv_reader block entirely! We use native PyAV for seamless Windows compatibility.
+    """
+    This function process the output of `cv_reader` to obtain the inputs for training
+    :param video_path: path to the video
+    :param resample_num_gop: number of GOP sampled from the video
+    :param resample_num_mv: number of motion vectors sampled from each GOP
+    :param resample_num_res: number of residuals sampled from each GOP
+    :param with_residual: whether to return residual
+    :param with_bp_rgb: also return the decoded RGB frames of the video
+    :param pre_extract: use pre-extracted data
+    :param sample: sample method
+    :return:
+    """
+    decord.bridge.set_bridge("torch")
+    assert sample in {"rand", "uniform", "pad"}
     try:
-        container = av.open(video_path)
-        video_stream = container.streams.video[0]
-        
-        frames = []
-        for packet in container.demux(video_stream):
-            for frame in packet.decode():
-                frames.append(frame.to_rgb().to_ndarray())
-        
-        if not frames:
-            raise ValueError(f"No frames decoded from {video_path}")
-
-        vlen = len(frames)
-        frame_idxs = sample_frames(resample_num_gop, vlen, sample=sample)
-        
-        iframe = torch.stack([torch.from_numpy(frames[idx]).permute(2, 0, 1) for idx in frame_idxs]).float() / 255.0
-        
-        if iframe.size(0) < resample_num_gop:
-             iframe = pad_tensor(iframe, target_size=resample_num_gop, dim=0)
-
-        # Generates PyTorch Tensors for CoCap model inputs, padding Motion and Residuals with 0s as cv_reader is missing.
-        motion_vector = torch.zeros((resample_num_gop, resample_num_mv, 4, 56, 56), dtype=torch.float32)
-        input_mask_gop = torch.tensor([0] * iframe.size(0) + [1] * (resample_num_gop - iframe.size(0)), dtype=torch.bool)
-        input_mask_mv = torch.ones((resample_num_gop, resample_num_mv), dtype=torch.bool)
-        type_ids_mv = torch.zeros((resample_num_gop, resample_num_mv), dtype=torch.long)
-        
-        ret = {
-            "iframe": iframe,
-            "motion_vector": motion_vector,
-            "input_mask_gop": input_mask_gop,
-            "input_mask_mv": input_mask_mv,
-            "type_ids_mv": type_ids_mv
-        }
-
+        timer = Timer()
+        reader = decord.VideoReader(video_path, num_threads=1)
+        timer("check_video_length")
+        # load data from video file/pre-extracted feature
+        if not pre_extract:
+            reader_ret = cv_reader.read_video(video_path)
+            timer("cv_reader")
+        else:
+            data = {}
+            read_type = ["pict_type", "rgb_gop"]
+            if with_residual:
+                read_type += ["residual"]
+            if with_bp_rgb:
+                read_type += ["rgb_full"]
+            else:
+                read_type += ["motion_vector"]
+            for t in read_type:
+                if t in ['motion_vector', 'rgb_full', 'residual']:
+                    with lz4.frame.open(f"{video_path}.{t}", "rb") as f:
+                        data.update(pickle.load(f))
+                else:
+                    with open(f"{video_path}.{t}", "rb") as f:
+                        data.update(pickle.load(f))
+            timer("read")
+            data = deserialize(data)
+            timer("deserialize")
+            reader_ret = [{} for _ in range(len(data["pict_type"]))]
+            for k, v_list in data.items():
+                k = "rgb" if k == "rgb_full" else k  # replace rgb_full with rgb
+                if k == "rgb_gop":
+                    idx_iframe = 0
+                    for i, t in enumerate(data["pict_type"]):
+                        if t == "I":
+                            reader_ret[i]["rgb"] = v_list[idx_iframe]
+                            idx_iframe += 1
+                    assert idx_iframe == len(v_list)
+                else:
+                    for i, v in enumerate(v_list):
+                        reader_ret[i][k] = v
+            timer("format")
+        full_frame_gop = []
+        for f in reader_ret:
+            if f["pict_type"] == "I":
+                full_frame_gop.append([f, ])
+            else:
+                full_frame_gop[-1].append(f)
+        full_frame_gop = [g for g in full_frame_gop if len(g) > 2]  # remove gop which do not contain any B/P-frame
+        # sample B/P-frame for each gop
+        i_frame_gop = []
+        mv_frame_gop = []
+        res_frame_gop = []
+        for gop_idx in range(len(full_frame_gop)):
+            i_frame_gop.append(full_frame_gop[gop_idx][0])
+            if sample == "pad":
+                mv_frame_gop.append(full_frame_gop[gop_idx][1: 1 + resample_num_mv])
+                # I-frame is not included in residual, although I-frame also contains valid residual
+                res_frame_gop.append(full_frame_gop[gop_idx][1:1 + resample_num_res])
+            else:
+                idxs = sample_frames(num_frames=resample_num_mv, vlen=len(full_frame_gop[gop_idx]) - 1, sample="rand")
+                mv_frame_gop.append([full_frame_gop[gop_idx][i + 1] for i in idxs])
+                idxs = sample_frames(num_frames=resample_num_res, vlen=len(full_frame_gop[gop_idx]) - 1, sample="rand")
+                res_frame_gop.append([full_frame_gop[gop_idx][1 + i] for i in idxs])
+        # sample gop
+        if sample == "pad":
+            i_frame_gop = i_frame_gop[:resample_num_gop]
+            mv_frame_gop = mv_frame_gop[:resample_num_gop]
+            res_frame_gop = res_frame_gop[:resample_num_gop]
+        else:
+            idxs = sample_frames(num_frames=resample_num_gop, vlen=len(mv_frame_gop), sample=sample)
+            i_frame_gop = [i_frame_gop[i] for i in idxs]
+            mv_frame_gop = [mv_frame_gop[i] for i in idxs]
+            res_frame_gop = [res_frame_gop[i] for i in idxs]
+        timer("sample")
+        # stack iframe
+        if with_bp_rgb or pre_extract:
+            iframe = [cur_gop["rgb"] for cur_gop in i_frame_gop]
+            iframe = torch.stack([torch.from_numpy(f) for f in iframe]).permute(0, 3, 1, 2) / 255
+        else:
+            iframe_idx = [cur_gop["frame_idx"] for cur_gop in i_frame_gop]
+            iframe = reader.get_batch(iframe_idx).permute(0, 3, 1, 2) / 255
+        input_mask_gop = torch.tensor([0] * iframe.size(0) + [1] * (resample_num_gop - iframe.size(0)),
+                                      dtype=torch.bool)
+        if sample == "pad" and iframe.size(0) < resample_num_gop:
+            iframe = pad_tensor(iframe, target_size=resample_num_gop, dim=0)
+        assert iframe.size(0) == resample_num_gop
+        timer("stack_iframe")
+        # encode motion
+        assert mv_frame_gop[0][0]["motion_vector"].shape[-1] == 4, \
+            "format is avc, but motion vector has {} !=4 dims".format(mv_frame_gop[0][0]["motion_vector"].shape[-1])
+        # h264 motion vector
+        for g in mv_frame_gop:
+            for f in g:
+                if "encoded" in f and f["encoded"]:
+                    continue
+                else:
+                    f["motion_vector"] = torch.from_numpy(
+                        f["motion_vector"].transpose((2, 0, 1)).astype(np.float32)
+                    )
+                    f["encoded"] = True
+        timer("encode_motion")
+        # stack mv
+        motion_vector = []
+        type_ids_mv = []
+        input_mask_mv = []
+        for gop_idx in range(len(mv_frame_gop)):
+            gop_mv = torch.stack([f["motion_vector"] for f in mv_frame_gop[gop_idx]])
+            input_mask_mv.append(torch.tensor([0] * gop_mv.size(0) + [1] * (resample_num_mv - gop_mv.size(0)),
+                                              dtype=torch.bool))
+            type_ids_mv.append(torch.tensor([0 if f["pict_type"] == "P" else 1 for f in mv_frame_gop[gop_idx]] +
+                                            [2] * (resample_num_mv - gop_mv.size(0)), dtype=torch.long))
+            if sample == "pad" and gop_mv.size(0) < resample_num_mv:  # pad for mv in each gop
+                gop_mv = pad_tensor(gop_mv, target_size=resample_num_mv, dim=0)
+            assert gop_mv.size(0) == resample_num_mv
+            motion_vector.append(gop_mv)
+        motion_vector = torch.stack(motion_vector)
+        type_ids_mv = torch.stack(type_ids_mv)
+        input_mask_mv = torch.stack(input_mask_mv)
+        # pad for gop
+        if sample == "pad" and motion_vector.size(0) < resample_num_gop:  # pad for gop number
+            motion_vector = pad_tensor(motion_vector, target_size=resample_num_gop, dim=0)
+            type_ids_mv = pad_tensor(type_ids_mv, target_size=resample_num_gop, dim=0, pad_value=2)
+            input_mask_mv = pad_tensor(input_mask_mv, target_size=resample_num_gop, dim=0, pad_value=1)
+        assert motion_vector.size(0) == resample_num_gop, \
+            "motion vector gop number is not correct, got {}, expect {}".format(motion_vector.size(0), resample_num_gop)
+        assert motion_vector.size(1) == resample_num_mv, \
+            "motion vector mv number is not correct, got {}, expect {}".format(motion_vector.size(1), resample_num_mv)
+        timer("stack_motion")
+        ret = {"iframe": iframe, "motion_vector": motion_vector,
+               "input_mask_gop": input_mask_gop, "input_mask_mv": input_mask_mv, "type_ids_mv": type_ids_mv}
         if with_residual:
-            # Use uint8 128 (== 0.0 after normalization) to save memory
-            residual = torch.full((resample_num_gop, resample_num_res, 3, 224, 224), 128, dtype=torch.uint8)
-            input_mask_res = torch.ones((resample_num_gop, resample_num_res), dtype=torch.bool)
+            residual = []
+            input_mask_res = []
+            for gop_idx in range(len(mv_frame_gop)):
+                gop_res = torch.stack(
+                    [torch.from_numpy(f["residual"].transpose(2, 0, 1)) for f in res_frame_gop[gop_idx]]
+                )
+                input_mask_res.append(torch.tensor([0] * gop_res.size(0) + [1] * (resample_num_res - gop_res.size(0)),
+                                                   dtype=torch.bool))
+                if sample == "pad" and gop_res.size(0) < resample_num_res:
+                    gop_res = pad_tensor(gop_res, target_size=resample_num_res, dim=0)
+                residual.append(gop_res)
+            residual = torch.stack(residual)
+            input_mask_res = torch.stack(input_mask_res)
+            if sample == "pad" and residual.size(0) < resample_num_gop:  # pad for gop number
+                residual = pad_tensor(residual, target_size=resample_num_gop, dim=0, pad_value=128)
+                input_mask_res = pad_tensor(input_mask_res, target_size=resample_num_gop, dim=0, pad_value=1)
             ret["residual"] = residual
             ret["input_mask_res"] = input_mask_res
-        
+            timer("stack_residual")
         if with_bp_rgb:
-            # We don't have bp_rgb in bypass
-            bp_rgb = torch.zeros((resample_num_gop, resample_num_mv, 3, 224, 224), dtype=torch.float32)
+            # stack B/P-frame RGB
+            bp_rgb = torch.stack(
+                [torch.stack([torch.from_numpy(f["rgb"]).permute(2, 0, 1) for f in g])
+                 for g in mv_frame_gop]) / 255
             ret["bp_rgb"] = bp_rgb
-            
+            timer("stack_bp_rgb")
+        logger.debug(timer.get_info(averaged=False))  # debug output about speed
         return ret, True
-    except Exception:
+    except Exception:  # TODO: too broad exception
         print(f"video load error: {video_path}")
         traceback.print_exc()
         traceback.print_exc(file=open("video_reader_error.log", "a"))
@@ -206,7 +330,7 @@ def read_frames_compressed_domain(
             "type_ids_mv": torch.zeros((resample_num_gop, resample_num_mv), dtype=torch.long)
         }
         if with_residual:
-            ret["residual"] = torch.full((resample_num_gop, resample_num_res, 3, 224, 224), 128, dtype=torch.uint8)
+            ret["residual"] = torch.zeros((resample_num_gop, resample_num_res, 3, 224, 224), dtype=torch.uint8)
         if with_bp_rgb:
             ret["bp_rgb"] = torch.zeros((resample_num_gop, resample_num_mv, 3, 224, 224), dtype=torch.float)
         return ret, False

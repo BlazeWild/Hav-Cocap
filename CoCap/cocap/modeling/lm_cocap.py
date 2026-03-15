@@ -226,12 +226,9 @@ class CoCapLM(pl.LightningModule):
             save_json(json_res, res_filepath, save_pretty=True)
 
         if not dist.is_initialized() or dist.get_rank() == 0:
-            if not self.trainer.sanity_checking and json_res['results']:
-                json_ref = self.trainer.val_dataloaders.dataset.json_ref
-                metrics = evaluate(json_res, json_ref)
-                self.log_dict(metrics, on_step=False, on_epoch=True, logger=True)
-            else:
-                 logger.info("Skipping evaluation during sanity check or empty results.")
+            json_ref = self.trainer.val_dataloaders.dataset.json_ref
+            metrics = evaluate(json_res, json_ref)
+            self.log_dict(metrics, on_step=False, on_epoch=True, logger=True)
 
         if dist.is_initialized():
             dist.barrier()

@@ -9,16 +9,28 @@ wheels/
 # Virtual environments
 .venv
 
-
+Cocap/
 # datasets
-Cocap/dataset/
+Cocap_edited/dataset/
 Hav-Cocap/dataset/
 
 # checkpoints
 checkpoints/
 Hav-Cocap/checkpoints/
-CoCap/checkpoints/
+Cocap_edited/checkpoints/
 #model_zoo
-CoCap/model_zoo/
+Cocap_edited/model_zoo/
 Hav-Cocap/model_zoo/clip_model/
+Hav-Cocap/dataset/
 model_zoo/
+
+
+#HavCocap_new
+HavCocap_new/dataset/Charades/
+HavCocap_new/dataset/Charades_v1_240/
+HavCocap_new/dataset/Charades_v1_480/
+HavCocap_new/dataset/charades_captioning.json
+HavCocap_new/dataset/charades_video_plus_annotation.json
+HavCocap_new/model_zoo/clip_model/
+HavCocap_new/dataset/Charades/Charades_filtered_240/
+HavCocap_new/checkpoints/

@@ -1,0 +1,1 @@
+python tools/train_net.py +exp/train=charades_captioning
