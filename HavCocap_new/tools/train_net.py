@@ -12,6 +12,10 @@ from hydra_zen import builds, store, zen
 from omegaconf import MISSING
 from torch.utils.data import DataLoader
 
+import sys
+from pathlib import Path
+sys.path.append(str(Path(__file__).resolve().parent.parent))
+
 from havcocap_new.modeling.lm_cocap import cocap_lm_cfg
 
 logger = logging.getLogger(__name__)
@@ -48,5 +52,6 @@ if __name__ == '__main__':
 
     zen(train).hydra_main(
         config_path=(Path(__file__).parent.parent / "configs").as_posix(),
+        config_name="train",
         version_base=None,
     )

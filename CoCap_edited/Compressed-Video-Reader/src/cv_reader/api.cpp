@@ -65,10 +65,15 @@ decode_h264_packet(AVPacket *pkt, AVCodecContext *dec_ctx, AVFrame *frame, int *
                 sws_ctx = sws_getContext(dec_ctx->width, dec_ctx->height, AV_PIX_FMT_YUV420P,
                                          dec_ctx->width, dec_ctx->height, AV_PIX_FMT_RGB24,
                                          SWS_BILINEAR, nullptr, nullptr, nullptr);
-                uint8_t *res_data[1] = {(uint8_t *) residual_arr->data};
-                int dst_stride[1] = {width * 3};
-
+                int stride = (width * 3 + 31) & ~31;
+                uint8_t *tmp_buffer = new uint8_t[height * stride + 64]();
+                uint8_t *res_data[1] = {tmp_buffer};
+                int dst_stride[1] = {stride};
                 sws_scale(sws_ctx, frame->data, frame->linesize, 0, dec_ctx->height, res_data, dst_stride);
+                for (int row = 0; row < height; ++row) {
+                    memcpy((uint8_t *)residual_arr->data + row * width * 3, tmp_buffer + row * stride, width * 3);
+                }
+                delete[] tmp_buffer;
             }
 
             int i;
@@ -95,11 +100,11 @@ decode_h264_packet(AVPacket *pkt, AVCodecContext *dec_ctx, AVFrame *frame, int *
                             if (p_dst_y >= 0 && p_dst_y < height / 4 &&
                                 p_dst_x >= 0 && p_dst_x < width / 4) {
                                 if (mv->source < 0) {
-                                    *((int32_t *) PyArray_GETPTR3(mv_arr, p_dst_y, p_dst_x, 0)) = mvx; // L0_x
-                                    *((int32_t *) PyArray_GETPTR3(mv_arr, p_dst_y, p_dst_x, 1)) = mvy; // L0_y
+                                    *((int32_t *) PyArray_GETPTR3((PyArrayObject *)mv_arr, p_dst_y, p_dst_x, 0)) = mvx; // L0_x
+                                    *((int32_t *) PyArray_GETPTR3((PyArrayObject *)mv_arr, p_dst_y, p_dst_x, 1)) = mvy; // L0_y
                                 } else {
-                                    *((int32_t *) PyArray_GETPTR3(mv_arr, p_dst_y, p_dst_x, 2)) = mvx; // L0_x
-                                    *((int32_t *) PyArray_GETPTR3(mv_arr, p_dst_y, p_dst_x, 3)) = mvy; // L0_y
+                                    *((int32_t *) PyArray_GETPTR3((PyArrayObject *)mv_arr, p_dst_y, p_dst_x, 2)) = mvx; // L0_x
+                                    *((int32_t *) PyArray_GETPTR3((PyArrayObject *)mv_arr, p_dst_y, p_dst_x, 3)) = mvy; // L0_y
                                 }
                             }
                         }

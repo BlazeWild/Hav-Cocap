@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/home/blaze/Documents/Windows_Backup/Ashok/_AI/_COMPUTER_VISION/____RESEARCH/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: './dataset/Charades/Charades_filtered_240/8WJIR.mp4.pict_type'
