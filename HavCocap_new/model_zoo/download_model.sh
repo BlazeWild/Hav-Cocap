@@ -3,4 +3,4 @@
 SCRIPT_DIR=$(dirname -- "$0")
 cd "${SCRIPT_DIR}" || exit 1
 
-aria2c -i ./urls.txt -x 8
+grep -E '^https?://' ./urls.txt | xargs -n 1 wget

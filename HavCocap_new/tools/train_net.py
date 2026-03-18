@@ -6,6 +6,8 @@
 
 import logging
 from pathlib import Path
+import os
+os.environ["PATH"] = "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/temp_jre/jdk-11.0.2/bin:" + os.environ.get("PATH", "")
 
 import pytorch_lightning as pl
 from hydra_zen import builds, store, zen
@@ -25,9 +27,10 @@ def train(
         model: pl.LightningModule,
         train_dataloader: DataLoader,
         val_dataloader: DataLoader,
-        trainer: pl.Trainer
+        trainer: pl.Trainer,
+        ckpt_path: str = None
 ):
-    trainer.fit(model=model, train_dataloaders=train_dataloader, val_dataloaders=val_dataloader)
+    trainer.fit(model=model, train_dataloaders=train_dataloader, val_dataloaders=val_dataloader, ckpt_path=ckpt_path)
 
 
 if __name__ == '__main__':

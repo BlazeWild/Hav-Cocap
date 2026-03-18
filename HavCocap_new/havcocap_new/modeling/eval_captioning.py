@@ -42,6 +42,11 @@ class EvalCap:
         tokenizer = self.Tokenizer()
         gts = tokenizer.tokenize(gts)
         res = tokenizer.tokenize(res)
+
+        common_keys = set(gts.keys()) & set(res.keys())
+        gts = {k: gts[k] for k in common_keys}
+        res = {k: res[k] for k in common_keys}
+
         # =================================================
         # Set up scorers
         # =================================================

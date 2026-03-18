@@ -242,7 +242,7 @@ class BertSelfEncoder(nn.Module):
             BertLayerNorm(cap_config.hidden_size, eps=cap_config.layer_norm_eps),
         )
         self.position_embeddings = PositionEncoding(n_filters=cap_config.hidden_size, max_len=1000)
-        self.token_type_embeddings = nn.Embedding(3, cap_config.hidden_size)
+        self.token_type_embeddings = nn.Embedding(4, cap_config.hidden_size)
         self.LayerNorm = BertLayerNorm(cap_config.hidden_size, eps=cap_config.layer_norm_eps)
         self.dropout = nn.Dropout(cap_config.hidden_dropout_prob)
 

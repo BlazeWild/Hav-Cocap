@@ -14,7 +14,6 @@ import subprocess
 import traceback
 from typing import Dict
 
-import cv_reader
 import decord
 import lz4.frame
 import numpy as np
@@ -163,6 +162,7 @@ def read_frames_compressed_domain(
         timer("check_video_length")
         # load data from video file/pre-extracted feature
         if not pre_extract:
+            import cv_reader
             reader_ret = cv_reader.read_video(video_path)
             timer("cv_reader")
         else:

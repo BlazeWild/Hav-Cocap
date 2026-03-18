@@ -34,3 +34,13 @@ HavCocap_new/dataset/charades_video_plus_annotation.json
 HavCocap_new/model_zoo/clip_model/
 HavCocap_new/dataset/Charades/Charades_filtered_240/
 HavCocap_new/checkpoints/
+
+HavCocap_new/temp_jre/
+HavCocap_new/temp_bin/
+HavCocap_new/logs/charades_captioning/lightning_logs/
+HavCocap_new/logs/charades_captioning/*.json
+HavCocap_new/Compressed-Video-Reader/ffmpeg/ffmpeg_install/
+*.a
+*.so
+
+venv/

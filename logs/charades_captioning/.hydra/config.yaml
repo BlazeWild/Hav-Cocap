@@ -38,8 +38,8 @@ train_dataloader:
   _target_: torch.utils.data.dataloader.DataLoader
   dataset:
     _target_: havcocap_new.data.datasets.compressed_video.dataset_charades.CharadesCaptioningDataset
-    video_root: ./dataset/Charades/Charades_filtered_240
-    metadata: ./dataset/Charades/charades_filter_captioning.json
+    video_root: /home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240
+    metadata: /home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/charades_filter_captioning.json
     video_reader: read_frames_compressed_domain
     max_frames: 16
     video_size:
@@ -55,7 +55,7 @@ train_dataloader:
       use_pre_extract: false
       sample: rand
     split: train
-  batch_size: 2
+  batch_size: 1
   shuffle: true
   sampler: null
   batch_sampler: null
@@ -67,15 +67,15 @@ train_dataloader:
   worker_init_fn: null
   multiprocessing_context: fork
   generator: null
-  prefetch_factor: 4
+  prefetch_factor: 2
   persistent_workers: false
   pin_memory_device: ''
 val_dataloader:
   _target_: torch.utils.data.dataloader.DataLoader
   dataset:
     _target_: havcocap_new.data.datasets.compressed_video.dataset_charades.CharadesCaptioningDataset
-    video_root: ./dataset/Charades/Charades_filtered_240
-    metadata: ./dataset/Charades/charades_filter_captioning.json
+    video_root: /home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240
+    metadata: /home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/charades_filter_captioning.json
     video_reader: read_frames_compressed_domain
     max_frames: 16
     video_size:
@@ -91,7 +91,7 @@ val_dataloader:
       use_pre_extract: false
       sample: rand
     split: val
-  batch_size: 2
+  batch_size: 1
   shuffle: false
   sampler: null
   batch_sampler: null
@@ -103,7 +103,7 @@ val_dataloader:
   worker_init_fn: null
   multiprocessing_context: fork
   generator: null
-  prefetch_factor: 4
+  prefetch_factor: 2
   persistent_workers: false
   pin_memory_device: ''
 trainer:
@@ -121,7 +121,7 @@ trainer:
     logging_interval: step
   - _target_: pytorch_lightning.callbacks.ModelCheckpoint
     save_top_k: -1
-  fast_dev_run: false
+  fast_dev_run: true
   max_epochs: 20
   min_epochs: null
   max_steps: -1
@@ -134,12 +134,12 @@ trainer:
   overfit_batches: 0.0
   val_check_interval: null
   check_val_every_n_epoch: 1
-  num_sanity_val_steps: -1
+  num_sanity_val_steps: 0
   log_every_n_steps: 1
   enable_checkpointing: null
   enable_progress_bar: null
   enable_model_summary: null
-  accumulate_grad_batches: 4
+  accumulate_grad_batches: 16
   gradient_clip_val: null
   gradient_clip_algorithm: null
   deterministic: null

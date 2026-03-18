@@ -3,3 +3,1386 @@ Traceback (most recent call last):
     with open(f"{video_path}.{t}", "rb") as f:
          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 FileNotFoundError: [Errno 2] No such file or directory: './dataset/Charades/Charades_filtered_240/8WJIR.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/Q9TIN.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/8ZF5S.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/1SJQX.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/T5FHD.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/I8QJN.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/I8QJN.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/VJ2QS.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/VJ2QS.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/ZEC1D.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/EJIKG.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/FQ6OB.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/DB52Q.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/VJ2QS.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/VJ2QS.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/AY08E.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/I8QJN.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/K5IAK.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/CC87Z.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/DQTAY.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/0R5GS.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/0R5GS.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/L8WFE.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/2PREF.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/9XXJ7.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/MSN1B.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/2PREF.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/PVVQS.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/K0C0A.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/0R5GS.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/2PREF.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/AY08E.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/0R5GS.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/7EBTI.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/S67WR.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/5GITI.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/S67WR.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/QBXRP.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/GAO6V.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/7HZHM.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/KPHP5.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/R5L98.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/2PREF.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/7HZHM.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/2PREF.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/1DNAX.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/PB7PQ.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/7HZHM.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/FU2HI.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/JZDL6.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/FU2HI.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/7HZHM.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/S72J9.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/0DAO5.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/5XCUV.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/CEKMS.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/S72J9.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/S72J9.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/UNQD7.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/WZVHJ.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/S72J9.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/8Y4YD.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/7B8EQ.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/S72J9.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/S72J9.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/FU2HI.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/MI76A.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/1SJQX.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/Q9TIN.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/8ZF5S.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/T5FHD.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/FQ6OB.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/VJ2QS.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/I8QJN.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/I8QJN.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/VJ2QS.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/DB52Q.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/EJIKG.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/ZEC1D.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/VJ2QS.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/AY08E.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/I8QJN.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/VJ2QS.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/K5IAK.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/9XXJ7.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/L8WFE.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/DQTAY.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/AY08E.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/0R5GS.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/2PREF.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/MSN1B.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/CC87Z.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/PVVQS.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/2PREF.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/2PREF.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/K0C0A.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/0R5GS.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/7EBTI.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/QBXRP.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/S67WR.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/R5L98.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/7HZHM.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/5GITI.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/GAO6V.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/KPHP5.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/S67WR.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/PB7PQ.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/7HZHM.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/0R5GS.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/2PREF.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/2PREF.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/1DNAX.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/0R5GS.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/JZDL6.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/0DAO5.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/FU2HI.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/WZVHJ.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/S72J9.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/CEKMS.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/UNQD7.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/FU2HI.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/S72J9.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/7B8EQ.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/5XCUV.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/8Y4YD.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/S72J9.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/S72J9.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/7HZHM.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/7HZHM.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/S72J9.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/S72J9.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/FU2HI.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240/MI76A.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 165, in read_frames_compressed_domain
+    import cv_reader
+ModuleNotFoundError: No module named 'cv_reader'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 165, in read_frames_compressed_domain
+    import cv_reader
+ModuleNotFoundError: No module named 'cv_reader'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 165, in read_frames_compressed_domain
+    import cv_reader
+ModuleNotFoundError: No module named 'cv_reader'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 165, in read_frames_compressed_domain
+    import cv_reader
+ModuleNotFoundError: No module named 'cv_reader'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 165, in read_frames_compressed_domain
+    import cv_reader
+ModuleNotFoundError: No module named 'cv_reader'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 166, in read_frames_compressed_domain
+    reader_ret = cv_reader.read_video(video_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/cv_reader.py", line 19, in read_video
+    frame_data["rgb"] = reader[i].asnumpy()
+                        ^^^^^^^^^^^^^^^^^
+AttributeError: 'Tensor' object has no attribute 'asnumpy'. Did you mean: 'numpy'?
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 166, in read_frames_compressed_domain
+    reader_ret = cv_reader.read_video(video_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/cv_reader.py", line 19, in read_video
+    frame_data["rgb"] = reader[i].asnumpy()
+                        ^^^^^^^^^^^^^^^^^
+AttributeError: 'Tensor' object has no attribute 'asnumpy'. Did you mean: 'numpy'?
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 166, in read_frames_compressed_domain
+    reader_ret = cv_reader.read_video(video_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/cv_reader.py", line 19, in read_video
+    frame_data["rgb"] = reader[i].asnumpy()
+                        ^^^^^^^^^^^^^^^^^
+AttributeError: 'Tensor' object has no attribute 'asnumpy'. Did you mean: 'numpy'?
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 166, in read_frames_compressed_domain
+    reader_ret = cv_reader.read_video(video_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/cv_reader.py", line 19, in read_video
+    frame_data["rgb"] = reader[i].asnumpy()
+                        ^^^^^^^^^^^^^^^^^
+AttributeError: 'Tensor' object has no attribute 'asnumpy'. Did you mean: 'numpy'?
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 166, in read_frames_compressed_domain
+    reader_ret = cv_reader.read_video(video_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/cv_reader.py", line 19, in read_video
+    frame_data["rgb"] = reader[i].asnumpy()
+                        ^^^^^^^^^^^^^^^^^
+AttributeError: 'Tensor' object has no attribute 'asnumpy'. Did you mean: 'numpy'?
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 166, in read_frames_compressed_domain
+    reader_ret = cv_reader.read_video(video_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/cv_reader.py", line 19, in read_video
+    frame_data["rgb"] = reader[i].asnumpy()
+                        ^^^^^^^^^^^^^^^^^
+AttributeError: 'Tensor' object has no attribute 'asnumpy'. Did you mean: 'numpy'?
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 166, in read_frames_compressed_domain
+    reader_ret = cv_reader.read_video(video_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/cv_reader.py", line 19, in read_video
+    frame_data["rgb"] = reader[i].asnumpy()
+                        ^^^^^^^^^^^^^^^^^
+AttributeError: 'Tensor' object has no attribute 'asnumpy'. Did you mean: 'numpy'?
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 166, in read_frames_compressed_domain
+    reader_ret = cv_reader.read_video(video_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/cv_reader.py", line 19, in read_video
+    frame_data["rgb"] = reader[i].asnumpy()
+                        ^^^^^^^^^^^^^^^^^
+AttributeError: 'Tensor' object has no attribute 'asnumpy'. Did you mean: 'numpy'?
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 166, in read_frames_compressed_domain
+    reader_ret = cv_reader.read_video(video_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/cv_reader.py", line 19, in read_video
+    frame_data["rgb"] = reader[i].asnumpy()
+                        ^^^^^^^^^^^^^^^^^
+AttributeError: 'Tensor' object has no attribute 'asnumpy'. Did you mean: 'numpy'?
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 166, in read_frames_compressed_domain
+    reader_ret = cv_reader.read_video(video_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/cv_reader.py", line 19, in read_video
+    frame_data["rgb"] = reader[i].asnumpy()
+                        ^^^^^^^^^^^^^^^^^
+AttributeError: 'Tensor' object has no attribute 'asnumpy'. Did you mean: 'numpy'?
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 166, in read_frames_compressed_domain
+    reader_ret = cv_reader.read_video(video_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/cv_reader.py", line 19, in read_video
+    frame_data["rgb"] = reader[i].asnumpy()
+                        ^^^^^^^^^^^^^^^^^
+AttributeError: 'Tensor' object has no attribute 'asnumpy'. Did you mean: 'numpy'?
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 166, in read_frames_compressed_domain
+    reader_ret = cv_reader.read_video(video_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/cv_reader.py", line 19, in read_video
+    frame_data["rgb"] = reader[i].asnumpy()
+                        ^^^^^^^^^^^^^^^^^
+AttributeError: 'Tensor' object has no attribute 'asnumpy'. Did you mean: 'numpy'?
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 166, in read_frames_compressed_domain
+    reader_ret = cv_reader.read_video(video_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/cv_reader.py", line 19, in read_video
+    frame_data["rgb"] = reader[i].asnumpy()
+                        ^^^^^^^^^^^^^^^^^
+AttributeError: 'Tensor' object has no attribute 'asnumpy'. Did you mean: 'numpy'?
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 166, in read_frames_compressed_domain
+    reader_ret = cv_reader.read_video(video_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/cv_reader.py", line 19, in read_video
+    frame_data["rgb"] = reader[i].asnumpy()
+                        ^^^^^^^^^^^^^^^^^
+AttributeError: 'Tensor' object has no attribute 'asnumpy'. Did you mean: 'numpy'?
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 166, in read_frames_compressed_domain
+    reader_ret = cv_reader.read_video(video_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/cv_reader.py", line 19, in read_video
+    frame_data["rgb"] = reader[i].asnumpy()
+                        ^^^^^^^^^^^^^^^^^
+AttributeError: 'Tensor' object has no attribute 'asnumpy'. Did you mean: 'numpy'?
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 166, in read_frames_compressed_domain
+    reader_ret = cv_reader.read_video(video_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/cv_reader.py", line 19, in read_video
+    frame_data["rgb"] = reader[i].asnumpy()
+                        ^^^^^^^^^^^^^^^^^
+AttributeError: 'Tensor' object has no attribute 'asnumpy'. Did you mean: 'numpy'?
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 166, in read_frames_compressed_domain
+    reader_ret = cv_reader.read_video(video_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/cv_reader.py", line 19, in read_video
+    frame_data["rgb"] = reader[i].asnumpy()
+                        ^^^^^^^^^^^^^^^^^
+AttributeError: 'Tensor' object has no attribute 'asnumpy'. Did you mean: 'numpy'?
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 166, in read_frames_compressed_domain
+    reader_ret = cv_reader.read_video(video_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/cv_reader.py", line 19, in read_video
+    frame_data["rgb"] = reader[i].asnumpy()
+                        ^^^^^^^^^^^^^^^^^
+AttributeError: 'Tensor' object has no attribute 'asnumpy'. Did you mean: 'numpy'?
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 166, in read_frames_compressed_domain
+    reader_ret = cv_reader.read_video(video_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/cv_reader.py", line 19, in read_video
+    frame_data["rgb"] = reader[i].asnumpy()
+                        ^^^^^^^^^^^^^^^^^
+AttributeError: 'Tensor' object has no attribute 'asnumpy'. Did you mean: 'numpy'?
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 166, in read_frames_compressed_domain
+    reader_ret = cv_reader.read_video(video_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/cv_reader.py", line 19, in read_video
+    frame_data["rgb"] = reader[i].asnumpy()
+                        ^^^^^^^^^^^^^^^^^
+AttributeError: 'Tensor' object has no attribute 'asnumpy'. Did you mean: 'numpy'?
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 166, in read_frames_compressed_domain
+    reader_ret = cv_reader.read_video(video_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/cv_reader.py", line 19, in read_video
+    frame_data["rgb"] = reader[i].asnumpy()
+                        ^^^^^^^^^^^^^^^^^
+AttributeError: 'Tensor' object has no attribute 'asnumpy'. Did you mean: 'numpy'?
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 166, in read_frames_compressed_domain
+    reader_ret = cv_reader.read_video(video_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/cv_reader.py", line 19, in read_video
+    frame_data["rgb"] = reader[i].asnumpy()
+                        ^^^^^^^^^^^^^^^^^
+AttributeError: 'Tensor' object has no attribute 'asnumpy'. Did you mean: 'numpy'?
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 166, in read_frames_compressed_domain
+    reader_ret = cv_reader.read_video(video_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/cv_reader.py", line 19, in read_video
+    frame_data["rgb"] = reader[i].asnumpy()
+                        ^^^^^^^^^^^^^^^^^
+AttributeError: 'Tensor' object has no attribute 'asnumpy'. Did you mean: 'numpy'?
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 166, in read_frames_compressed_domain
+    reader_ret = cv_reader.read_video(video_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/cv_reader.py", line 19, in read_video
+    frame_data["rgb"] = reader[i].asnumpy()
+                        ^^^^^^^^^^^^^^^^^
+AttributeError: 'Tensor' object has no attribute 'asnumpy'. Did you mean: 'numpy'?
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 166, in read_frames_compressed_domain
+    reader_ret = cv_reader.read_video(video_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/cv_reader.py", line 19, in read_video
+    frame_data["rgb"] = reader[i].asnumpy()
+                        ^^^^^^^^^^^^^^^^^
+AttributeError: 'Tensor' object has no attribute 'asnumpy'. Did you mean: 'numpy'?
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 166, in read_frames_compressed_domain
+    reader_ret = cv_reader.read_video(video_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/cv_reader.py", line 19, in read_video
+    frame_data["rgb"] = reader[i].asnumpy()
+                        ^^^^^^^^^^^^^^^^^
+AttributeError: 'Tensor' object has no attribute 'asnumpy'. Did you mean: 'numpy'?
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 166, in read_frames_compressed_domain
+    reader_ret = cv_reader.read_video(video_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/cv_reader.py", line 19, in read_video
+    frame_data["rgb"] = reader[i].asnumpy()
+                        ^^^^^^^^^^^^^^^^^
+AttributeError: 'Tensor' object has no attribute 'asnumpy'. Did you mean: 'numpy'?
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 166, in read_frames_compressed_domain
+    reader_ret = cv_reader.read_video(video_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/cv_reader.py", line 19, in read_video
+    frame_data["rgb"] = reader[i].asnumpy()
+                        ^^^^^^^^^^^^^^^^^
+AttributeError: 'Tensor' object has no attribute 'asnumpy'. Did you mean: 'numpy'?
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 166, in read_frames_compressed_domain
+    reader_ret = cv_reader.read_video(video_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/cv_reader.py", line 19, in read_video
+    frame_data["rgb"] = reader[i].asnumpy()
+                        ^^^^^^^^^^^^^^^^^
+AttributeError: 'Tensor' object has no attribute 'asnumpy'. Did you mean: 'numpy'?
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 166, in read_frames_compressed_domain
+    reader_ret = cv_reader.read_video(video_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/cv_reader.py", line 19, in read_video
+    frame_data["rgb"] = reader[i].asnumpy()
+                        ^^^^^^^^^^^^^^^^^
+AttributeError: 'Tensor' object has no attribute 'asnumpy'. Did you mean: 'numpy'?
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 166, in read_frames_compressed_domain
+    reader_ret = cv_reader.read_video(video_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/cv_reader.py", line 19, in read_video
+    frame_data["rgb"] = reader[i].asnumpy()
+                        ^^^^^^^^^^^^^^^^^
+AttributeError: 'Tensor' object has no attribute 'asnumpy'. Did you mean: 'numpy'?
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 166, in read_frames_compressed_domain
+    reader_ret = cv_reader.read_video(video_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/cv_reader.py", line 19, in read_video
+    frame_data["rgb"] = reader[i].asnumpy()
+                        ^^^^^^^^^^^^^^^^^
+AttributeError: 'Tensor' object has no attribute 'asnumpy'. Did you mean: 'numpy'?
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 166, in read_frames_compressed_domain
+    reader_ret = cv_reader.read_video(video_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/cv_reader.py", line 19, in read_video
+    frame_data["rgb"] = reader[i].asnumpy()
+                        ^^^^^^^^^^^^^^^^^
+AttributeError: 'Tensor' object has no attribute 'asnumpy'. Did you mean: 'numpy'?
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 166, in read_frames_compressed_domain
+    reader_ret = cv_reader.read_video(video_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/cv_reader.py", line 19, in read_video
+    frame_data["rgb"] = reader[i].asnumpy()
+                        ^^^^^^^^^^^^^^^^^
+AttributeError: 'Tensor' object has no attribute 'asnumpy'. Did you mean: 'numpy'?
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 166, in read_frames_compressed_domain
+    reader_ret = cv_reader.read_video(video_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/cv_reader.py", line 19, in read_video
+    frame_data["rgb"] = reader[i].asnumpy()
+                        ^^^^^^^^^^^^^^^^^
+AttributeError: 'Tensor' object has no attribute 'asnumpy'. Did you mean: 'numpy'?
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 166, in read_frames_compressed_domain
+    reader_ret = cv_reader.read_video(video_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/cv_reader.py", line 19, in read_video
+    frame_data["rgb"] = reader[i].asnumpy()
+                        ^^^^^^^^^^^^^^^^^
+AttributeError: 'Tensor' object has no attribute 'asnumpy'. Did you mean: 'numpy'?
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 166, in read_frames_compressed_domain
+    reader_ret = cv_reader.read_video(video_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/cv_reader.py", line 19, in read_video
+    frame_data["rgb"] = reader[i].asnumpy()
+                        ^^^^^^^^^^^^^^^^^
+AttributeError: 'Tensor' object has no attribute 'asnumpy'. Did you mean: 'numpy'?
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 166, in read_frames_compressed_domain
+    reader_ret = cv_reader.read_video(video_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/cv_reader.py", line 19, in read_video
+    frame_data["rgb"] = reader[i].asnumpy()
+                        ^^^^^^^^^^^^^^^^^
+AttributeError: 'Tensor' object has no attribute 'asnumpy'. Did you mean: 'numpy'?
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 166, in read_frames_compressed_domain
+    reader_ret = cv_reader.read_video(video_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/cv_reader.py", line 19, in read_video
+    frame_data["rgb"] = reader[i].asnumpy()
+                        ^^^^^^^^^^^^^^^^^
+AttributeError: 'Tensor' object has no attribute 'asnumpy'. Did you mean: 'numpy'?
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 166, in read_frames_compressed_domain
+    reader_ret = cv_reader.read_video(video_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/cv_reader.py", line 19, in read_video
+    frame_data["rgb"] = reader[i].asnumpy()
+                        ^^^^^^^^^^^^^^^^^
+AttributeError: 'Tensor' object has no attribute 'asnumpy'. Did you mean: 'numpy'?
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 166, in read_frames_compressed_domain
+    reader_ret = cv_reader.read_video(video_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/cv_reader.py", line 19, in read_video
+    frame_data["rgb"] = reader[i].asnumpy()
+                        ^^^^^^^^^^^^^^^^^
+AttributeError: 'Tensor' object has no attribute 'asnumpy'. Did you mean: 'numpy'?
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 166, in read_frames_compressed_domain
+    reader_ret = cv_reader.read_video(video_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/cv_reader.py", line 19, in read_video
+    frame_data["rgb"] = reader[i].asnumpy()
+                        ^^^^^^^^^^^^^^^^^
+AttributeError: 'Tensor' object has no attribute 'asnumpy'. Did you mean: 'numpy'?
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 166, in read_frames_compressed_domain
+    reader_ret = cv_reader.read_video(video_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/cv_reader.py", line 19, in read_video
+    frame_data["rgb"] = reader[i].asnumpy()
+                        ^^^^^^^^^^^^^^^^^
+AttributeError: 'Tensor' object has no attribute 'asnumpy'. Did you mean: 'numpy'?
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 166, in read_frames_compressed_domain
+    reader_ret = cv_reader.read_video(video_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/cv_reader.py", line 19, in read_video
+    frame_data["rgb"] = reader[i].asnumpy()
+                        ^^^^^^^^^^^^^^^^^
+AttributeError: 'Tensor' object has no attribute 'asnumpy'. Did you mean: 'numpy'?
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 166, in read_frames_compressed_domain
+    reader_ret = cv_reader.read_video(video_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/cv_reader.py", line 19, in read_video
+    frame_data["rgb"] = reader[i].asnumpy()
+                        ^^^^^^^^^^^^^^^^^
+AttributeError: 'Tensor' object has no attribute 'asnumpy'. Did you mean: 'numpy'?
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 166, in read_frames_compressed_domain
+    reader_ret = cv_reader.read_video(video_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/cv_reader.py", line 19, in read_video
+    frame_data["rgb"] = reader[i].asnumpy()
+                        ^^^^^^^^^^^^^^^^^
+AttributeError: 'Tensor' object has no attribute 'asnumpy'. Did you mean: 'numpy'?
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 166, in read_frames_compressed_domain
+    reader_ret = cv_reader.read_video(video_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/cv_reader.py", line 19, in read_video
+    frame_data["rgb"] = reader[i].asnumpy()
+                        ^^^^^^^^^^^^^^^^^
+AttributeError: 'Tensor' object has no attribute 'asnumpy'. Did you mean: 'numpy'?
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 166, in read_frames_compressed_domain
+    reader_ret = cv_reader.read_video(video_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/cv_reader.py", line 19, in read_video
+    frame_data["rgb"] = reader[i].asnumpy()
+                        ^^^^^^^^^^^^^^^^^
+AttributeError: 'Tensor' object has no attribute 'asnumpy'. Did you mean: 'numpy'?
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 166, in read_frames_compressed_domain
+    reader_ret = cv_reader.read_video(video_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/cv_reader.py", line 19, in read_video
+    frame_data["rgb"] = reader[i].asnumpy()
+                        ^^^^^^^^^^^^^^^^^
+AttributeError: 'Tensor' object has no attribute 'asnumpy'. Did you mean: 'numpy'?
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 166, in read_frames_compressed_domain
+    reader_ret = cv_reader.read_video(video_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/cv_reader.py", line 19, in read_video
+    frame_data["rgb"] = reader[i].asnumpy()
+                        ^^^^^^^^^^^^^^^^^
+AttributeError: 'Tensor' object has no attribute 'asnumpy'. Did you mean: 'numpy'?
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 166, in read_frames_compressed_domain
+    reader_ret = cv_reader.read_video(video_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/cv_reader.py", line 19, in read_video
+    frame_data["rgb"] = reader[i].asnumpy()
+                        ^^^^^^^^^^^^^^^^^
+AttributeError: 'Tensor' object has no attribute 'asnumpy'. Did you mean: 'numpy'?
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 166, in read_frames_compressed_domain
+    reader_ret = cv_reader.read_video(video_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/cv_reader.py", line 19, in read_video
+    frame_data["rgb"] = reader[i].asnumpy()
+                        ^^^^^^^^^^^^^^^^^
+AttributeError: 'Tensor' object has no attribute 'asnumpy'. Did you mean: 'numpy'?
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 166, in read_frames_compressed_domain
+    reader_ret = cv_reader.read_video(video_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/cv_reader.py", line 19, in read_video
+    frame_data["rgb"] = reader[i].asnumpy()
+                        ^^^^^^^^^^^^^^^^^
+AttributeError: 'Tensor' object has no attribute 'asnumpy'. Did you mean: 'numpy'?
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 166, in read_frames_compressed_domain
+    reader_ret = cv_reader.read_video(video_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/cv_reader.py", line 19, in read_video
+    frame_data["rgb"] = reader[i].asnumpy()
+                        ^^^^^^^^^^^^^^^^^
+AttributeError: 'Tensor' object has no attribute 'asnumpy'. Did you mean: 'numpy'?
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 166, in read_frames_compressed_domain
+    reader_ret = cv_reader.read_video(video_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/cv_reader.py", line 19, in read_video
+    frame_data["rgb"] = reader[i].asnumpy()
+                        ^^^^^^^^^^^^^^^^^
+AttributeError: 'Tensor' object has no attribute 'asnumpy'. Did you mean: 'numpy'?
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 166, in read_frames_compressed_domain
+    reader_ret = cv_reader.read_video(video_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/cv_reader.py", line 19, in read_video
+    frame_data["rgb"] = reader[i].asnumpy()
+                        ^^^^^^^^^^^^^^^^^
+AttributeError: 'Tensor' object has no attribute 'asnumpy'. Did you mean: 'numpy'?
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 166, in read_frames_compressed_domain
+    reader_ret = cv_reader.read_video(video_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/cv_reader.py", line 19, in read_video
+    frame_data["rgb"] = reader[i].asnumpy()
+                        ^^^^^^^^^^^^^^^^^
+AttributeError: 'Tensor' object has no attribute 'asnumpy'. Did you mean: 'numpy'?
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 166, in read_frames_compressed_domain
+    reader_ret = cv_reader.read_video(video_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/cv_reader.py", line 19, in read_video
+    frame_data["rgb"] = reader[i].asnumpy()
+                        ^^^^^^^^^^^^^^^^^
+AttributeError: 'Tensor' object has no attribute 'asnumpy'. Did you mean: 'numpy'?
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 166, in read_frames_compressed_domain
+    reader_ret = cv_reader.read_video(video_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/cv_reader.py", line 19, in read_video
+    frame_data["rgb"] = reader[i].asnumpy()
+                        ^^^^^^^^^^^^^^^^^
+AttributeError: 'Tensor' object has no attribute 'asnumpy'. Did you mean: 'numpy'?
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 166, in read_frames_compressed_domain
+    reader_ret = cv_reader.read_video(video_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/cv_reader.py", line 19, in read_video
+    frame_data["rgb"] = reader[i].asnumpy()
+                        ^^^^^^^^^^^^^^^^^
+AttributeError: 'Tensor' object has no attribute 'asnumpy'. Did you mean: 'numpy'?
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 166, in read_frames_compressed_domain
+    reader_ret = cv_reader.read_video(video_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/cv_reader.py", line 19, in read_video
+    frame_data["rgb"] = reader[i].asnumpy()
+                        ^^^^^^^^^^^^^^^^^
+AttributeError: 'Tensor' object has no attribute 'asnumpy'. Did you mean: 'numpy'?
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 166, in read_frames_compressed_domain
+    reader_ret = cv_reader.read_video(video_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/cv_reader.py", line 19, in read_video
+    frame_data["rgb"] = reader[i].asnumpy()
+                        ^^^^^^^^^^^^^^^^^
+AttributeError: 'Tensor' object has no attribute 'asnumpy'. Did you mean: 'numpy'?
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 166, in read_frames_compressed_domain
+    reader_ret = cv_reader.read_video(video_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/cv_reader.py", line 19, in read_video
+    frame_data["rgb"] = reader[i].asnumpy()
+                        ^^^^^^^^^^^^^^^^^
+AttributeError: 'Tensor' object has no attribute 'asnumpy'. Did you mean: 'numpy'?
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 166, in read_frames_compressed_domain
+    reader_ret = cv_reader.read_video(video_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/cv_reader.py", line 19, in read_video
+    frame_data["rgb"] = reader[i].asnumpy()
+                        ^^^^^^^^^^^^^^^^^
+AttributeError: 'Tensor' object has no attribute 'asnumpy'. Did you mean: 'numpy'?
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 166, in read_frames_compressed_domain
+    reader_ret = cv_reader.read_video(video_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/cv_reader.py", line 19, in read_video
+    frame_data["rgb"] = reader[i].asnumpy()
+                        ^^^^^^^^^^^^^^^^^
+AttributeError: 'Tensor' object has no attribute 'asnumpy'. Did you mean: 'numpy'?
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 166, in read_frames_compressed_domain
+    reader_ret = cv_reader.read_video(video_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/cv_reader.py", line 19, in read_video
+    frame_data["rgb"] = reader[i].asnumpy()
+                        ^^^^^^^^^^^^^^^^^
+AttributeError: 'Tensor' object has no attribute 'asnumpy'. Did you mean: 'numpy'?
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 166, in read_frames_compressed_domain
+    reader_ret = cv_reader.read_video(video_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/cv_reader.py", line 19, in read_video
+    frame_data["rgb"] = reader[i].asnumpy()
+                        ^^^^^^^^^^^^^^^^^
+AttributeError: 'Tensor' object has no attribute 'asnumpy'. Did you mean: 'numpy'?
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 166, in read_frames_compressed_domain
+    reader_ret = cv_reader.read_video(video_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/cv_reader.py", line 19, in read_video
+    frame_data["rgb"] = reader[i].asnumpy()
+                        ^^^^^^^^^^^^^^^^^
+AttributeError: 'Tensor' object has no attribute 'asnumpy'. Did you mean: 'numpy'?
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 166, in read_frames_compressed_domain
+    reader_ret = cv_reader.read_video(video_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/cv_reader.py", line 19, in read_video
+    frame_data["rgb"] = reader[i].asnumpy()
+                        ^^^^^^^^^^^^^^^^^
+AttributeError: 'Tensor' object has no attribute 'asnumpy'. Did you mean: 'numpy'?
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 166, in read_frames_compressed_domain
+    reader_ret = cv_reader.read_video(video_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/cv_reader.py", line 19, in read_video
+    frame_data["rgb"] = reader[i].asnumpy()
+                        ^^^^^^^^^^^^^^^^^
+AttributeError: 'Tensor' object has no attribute 'asnumpy'. Did you mean: 'numpy'?
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 166, in read_frames_compressed_domain
+    reader_ret = cv_reader.read_video(video_path)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/cv_reader.py", line 19, in read_video
+    frame_data["rgb"] = reader[i].asnumpy()
+                        ^^^^^^^^^^^^^^^^^
+AttributeError: 'Tensor' object has no attribute 'asnumpy'. Did you mean: 'numpy'?
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 239, in read_frames_compressed_domain
+    iframe_idx = [cur_gop["frame_idx"] for cur_gop in i_frame_gop]
+                  ~~~~~~~^^^^^^^^^^^^^
+KeyError: 'frame_idx'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 239, in read_frames_compressed_domain
+    iframe_idx = [cur_gop["frame_idx"] for cur_gop in i_frame_gop]
+                  ~~~~~~~^^^^^^^^^^^^^
+KeyError: 'frame_idx'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 239, in read_frames_compressed_domain
+    iframe_idx = [cur_gop["frame_idx"] for cur_gop in i_frame_gop]
+                  ~~~~~~~^^^^^^^^^^^^^
+KeyError: 'frame_idx'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 239, in read_frames_compressed_domain
+    iframe_idx = [cur_gop["frame_idx"] for cur_gop in i_frame_gop]
+                  ~~~~~~~^^^^^^^^^^^^^
+KeyError: 'frame_idx'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 239, in read_frames_compressed_domain
+    iframe_idx = [cur_gop["frame_idx"] for cur_gop in i_frame_gop]
+                  ~~~~~~~^^^^^^^^^^^^^
+KeyError: 'frame_idx'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 239, in read_frames_compressed_domain
+    iframe_idx = [cur_gop["frame_idx"] for cur_gop in i_frame_gop]
+                  ~~~~~~~^^^^^^^^^^^^^
+KeyError: 'frame_idx'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 239, in read_frames_compressed_domain
+    iframe_idx = [cur_gop["frame_idx"] for cur_gop in i_frame_gop]
+                  ~~~~~~~^^^^^^^^^^^^^
+KeyError: 'frame_idx'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 239, in read_frames_compressed_domain
+    iframe_idx = [cur_gop["frame_idx"] for cur_gop in i_frame_gop]
+                  ~~~~~~~^^^^^^^^^^^^^
+KeyError: 'frame_idx'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 239, in read_frames_compressed_domain
+    iframe_idx = [cur_gop["frame_idx"] for cur_gop in i_frame_gop]
+                  ~~~~~~~^^^^^^^^^^^^^
+KeyError: 'frame_idx'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 239, in read_frames_compressed_domain
+    iframe_idx = [cur_gop["frame_idx"] for cur_gop in i_frame_gop]
+                  ~~~~~~~^^^^^^^^^^^^^
+KeyError: 'frame_idx'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 239, in read_frames_compressed_domain
+    iframe_idx = [cur_gop["frame_idx"] for cur_gop in i_frame_gop]
+                  ~~~~~~~^^^^^^^^^^^^^
+KeyError: 'frame_idx'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 239, in read_frames_compressed_domain
+    iframe_idx = [cur_gop["frame_idx"] for cur_gop in i_frame_gop]
+                  ~~~~~~~^^^^^^^^^^^^^
+KeyError: 'frame_idx'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 239, in read_frames_compressed_domain
+    iframe_idx = [cur_gop["frame_idx"] for cur_gop in i_frame_gop]
+                  ~~~~~~~^^^^^^^^^^^^^
+KeyError: 'frame_idx'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 239, in read_frames_compressed_domain
+    iframe_idx = [cur_gop["frame_idx"] for cur_gop in i_frame_gop]
+                  ~~~~~~~^^^^^^^^^^^^^
+KeyError: 'frame_idx'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 239, in read_frames_compressed_domain
+    iframe_idx = [cur_gop["frame_idx"] for cur_gop in i_frame_gop]
+                  ~~~~~~~^^^^^^^^^^^^^
+KeyError: 'frame_idx'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 239, in read_frames_compressed_domain
+    iframe_idx = [cur_gop["frame_idx"] for cur_gop in i_frame_gop]
+                  ~~~~~~~^^^^^^^^^^^^^
+KeyError: 'frame_idx'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 239, in read_frames_compressed_domain
+    iframe_idx = [cur_gop["frame_idx"] for cur_gop in i_frame_gop]
+                  ~~~~~~~^^^^^^^^^^^^^
+KeyError: 'frame_idx'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 239, in read_frames_compressed_domain
+    iframe_idx = [cur_gop["frame_idx"] for cur_gop in i_frame_gop]
+                  ~~~~~~~^^^^^^^^^^^^^
+KeyError: 'frame_idx'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 239, in read_frames_compressed_domain
+    iframe_idx = [cur_gop["frame_idx"] for cur_gop in i_frame_gop]
+                  ~~~~~~~^^^^^^^^^^^^^
+KeyError: 'frame_idx'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 239, in read_frames_compressed_domain
+    iframe_idx = [cur_gop["frame_idx"] for cur_gop in i_frame_gop]
+                  ~~~~~~~^^^^^^^^^^^^^
+KeyError: 'frame_idx'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 239, in read_frames_compressed_domain
+    iframe_idx = [cur_gop["frame_idx"] for cur_gop in i_frame_gop]
+                  ~~~~~~~^^^^^^^^^^^^^
+KeyError: 'frame_idx'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 239, in read_frames_compressed_domain
+    iframe_idx = [cur_gop["frame_idx"] for cur_gop in i_frame_gop]
+                  ~~~~~~~^^^^^^^^^^^^^
+KeyError: 'frame_idx'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 239, in read_frames_compressed_domain
+    iframe_idx = [cur_gop["frame_idx"] for cur_gop in i_frame_gop]
+                  ~~~~~~~^^^^^^^^^^^^^
+KeyError: 'frame_idx'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 239, in read_frames_compressed_domain
+    iframe_idx = [cur_gop["frame_idx"] for cur_gop in i_frame_gop]
+                  ~~~~~~~^^^^^^^^^^^^^
+KeyError: 'frame_idx'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 239, in read_frames_compressed_domain
+    iframe_idx = [cur_gop["frame_idx"] for cur_gop in i_frame_gop]
+                  ~~~~~~~^^^^^^^^^^^^^
+KeyError: 'frame_idx'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 239, in read_frames_compressed_domain
+    iframe_idx = [cur_gop["frame_idx"] for cur_gop in i_frame_gop]
+                  ~~~~~~~^^^^^^^^^^^^^
+KeyError: 'frame_idx'
+Traceback (most recent call last):
+  File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 248, in read_frames_compressed_domain
+    assert mv_frame_gop[0][0]["motion_vector"].shape[-1] == 4, \
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: format is avc, but motion vector has 2 !=4 dims

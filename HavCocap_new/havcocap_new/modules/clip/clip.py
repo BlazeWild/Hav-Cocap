@@ -7,7 +7,7 @@ from typing import Union, List
 
 import torch
 from PIL import Image
-from pkg_resources import packaging
+import packaging
 from torchvision.transforms import Compose, Resize, CenterCrop, ToTensor, Normalize
 from tqdm import tqdm
 

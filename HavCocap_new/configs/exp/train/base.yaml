@@ -46,12 +46,12 @@ trainer:
   # default_root_dir: # Required
   strategy: "ddp_find_unused_parameters_true"
   max_epochs: 20
-  accumulate_grad_batches: 4
+  accumulate_grad_batches: 16
   logger:
     _target_: "pytorch_lightning.loggers.tensorboard.TensorBoardLogger"
     save_dir: ${trainer.default_root_dir}
   log_every_n_steps: 1
-  num_sanity_val_steps: -1
+  num_sanity_val_steps: 0
   callbacks:
     - _target_: "pytorch_lightning.callbacks.LearningRateMonitor"
       logging_interval: "step"
@@ -62,18 +62,18 @@ train_dataloader:
   dataset:
     split: "train"
   num_workers: 4
-  batch_size: 2
-  prefetch_factor: 4
+  batch_size: 1
+  prefetch_factor: null
   shuffle: True
   pin_memory: True
   multiprocessing_context: "fork"
 
 val_dataloader:
   dataset:
-    split: "test"
-  num_workers: 4
-  batch_size: 2
-  prefetch_factor: 4
+    split: "val"
+  num_workers: 3
+  batch_size: 1
+  prefetch_factor: null
   shuffle: False
   pin_memory: True
   multiprocessing_context: "fork"
