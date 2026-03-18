@@ -60,3 +60,6 @@ datasets>=2.14.0
 # Additional Dependencies
 scipy>=1.11.0
 scikit-learn>=1.3.0
+
+
+gdown

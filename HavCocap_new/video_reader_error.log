@@ -1386,3 +1386,369 @@ Traceback (most recent call last):
     assert mv_frame_gop[0][0]["motion_vector"].shape[-1] == 4, \
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 AssertionError: format is avc, but motion vector has 2 !=4 dims
+Traceback (most recent call last):
+  File "/home/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 161, in read_frames_compressed_domain
+    reader = decord.VideoReader(video_path, num_threads=1)
+  File "/home/blaze/Hav-Cocap/venv/lib/python3.10/site-packages/decord/video_reader.py", line 57, in __init__
+    raise RuntimeError("Error reading " + uri + "...")
+RuntimeError: Error reading dataset/Charades/Charades_filtered_240/8ZF5S.mp4...
+Traceback (most recent call last):
+  File "/home/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 161, in read_frames_compressed_domain
+    reader = decord.VideoReader(video_path, num_threads=1)
+  File "/home/blaze/Hav-Cocap/venv/lib/python3.10/site-packages/decord/video_reader.py", line 57, in __init__
+    raise RuntimeError("Error reading " + uri + "...")
+RuntimeError: Error reading dataset/Charades/Charades_filtered_240/DB52Q.mp4...
+Traceback (most recent call last):
+  File "/home/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 161, in read_frames_compressed_domain
+    reader = decord.VideoReader(video_path, num_threads=1)
+  File "/home/blaze/Hav-Cocap/venv/lib/python3.10/site-packages/decord/video_reader.py", line 57, in __init__
+    raise RuntimeError("Error reading " + uri + "...")
+RuntimeError: Error reading dataset/Charades/Charades_filtered_240/1SJQX.mp4...
+Traceback (most recent call last):
+  File "/home/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 161, in read_frames_compressed_domain
+    reader = decord.VideoReader(video_path, num_threads=1)
+  File "/home/blaze/Hav-Cocap/venv/lib/python3.10/site-packages/decord/video_reader.py", line 57, in __init__
+    raise RuntimeError("Error reading " + uri + "...")
+RuntimeError: Error reading dataset/Charades/Charades_filtered_240/FQ6OB.mp4...
+Traceback (most recent call last):
+  File "/home/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 161, in read_frames_compressed_domain
+    reader = decord.VideoReader(video_path, num_threads=1)
+  File "/home/blaze/Hav-Cocap/venv/lib/python3.10/site-packages/decord/video_reader.py", line 57, in __init__
+    raise RuntimeError("Error reading " + uri + "...")
+RuntimeError: Error reading dataset/Charades/Charades_filtered_240/0O022.mp4...
+Traceback (most recent call last):
+  File "/home/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 161, in read_frames_compressed_domain
+    reader = decord.VideoReader(video_path, num_threads=1)
+  File "/home/blaze/Hav-Cocap/venv/lib/python3.10/site-packages/decord/video_reader.py", line 57, in __init__
+    raise RuntimeError("Error reading " + uri + "...")
+RuntimeError: Error reading dataset/Charades/Charades_filtered_240/LBG7L.mp4...
+Traceback (most recent call last):
+  File "/home/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 161, in read_frames_compressed_domain
+    reader = decord.VideoReader(video_path, num_threads=1)
+  File "/home/blaze/Hav-Cocap/venv/lib/python3.10/site-packages/decord/video_reader.py", line 57, in __init__
+    raise RuntimeError("Error reading " + uri + "...")
+RuntimeError: Error reading dataset/Charades/Charades_filtered_240/AZTTC.mp4...
+Traceback (most recent call last):
+  File "/home/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 161, in read_frames_compressed_domain
+    reader = decord.VideoReader(video_path, num_threads=1)
+  File "/home/blaze/Hav-Cocap/venv/lib/python3.10/site-packages/decord/video_reader.py", line 57, in __init__
+    raise RuntimeError("Error reading " + uri + "...")
+RuntimeError: Error reading dataset/Charades/Charades_filtered_240/0F1VF.mp4...
+Traceback (most recent call last):
+  File "/home/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 161, in read_frames_compressed_domain
+    reader = decord.VideoReader(video_path, num_threads=1)
+  File "/home/blaze/Hav-Cocap/venv/lib/python3.10/site-packages/decord/video_reader.py", line 57, in __init__
+    raise RuntimeError("Error reading " + uri + "...")
+RuntimeError: Error reading dataset/Charades/Charades_filtered_240/MUO4G.mp4...
+Traceback (most recent call last):
+  File "/home/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 161, in read_frames_compressed_domain
+    reader = decord.VideoReader(video_path, num_threads=1)
+  File "/home/blaze/Hav-Cocap/venv/lib/python3.10/site-packages/decord/video_reader.py", line 57, in __init__
+    raise RuntimeError("Error reading " + uri + "...")
+RuntimeError: Error reading dataset/Charades/Charades_filtered_240/MMKKS.mp4...
+Traceback (most recent call last):
+  File "/home/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 161, in read_frames_compressed_domain
+    reader = decord.VideoReader(video_path, num_threads=1)
+  File "/home/blaze/Hav-Cocap/venv/lib/python3.10/site-packages/decord/video_reader.py", line 57, in __init__
+    raise RuntimeError("Error reading " + uri + "...")
+RuntimeError: Error reading dataset/Charades/Charades_filtered_240/ZFQNZ.mp4...
+Traceback (most recent call last):
+  File "/home/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 161, in read_frames_compressed_domain
+    reader = decord.VideoReader(video_path, num_threads=1)
+  File "/home/blaze/Hav-Cocap/venv/lib/python3.10/site-packages/decord/video_reader.py", line 57, in __init__
+    raise RuntimeError("Error reading " + uri + "...")
+RuntimeError: Error reading dataset/Charades/Charades_filtered_240/PVCFQ.mp4...
+Traceback (most recent call last):
+  File "/home/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 161, in read_frames_compressed_domain
+    reader = decord.VideoReader(video_path, num_threads=1)
+  File "/home/blaze/Hav-Cocap/venv/lib/python3.10/site-packages/decord/video_reader.py", line 57, in __init__
+    raise RuntimeError("Error reading " + uri + "...")
+RuntimeError: Error reading dataset/Charades/Charades_filtered_240/ETY8D.mp4...
+Traceback (most recent call last):
+  File "/home/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 161, in read_frames_compressed_domain
+    reader = decord.VideoReader(video_path, num_threads=1)
+  File "/home/blaze/Hav-Cocap/venv/lib/python3.10/site-packages/decord/video_reader.py", line 57, in __init__
+    raise RuntimeError("Error reading " + uri + "...")
+RuntimeError: Error reading dataset/Charades/Charades_filtered_240/D2CEL.mp4...
+Traceback (most recent call last):
+  File "/home/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 161, in read_frames_compressed_domain
+    reader = decord.VideoReader(video_path, num_threads=1)
+  File "/home/blaze/Hav-Cocap/venv/lib/python3.10/site-packages/decord/video_reader.py", line 57, in __init__
+    raise RuntimeError("Error reading " + uri + "...")
+RuntimeError: Error reading dataset/Charades/Charades_filtered_240/RF3EW.mp4...
+Traceback (most recent call last):
+  File "/home/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 161, in read_frames_compressed_domain
+    reader = decord.VideoReader(video_path, num_threads=1)
+  File "/home/blaze/Hav-Cocap/venv/lib/python3.10/site-packages/decord/video_reader.py", line 57, in __init__
+    raise RuntimeError("Error reading " + uri + "...")
+RuntimeError: Error reading dataset/Charades/Charades_filtered_240/IGOQK.mp4...
+Traceback (most recent call last):
+  File "/home/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 161, in read_frames_compressed_domain
+    reader = decord.VideoReader(video_path, num_threads=1)
+  File "/home/blaze/Hav-Cocap/venv/lib/python3.10/site-packages/decord/video_reader.py", line 57, in __init__
+    raise RuntimeError("Error reading " + uri + "...")
+RuntimeError: Error reading dataset/Charades/Charades_filtered_240/88LYX.mp4...
+Traceback (most recent call last):
+  File "/home/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 161, in read_frames_compressed_domain
+    reader = decord.VideoReader(video_path, num_threads=1)
+  File "/home/blaze/Hav-Cocap/venv/lib/python3.10/site-packages/decord/video_reader.py", line 57, in __init__
+    raise RuntimeError("Error reading " + uri + "...")
+RuntimeError: Error reading dataset/Charades/Charades_filtered_240/B8JAF.mp4...
+Traceback (most recent call last):
+  File "/home/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 161, in read_frames_compressed_domain
+    reader = decord.VideoReader(video_path, num_threads=1)
+  File "/home/blaze/Hav-Cocap/venv/lib/python3.10/site-packages/decord/video_reader.py", line 57, in __init__
+    raise RuntimeError("Error reading " + uri + "...")
+RuntimeError: Error reading dataset/Charades/Charades_filtered_240/RW587.mp4...
+Traceback (most recent call last):
+  File "/home/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 161, in read_frames_compressed_domain
+    reader = decord.VideoReader(video_path, num_threads=1)
+  File "/home/blaze/Hav-Cocap/venv/lib/python3.10/site-packages/decord/video_reader.py", line 57, in __init__
+    raise RuntimeError("Error reading " + uri + "...")
+RuntimeError: Error reading dataset/Charades/Charades_filtered_240/SODJP.mp4...
+Traceback (most recent call last):
+  File "/home/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 161, in read_frames_compressed_domain
+    reader = decord.VideoReader(video_path, num_threads=1)
+  File "/home/blaze/Hav-Cocap/venv/lib/python3.10/site-packages/decord/video_reader.py", line 57, in __init__
+    raise RuntimeError("Error reading " + uri + "...")
+RuntimeError: Error reading dataset/Charades/Charades_filtered_240/ZG1EM.mp4...
+Traceback (most recent call last):
+  File "/home/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 161, in read_frames_compressed_domain
+    reader = decord.VideoReader(video_path, num_threads=1)
+  File "/home/blaze/Hav-Cocap/venv/lib/python3.10/site-packages/decord/video_reader.py", line 57, in __init__
+    raise RuntimeError("Error reading " + uri + "...")
+RuntimeError: Error reading dataset/Charades/Charades_filtered_240/IXL74.mp4...
+Traceback (most recent call last):
+  File "/home/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 161, in read_frames_compressed_domain
+    reader = decord.VideoReader(video_path, num_threads=1)
+  File "/home/blaze/Hav-Cocap/venv/lib/python3.10/site-packages/decord/video_reader.py", line 57, in __init__
+    raise RuntimeError("Error reading " + uri + "...")
+RuntimeError: Error reading dataset/Charades/Charades_filtered_240/DEZJ5.mp4...
+Traceback (most recent call last):
+  File "/home/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 161, in read_frames_compressed_domain
+    reader = decord.VideoReader(video_path, num_threads=1)
+  File "/home/blaze/Hav-Cocap/venv/lib/python3.10/site-packages/decord/video_reader.py", line 57, in __init__
+    raise RuntimeError("Error reading " + uri + "...")
+RuntimeError: Error reading dataset/Charades/Charades_filtered_240/3EHAJ.mp4...
+Traceback (most recent call last):
+  File "/home/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 161, in read_frames_compressed_domain
+    reader = decord.VideoReader(video_path, num_threads=1)
+  File "/home/blaze/Hav-Cocap/venv/lib/python3.10/site-packages/decord/video_reader.py", line 57, in __init__
+    raise RuntimeError("Error reading " + uri + "...")
+RuntimeError: Error reading dataset/Charades/Charades_filtered_240/6XT4W.mp4...
+Traceback (most recent call last):
+  File "/home/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 161, in read_frames_compressed_domain
+    reader = decord.VideoReader(video_path, num_threads=1)
+  File "/home/blaze/Hav-Cocap/venv/lib/python3.10/site-packages/decord/video_reader.py", line 57, in __init__
+    raise RuntimeError("Error reading " + uri + "...")
+RuntimeError: Error reading dataset/Charades/Charades_filtered_240/LTYK5.mp4...
+Traceback (most recent call last):
+  File "/home/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 161, in read_frames_compressed_domain
+    reader = decord.VideoReader(video_path, num_threads=1)
+  File "/home/blaze/Hav-Cocap/venv/lib/python3.10/site-packages/decord/video_reader.py", line 57, in __init__
+    raise RuntimeError("Error reading " + uri + "...")
+RuntimeError: Error reading dataset/Charades/Charades_filtered_240/HOI88.mp4...
+Traceback (most recent call last):
+  File "/home/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 161, in read_frames_compressed_domain
+    reader = decord.VideoReader(video_path, num_threads=1)
+  File "/home/blaze/Hav-Cocap/venv/lib/python3.10/site-packages/decord/video_reader.py", line 57, in __init__
+    raise RuntimeError("Error reading " + uri + "...")
+RuntimeError: Error reading dataset/Charades/Charades_filtered_240/MNBEI.mp4...
+Traceback (most recent call last):
+  File "/home/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 161, in read_frames_compressed_domain
+    reader = decord.VideoReader(video_path, num_threads=1)
+  File "/home/blaze/Hav-Cocap/venv/lib/python3.10/site-packages/decord/video_reader.py", line 57, in __init__
+    raise RuntimeError("Error reading " + uri + "...")
+RuntimeError: Error reading dataset/Charades/Charades_filtered_240/069GJ.mp4...
+Traceback (most recent call last):
+  File "/home/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 161, in read_frames_compressed_domain
+    reader = decord.VideoReader(video_path, num_threads=1)
+  File "/home/blaze/Hav-Cocap/venv/lib/python3.10/site-packages/decord/video_reader.py", line 57, in __init__
+    raise RuntimeError("Error reading " + uri + "...")
+RuntimeError: Error reading dataset/Charades/Charades_filtered_240/67RSR.mp4...
+Traceback (most recent call last):
+  File "/home/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 161, in read_frames_compressed_domain
+    reader = decord.VideoReader(video_path, num_threads=1)
+  File "/home/blaze/Hav-Cocap/venv/lib/python3.10/site-packages/decord/video_reader.py", line 57, in __init__
+    raise RuntimeError("Error reading " + uri + "...")
+RuntimeError: Error reading dataset/Charades/Charades_filtered_240/ZBBP9.mp4...
+Traceback (most recent call last):
+  File "/home/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 161, in read_frames_compressed_domain
+    reader = decord.VideoReader(video_path, num_threads=1)
+  File "/home/blaze/Hav-Cocap/venv/lib/python3.10/site-packages/decord/video_reader.py", line 57, in __init__
+    raise RuntimeError("Error reading " + uri + "...")
+RuntimeError: Error reading dataset/Charades/Charades_filtered_240/BNH5C.mp4...
+Traceback (most recent call last):
+  File "/home/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 161, in read_frames_compressed_domain
+    reader = decord.VideoReader(video_path, num_threads=1)
+  File "/home/blaze/Hav-Cocap/venv/lib/python3.10/site-packages/decord/video_reader.py", line 57, in __init__
+    raise RuntimeError("Error reading " + uri + "...")
+RuntimeError: Error reading dataset/Charades/Charades_filtered_240/275W0.mp4...
+Traceback (most recent call last):
+  File "/home/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 161, in read_frames_compressed_domain
+    reader = decord.VideoReader(video_path, num_threads=1)
+  File "/home/blaze/Hav-Cocap/venv/lib/python3.10/site-packages/decord/video_reader.py", line 57, in __init__
+    raise RuntimeError("Error reading " + uri + "...")
+RuntimeError: Error reading dataset/Charades/Charades_filtered_240/7CCM1.mp4...
+Traceback (most recent call last):
+  File "/home/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 161, in read_frames_compressed_domain
+    reader = decord.VideoReader(video_path, num_threads=1)
+  File "/home/blaze/Hav-Cocap/venv/lib/python3.10/site-packages/decord/video_reader.py", line 57, in __init__
+    raise RuntimeError("Error reading " + uri + "...")
+RuntimeError: Error reading dataset/Charades/Charades_filtered_240/OJIEC.mp4...
+Traceback (most recent call last):
+  File "/home/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 161, in read_frames_compressed_domain
+    reader = decord.VideoReader(video_path, num_threads=1)
+  File "/home/blaze/Hav-Cocap/venv/lib/python3.10/site-packages/decord/video_reader.py", line 57, in __init__
+    raise RuntimeError("Error reading " + uri + "...")
+RuntimeError: Error reading dataset/Charades/Charades_filtered_240/EBTD6.mp4...
+Traceback (most recent call last):
+  File "/home/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 161, in read_frames_compressed_domain
+    reader = decord.VideoReader(video_path, num_threads=1)
+  File "/home/blaze/Hav-Cocap/venv/lib/python3.10/site-packages/decord/video_reader.py", line 57, in __init__
+    raise RuntimeError("Error reading " + uri + "...")
+RuntimeError: Error reading dataset/Charades/Charades_filtered_240/PNOSZ.mp4...
+Traceback (most recent call last):
+  File "/home/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 161, in read_frames_compressed_domain
+    reader = decord.VideoReader(video_path, num_threads=1)
+  File "/home/blaze/Hav-Cocap/venv/lib/python3.10/site-packages/decord/video_reader.py", line 57, in __init__
+    raise RuntimeError("Error reading " + uri + "...")
+RuntimeError: Error reading dataset/Charades/Charades_filtered_240/YW5C4.mp4...
+Traceback (most recent call last):
+  File "/home/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 161, in read_frames_compressed_domain
+    reader = decord.VideoReader(video_path, num_threads=1)
+  File "/home/blaze/Hav-Cocap/venv/lib/python3.10/site-packages/decord/video_reader.py", line 57, in __init__
+    raise RuntimeError("Error reading " + uri + "...")
+RuntimeError: Error reading dataset/Charades/Charades_filtered_240/FU5BL.mp4...
+Traceback (most recent call last):
+  File "/home/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 161, in read_frames_compressed_domain
+    reader = decord.VideoReader(video_path, num_threads=1)
+  File "/home/blaze/Hav-Cocap/venv/lib/python3.10/site-packages/decord/video_reader.py", line 57, in __init__
+    raise RuntimeError("Error reading " + uri + "...")
+RuntimeError: Error reading dataset/Charades/Charades_filtered_240/AXYF9.mp4...
+Traceback (most recent call last):
+  File "/home/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 161, in read_frames_compressed_domain
+    reader = decord.VideoReader(video_path, num_threads=1)
+  File "/home/blaze/Hav-Cocap/venv/lib/python3.10/site-packages/decord/video_reader.py", line 57, in __init__
+    raise RuntimeError("Error reading " + uri + "...")
+RuntimeError: Error reading dataset/Charades/Charades_filtered_240/L0NFK.mp4...
+Traceback (most recent call last):
+  File "/home/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 161, in read_frames_compressed_domain
+    reader = decord.VideoReader(video_path, num_threads=1)
+  File "/home/blaze/Hav-Cocap/venv/lib/python3.10/site-packages/decord/video_reader.py", line 57, in __init__
+    raise RuntimeError("Error reading " + uri + "...")
+RuntimeError: Error reading dataset/Charades/Charades_filtered_240/YA379.mp4...
+Traceback (most recent call last):
+  File "/home/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 161, in read_frames_compressed_domain
+    reader = decord.VideoReader(video_path, num_threads=1)
+  File "/home/blaze/Hav-Cocap/venv/lib/python3.10/site-packages/decord/video_reader.py", line 57, in __init__
+    raise RuntimeError("Error reading " + uri + "...")
+RuntimeError: Error reading dataset/Charades/Charades_filtered_240/52FNN.mp4...
+Traceback (most recent call last):
+  File "/home/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 161, in read_frames_compressed_domain
+    reader = decord.VideoReader(video_path, num_threads=1)
+  File "/home/blaze/Hav-Cocap/venv/lib/python3.10/site-packages/decord/video_reader.py", line 57, in __init__
+    raise RuntimeError("Error reading " + uri + "...")
+RuntimeError: Error reading dataset/Charades/Charades_filtered_240/5C837.mp4...
+Traceback (most recent call last):
+  File "/home/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 161, in read_frames_compressed_domain
+    reader = decord.VideoReader(video_path, num_threads=1)
+  File "/home/blaze/Hav-Cocap/venv/lib/python3.10/site-packages/decord/video_reader.py", line 57, in __init__
+    raise RuntimeError("Error reading " + uri + "...")
+RuntimeError: Error reading dataset/Charades/Charades_filtered_240/DB52Q.mp4...
+Traceback (most recent call last):
+  File "/home/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 161, in read_frames_compressed_domain
+    reader = decord.VideoReader(video_path, num_threads=1)
+  File "/home/blaze/Hav-Cocap/venv/lib/python3.10/site-packages/decord/video_reader.py", line 57, in __init__
+    raise RuntimeError("Error reading " + uri + "...")
+RuntimeError: Error reading dataset/Charades/Charades_filtered_240/8ZF5S.mp4...
+Traceback (most recent call last):
+  File "/home/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 161, in read_frames_compressed_domain
+    reader = decord.VideoReader(video_path, num_threads=1)
+  File "/home/blaze/Hav-Cocap/venv/lib/python3.10/site-packages/decord/video_reader.py", line 57, in __init__
+    raise RuntimeError("Error reading " + uri + "...")
+RuntimeError: Error reading dataset/Charades/Charades_filtered_240/1SJQX.mp4...
+Traceback (most recent call last):
+  File "/home/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 161, in read_frames_compressed_domain
+    reader = decord.VideoReader(video_path, num_threads=1)
+  File "/home/blaze/Hav-Cocap/venv/lib/python3.10/site-packages/decord/video_reader.py", line 57, in __init__
+    raise RuntimeError("Error reading " + uri + "...")
+RuntimeError: Error reading dataset/Charades/Charades_filtered_240/FQ6OB.mp4...
+Traceback (most recent call last):
+  File "/home/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 161, in read_frames_compressed_domain
+    reader = decord.VideoReader(video_path, num_threads=1)
+  File "/home/blaze/Hav-Cocap/venv/lib/python3.10/site-packages/decord/video_reader.py", line 57, in __init__
+    raise RuntimeError("Error reading " + uri + "...")
+RuntimeError: Error reading dataset/Charades/Charades_filtered_240/EJIKG.mp4...
+Traceback (most recent call last):
+  File "/home/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 161, in read_frames_compressed_domain
+    reader = decord.VideoReader(video_path, num_threads=1)
+  File "/home/blaze/Hav-Cocap/venv/lib/python3.10/site-packages/decord/video_reader.py", line 57, in __init__
+    raise RuntimeError("Error reading " + uri + "...")
+RuntimeError: Error reading dataset/Charades/Charades_filtered_240/Q9TIN.mp4...
+Traceback (most recent call last):
+  File "/home/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 161, in read_frames_compressed_domain
+    reader = decord.VideoReader(video_path, num_threads=1)
+  File "/home/blaze/Hav-Cocap/venv/lib/python3.10/site-packages/decord/video_reader.py", line 57, in __init__
+    raise RuntimeError("Error reading " + uri + "...")
+RuntimeError: Error reading dataset/Charades/Charades_filtered_240/T5FHD.mp4...
+Traceback (most recent call last):
+  File "/home/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 161, in read_frames_compressed_domain
+    reader = decord.VideoReader(video_path, num_threads=1)
+  File "/home/blaze/Hav-Cocap/venv/lib/python3.10/site-packages/decord/video_reader.py", line 57, in __init__
+    raise RuntimeError("Error reading " + uri + "...")
+RuntimeError: Error reading dataset/Charades/Charades_filtered_240/ZEC1D.mp4...
+Traceback (most recent call last):
+  File "/home/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 161, in read_frames_compressed_domain
+    reader = decord.VideoReader(video_path, num_threads=1)
+  File "/home/blaze/Hav-Cocap/venv/lib/python3.10/site-packages/decord/video_reader.py", line 57, in __init__
+    raise RuntimeError("Error reading " + uri + "...")
+RuntimeError: Error reading dataset/Charades/Charades_filtered_240/LBG7L.mp4...
+Traceback (most recent call last):
+  File "/home/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 161, in read_frames_compressed_domain
+    reader = decord.VideoReader(video_path, num_threads=1)
+  File "/home/blaze/Hav-Cocap/venv/lib/python3.10/site-packages/decord/video_reader.py", line 57, in __init__
+    raise RuntimeError("Error reading " + uri + "...")
+RuntimeError: Error reading dataset/Charades/Charades_filtered_240/AZTTC.mp4...
+Traceback (most recent call last):
+  File "/home/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 161, in read_frames_compressed_domain
+    reader = decord.VideoReader(video_path, num_threads=1)
+  File "/home/blaze/Hav-Cocap/venv/lib/python3.10/site-packages/decord/video_reader.py", line 57, in __init__
+    raise RuntimeError("Error reading " + uri + "...")
+RuntimeError: Error reading dataset/Charades/Charades_filtered_240/0O022.mp4...
+Traceback (most recent call last):
+  File "/home/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 161, in read_frames_compressed_domain
+    reader = decord.VideoReader(video_path, num_threads=1)
+  File "/home/blaze/Hav-Cocap/venv/lib/python3.10/site-packages/decord/video_reader.py", line 57, in __init__
+    raise RuntimeError("Error reading " + uri + "...")
+RuntimeError: Error reading dataset/Charades/Charades_filtered_240/0F1VF.mp4...
+Traceback (most recent call last):
+  File "/home/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 161, in read_frames_compressed_domain
+    reader = decord.VideoReader(video_path, num_threads=1)
+  File "/home/blaze/Hav-Cocap/venv/lib/python3.10/site-packages/decord/video_reader.py", line 57, in __init__
+    raise RuntimeError("Error reading " + uri + "...")
+RuntimeError: Error reading dataset/Charades/Charades_filtered_240/MUO4G.mp4...
+Traceback (most recent call last):
+  File "/home/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 161, in read_frames_compressed_domain
+    reader = decord.VideoReader(video_path, num_threads=1)
+  File "/home/blaze/Hav-Cocap/venv/lib/python3.10/site-packages/decord/video_reader.py", line 57, in __init__
+    raise RuntimeError("Error reading " + uri + "...")
+RuntimeError: Error reading dataset/Charades/Charades_filtered_240/PVCFQ.mp4...
+Traceback (most recent call last):
+  File "/home/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 161, in read_frames_compressed_domain
+    reader = decord.VideoReader(video_path, num_threads=1)
+  File "/home/blaze/Hav-Cocap/venv/lib/python3.10/site-packages/decord/video_reader.py", line 57, in __init__
+    raise RuntimeError("Error reading " + uri + "...")
+RuntimeError: Error reading dataset/Charades/Charades_filtered_240/ZFQNZ.mp4...
+Traceback (most recent call last):
+  File "/home/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 161, in read_frames_compressed_domain
+    reader = decord.VideoReader(video_path, num_threads=1)
+  File "/home/blaze/Hav-Cocap/venv/lib/python3.10/site-packages/decord/video_reader.py", line 57, in __init__
+    raise RuntimeError("Error reading " + uri + "...")
+RuntimeError: Error reading dataset/Charades/Charades_filtered_240/MMKKS.mp4...
+Traceback (most recent call last):
+  File "/home/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 161, in read_frames_compressed_domain
+    reader = decord.VideoReader(video_path, num_threads=1)
+  File "/home/blaze/Hav-Cocap/venv/lib/python3.10/site-packages/decord/video_reader.py", line 57, in __init__
+    raise RuntimeError("Error reading " + uri + "...")
+RuntimeError: Error reading dataset/Charades/Charades_filtered_240/ETY8D.mp4...

@@ -317,8 +317,8 @@ def read_frames_compressed_domain(
         logger.debug(timer.get_info(averaged=False))  # debug output about speed
         return ret, True
     except Exception:  # TODO: too broad exception
-        print(f"video load error: {video_path}")
-        traceback.print_exc()
+        # print(f"video load error: {video_path}")
+        # traceback.print_exc()
         traceback.print_exc(file=open("video_reader_error.log", "a"))
         # create a dummy return data
         ret = {

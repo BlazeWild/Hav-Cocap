@@ -1,7 +1,7 @@
 _target_: "havcocap_new.data.datasets.compressed_video.dataset_charades.CharadesCaptioningDataset"
 
-video_root: "../../____RESEARCH/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240"
-metadata: "../../____RESEARCH/Hav-Cocap/HavCocap_new/dataset/Charades/charades_filter_captioning.json"
+video_root: "dataset/Charades/Charades_filtered_240"
+metadata: "dataset/Charades/charades_filter_captioning.json"
 
 video_reader: "read_frames_compressed_domain"
 max_frames: 16
