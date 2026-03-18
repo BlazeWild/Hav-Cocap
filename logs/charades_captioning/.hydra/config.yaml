@@ -38,8 +38,8 @@ train_dataloader:
   _target_: torch.utils.data.dataloader.DataLoader
   dataset:
     _target_: havcocap_new.data.datasets.compressed_video.dataset_charades.CharadesCaptioningDataset
-    video_root: /home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240
-    metadata: /home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/charades_filter_captioning.json
+    video_root: ../../____RESEARCH/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240
+    metadata: ../../____RESEARCH/Hav-Cocap/HavCocap_new/dataset/Charades/charades_filter_captioning.json
     video_reader: read_frames_compressed_domain
     max_frames: 16
     video_size:
@@ -67,15 +67,15 @@ train_dataloader:
   worker_init_fn: null
   multiprocessing_context: fork
   generator: null
-  prefetch_factor: 2
+  prefetch_factor: null
   persistent_workers: false
   pin_memory_device: ''
 val_dataloader:
   _target_: torch.utils.data.dataloader.DataLoader
   dataset:
     _target_: havcocap_new.data.datasets.compressed_video.dataset_charades.CharadesCaptioningDataset
-    video_root: /home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240
-    metadata: /home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/dataset/Charades/charades_filter_captioning.json
+    video_root: ../../____RESEARCH/Hav-Cocap/HavCocap_new/dataset/Charades/Charades_filtered_240
+    metadata: ../../____RESEARCH/Hav-Cocap/HavCocap_new/dataset/Charades/charades_filter_captioning.json
     video_reader: read_frames_compressed_domain
     max_frames: 16
     video_size:
@@ -95,7 +95,7 @@ val_dataloader:
   shuffle: false
   sampler: null
   batch_sampler: null
-  num_workers: 4
+  num_workers: 3
   collate_fn: null
   pin_memory: true
   drop_last: false
@@ -103,7 +103,7 @@ val_dataloader:
   worker_init_fn: null
   multiprocessing_context: fork
   generator: null
-  prefetch_factor: 2
+  prefetch_factor: null
   persistent_workers: false
   pin_memory_device: ''
 trainer:
@@ -121,7 +121,7 @@ trainer:
     logging_interval: step
   - _target_: pytorch_lightning.callbacks.ModelCheckpoint
     save_top_k: -1
-  fast_dev_run: true
+  fast_dev_run: false
   max_epochs: 20
   min_epochs: null
   max_steps: -1
@@ -154,3 +154,4 @@ trainer:
   reload_dataloaders_every_n_epochs: 0
   default_root_dir: ./logs/charades_captioning
   model_registry: null
+ckpt_path: HavCocap_new/logs/charades_captioning/lightning_logs/version_54/checkpoints/epoch=5-step=6054.ckpt

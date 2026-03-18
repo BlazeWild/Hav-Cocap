@@ -7,7 +7,8 @@
 import logging
 from pathlib import Path
 import os
-os.environ["PATH"] = "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/temp_jre/jdk-11.0.2/bin:" + os.environ.get("PATH", "")
+java_bin = str(Path(__file__).resolve().parent.parent / "temp_jre" / "jdk-11.0.2" / "bin")
+os.environ["PATH"] = f"{java_bin}:" + os.environ.get("PATH", "")
 
 import pytorch_lightning as pl
 from hydra_zen import builds, store, zen
