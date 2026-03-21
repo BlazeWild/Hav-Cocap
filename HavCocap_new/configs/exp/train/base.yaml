@@ -71,7 +71,7 @@ train_dataloader:
 val_dataloader:
   dataset:
     split: "val"
-  num_workers: 3
+  num_workers: 2
   batch_size: 1
   prefetch_factor: null
   shuffle: False

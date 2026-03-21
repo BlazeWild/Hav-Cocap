@@ -41,11 +41,15 @@ if __name__ == '__main__':
         train_dataloader=builds(
             DataLoader,
             dataset=MISSING,
+            batch_size=2,
+            num_workers=6,
             populate_full_signature=True,
         ),
         val_dataloader=builds(
             DataLoader,
             dataset=MISSING,
+            batch_size=2,
+            num_workers=6,
             populate_full_signature=True,
         ),
         trainer=builds(pl.Trainer, populate_full_signature=True),

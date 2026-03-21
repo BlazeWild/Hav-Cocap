@@ -1,0 +1,206 @@
+{
+    "good_captions": [
+        {
+            "video_id": "I6IPP",
+            "sentence": "a person is sitting in a chair and eating a sandwich while watching television . the person takes a picture of the television .",
+            "gt_sentence": "The person is sitting on a chair in front of a laptop"
+        },
+        {
+            "video_id": "MFOVZ",
+            "sentence": "a person is eating a sandwich and then putting a book on a shelf .",
+            "gt_sentence": "A person is eating a sandwich"
+        },
+        {
+            "video_id": "XFLQH",
+            "sentence": "a person is lying in bed",
+            "gt_sentence": "A person is lying in bed underneath a blanket"
+        },
+        {
+            "video_id": "USM36",
+            "sentence": "a person is working on a laptop while another person is working on a laptop .",
+            "gt_sentence": "A person is opening a laptop while another person is drinking medicine."
+        },
+        {
+            "video_id": "FQA3W",
+            "sentence": "a person is sitting on a bed and drinking coffee",
+            "gt_sentence": "A person is sitting on their bed putting on their shoes, they then grab a doorknob"
+        },
+        {
+            "video_id": "A3MOW",
+            "sentence": "a person is sitting on a chair and eating a sandwich",
+            "gt_sentence": "The person sat in a chair eating a sandwich"
+        },
+        {
+            "video_id": "TPHRR",
+            "sentence": "a person is sitting on the floor and eating a sandwich",
+            "gt_sentence": "A person is sitting in a chair and smiling"
+        },
+        {
+            "video_id": "2GRGY",
+            "sentence": "a person walks into the kitchen and opens a cabinet",
+            "gt_sentence": "The person opens a refrigerator and takes out juice and pours it into a glass"
+        },
+        {
+            "video_id": "9MXDX",
+            "sentence": "a person is sitting on a sofa and eating a sandwich",
+            "gt_sentence": "person sitting on couch eating and drinking ans smiling"
+        },
+        {
+            "video_id": "U4NWI",
+            "sentence": "a person is sitting on a sofa and eating a sandwich while watching television .",
+            "gt_sentence": "A person is sitting on a sofa in a dark room, watching television covered with a towel, then the person takes the towel, and folds it"
+        },
+        {
+            "video_id": "Z0KN7",
+            "sentence": "a person is sitting on a bed and looking at a laptop",
+            "gt_sentence": "A person is sitting on a floor looking at a laptop, they then grab a glass and something, after that they leave"
+        },
+        {
+            "video_id": "VSAA7",
+            "sentence": "a person is sitting at a table , eating a sandwich , then eating a sandwich and eating a sandwich",
+            "gt_sentence": "A person is sitting in a chair at a table"
+        },
+        {
+            "video_id": "4CAHN",
+            "sentence": "a person is cooking on a stove and then they take a bag of groceries from the cabinet and put it in a cabinet",
+            "gt_sentence": "A person is preparing a cup of coffee then they take a cup from the refrigerator and pour it on a mug"
+        },
+        {
+            "video_id": "HHEIV",
+            "sentence": "a person is sitting on a sofa and holding a phone",
+            "gt_sentence": "A person is sitting on a couch drinking from a cup and watching television"
+        },
+        {
+            "video_id": "AQ69X",
+            "sentence": "a person is putting on a shirt and then putting a box on a shelf in a closet .",
+            "gt_sentence": "a person is sitting in a closet and putting on shoes"
+        },
+        {
+            "video_id": "IKYVB",
+            "sentence": "a person is holding a pillow and then putting it on a shelf and then they pick up a pillow and start sneezing .",
+            "gt_sentence": "A person is fixing a pillow and placing it on a shelf"
+        },
+        {
+            "video_id": "L76ND",
+            "sentence": "a person walks into the room and sits down on the sofa",
+            "gt_sentence": "Someone walks into the living room and turns on the TV and sits on a chair and eats something"
+        },
+        {
+            "video_id": "A3MOW",
+            "sentence": "a person is sitting on a chair and eating a sandwich",
+            "gt_sentence": "The person is sitting on a chair eating a sandwich then gets up and walks out the door"
+        },
+        {
+            "video_id": "XTZYM",
+            "sentence": "a person is holding a bag of groceries and putting it on a shelf .",
+            "gt_sentence": "A person is putting on a shirt, while holding a bag"
+        },
+        {
+            "video_id": "HYR9Q",
+            "sentence": "a person walks into the kitchen and puts a bag on the table",
+            "gt_sentence": "A person walks into a room and puts their laptop on a table"
+        }
+    ],
+    "bad_captions": [
+        {
+            "video_id": "5XAMJ",
+            "sentence": "a person is sitting on a couch eating a sandwich while watching television",
+            "gt_sentence": "The person looks at the phone and laughs"
+        },
+        {
+            "video_id": "IZTHW",
+            "sentence": "a person is standing on a chair holding a camera and a camera",
+            "gt_sentence": "The person then haphazardly swept the stair steps"
+        },
+        {
+            "video_id": "1YDCG",
+            "sentence": "a person is putting dishes in a cabinet",
+            "gt_sentence": "That person then stirs something on the stove"
+        },
+        {
+            "video_id": "ZHPZ1",
+            "sentence": "a person is sitting on a bed and drinking coffee",
+            "gt_sentence": "She then removes the towel and walks away"
+        },
+        {
+            "video_id": "3W6CP",
+            "sentence": "a person is sitting on a chair and then sneezing",
+            "gt_sentence": "The camera pans over to two other people regarding a picture"
+        },
+        {
+            "video_id": "2PREF",
+            "sentence": "a person walks into a kitchen and sits down on a chair",
+            "gt_sentence": "The person then grabbed some food from the cabinet"
+        },
+        {
+            "video_id": "E27NK",
+            "sentence": "a person is sitting at a desk , eating a sandwich , they then start eating a sandwich",
+            "gt_sentence": "The person turns the light off and opens the door and leaves"
+        },
+        {
+            "video_id": "IQM7A",
+            "sentence": "a person is tidying the laundry room with a broom . the person then puts the pillow down and begins tidying the floor .",
+            "gt_sentence": "They pick up their homework and shoes and leave"
+        },
+        {
+            "video_id": "OSCS2",
+            "sentence": "a person is lying on a bed",
+            "gt_sentence": "The person then moved to the window to look outside"
+        },
+        {
+            "video_id": "V3B51",
+            "sentence": "a person is standing in the doorway holding a glass and a glass of water . they then take a drink of water .",
+            "gt_sentence": "He turns on the lights, put down the book and walks downstairs"
+        },
+        {
+            "video_id": "W8WRK",
+            "sentence": "a person is standing in front of a refrigerator holding a laptop",
+            "gt_sentence": "tips the box up and acts like they are eating it"
+        },
+        {
+            "video_id": "4D5XD",
+            "sentence": "person takes a box off of a shelf and puts it on a shelf",
+            "gt_sentence": "They walk out of the garage"
+        },
+        {
+            "video_id": "RF4OI",
+            "sentence": "a person is standing in the kitchen",
+            "gt_sentence": "After washing their hands"
+        },
+        {
+            "video_id": "409X2",
+            "sentence": "a person is walking into the room holding a pillow . the person puts the pillow on the floor and begins to put on a jacket .",
+            "gt_sentence": "After that they get up out of the chair"
+        },
+        {
+            "video_id": "Q9H04",
+            "sentence": "a person is walking into a room and then takes a picture of the mirror and puts it on a shelf",
+            "gt_sentence": "Both people have a discussion wherein each laughs several times"
+        },
+        {
+            "video_id": "EF5XT",
+            "sentence": "a person is holding a pillow while holding a pillow and laughing",
+            "gt_sentence": "They pout the water into a glass"
+        },
+        {
+            "video_id": "OL2QI",
+            "sentence": "a person walks into a closet and opens a door",
+            "gt_sentence": "They then threw something from the closet on the floor"
+        },
+        {
+            "video_id": "8XICU",
+            "sentence": "a person is walking into the room holding a bag of groceries . they then start sneezing .",
+            "gt_sentence": "A person with a blanket on their shoulders walks to their front door"
+        },
+        {
+            "video_id": "MI76A",
+            "sentence": "a person is lying on a bed with a book on a table",
+            "gt_sentence": "They then close the book and lay down"
+        },
+        {
+            "video_id": "SPJVR",
+            "sentence": "a person is standing in a chair holding a pillow . they then take a pillow and start sneezing .",
+            "gt_sentence": "He takes the blanket off and starts to fold it"
+        }
+    ]
+}

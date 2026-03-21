@@ -127,11 +127,11 @@ hydra:
     hydra:
     - hydra.mode=RUN
     task:
-    - ++ckpt_path="logs/charades_captioning/lightning_logs/version_54/checkpoints/epoch=5-step=6054.ckpt"
+    - ++ckpt_path='/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/logs/charades_captioning/lightning_logs/version_57/checkpoints/epoch=6-step=7063.ckpt'
   job:
     name: train_net
     chdir: null
-    override_dirname: ++ckpt_path="logs/charades_captioning/lightning_logs/version_54/checkpoints/epoch=5-step=6054.ckpt"
+    override_dirname: ++ckpt_path='/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/logs/charades_captioning/lightning_logs/version_57/checkpoints/epoch=6-step=7063.ckpt'
     id: ???
     num: ???
     config_name: exp/train/charades_captioning
@@ -145,18 +145,18 @@ hydra:
   runtime:
     version: 1.3.2
     version_base: '1.3'
-    cwd: /home/blaze/Hav-Cocap/HavCocap_new
+    cwd: /home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new
     config_sources:
     - path: hydra.conf
       schema: pkg
       provider: hydra
-    - path: /home/blaze/Hav-Cocap/HavCocap_new/configs
+    - path: /home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/configs
       schema: file
       provider: main
     - path: ''
       schema: structured
       provider: schema
-    output_dir: /home/blaze/Hav-Cocap/HavCocap_new/logs/charades_captioning
+    output_dir: /home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/logs/charades_captioning
     choices:
       dataset@val_dataloader.dataset: charades
       dataset@train_dataloader.dataset: charades

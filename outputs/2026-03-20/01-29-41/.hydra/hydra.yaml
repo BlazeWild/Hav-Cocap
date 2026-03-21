@@ -1,9 +1,9 @@
 hydra:
   run:
-    dir: ${trainer.default_root_dir}
+    dir: outputs/${now:%Y-%m-%d}/${now:%H-%M-%S}
   sweep:
-    dir: ${trainer.default_root_dir}
-    subdir: ${hydra.job.override_dirname}
+    dir: multirun/${now:%Y-%m-%d}/${now:%H-%M-%S}
+    subdir: ${hydra.job.num}
   launcher:
     _target_: hydra._internal.core_plugins.basic_launcher.BasicLauncher
   sweeper:
@@ -88,35 +88,20 @@ hydra:
     formatters:
       simple:
         format: '[%(asctime)s][%(name)s][%(levelname)s] - %(message)s'
-      default:
-        format: '[%(asctime)s][%(levelname)s] %(name)s %(lineno)d: %(message)s'
-      colorful:
-        (): colorlog.ColoredFormatter
-        format: '[%(yellow)s%(asctime)s%(reset)s][%(log_color)s%(levelname)s%(reset)s][%(blue)s%(name)s
-          L%(lineno)d%(reset)s]: %(message)s'
-        datefmt: '%Y-%m-%d %H:%M:%S'
-        log_colors:
-          DEBUG: purple
-          INFO: green
-          WARNING: yellow
-          ERROR: red
-          CRITICAL: red
     handlers:
       console:
         class: logging.StreamHandler
-        formatter: colorful
+        formatter: simple
         stream: ext://sys.stdout
-        level: INFO
       file:
         class: logging.FileHandler
-        formatter: default
+        formatter: simple
         filename: ${hydra.runtime.output_dir}/${hydra.job.name}.log
-        level: DEBUG
     root:
       level: INFO
       handlers:
-      - file
       - console
+      - file
     disable_existing_loggers: false
   env: {}
   mode: RUN
@@ -126,18 +111,11 @@ hydra:
   overrides:
     hydra:
     - hydra.mode=RUN
-    task:
-    - +exp/train=charades_captioning
-    - ++val_dataloader.dataset.split=test
-    - ++val_dataloader.batch_size=2
-    - ++val_dataloader.num_workers=6
-    - ++train_dataloader.batch_size=2
-    - ++train_dataloader.num_workers=6
-    - ckpt_path=HavCocap_new/logs/charades_captioning/lightning_logs/version_58/checkpoints/best_epoch_11.ckpt
+    task: []
   job:
-    name: test_net
+    name: train_net
     chdir: null
-    override_dirname: ++train_dataloader.batch_size=2,++train_dataloader.num_workers=6,++val_dataloader.batch_size=2,++val_dataloader.dataset.split=test,++val_dataloader.num_workers=6,+exp/train=charades_captioning,ckpt_path=HavCocap_new/logs/charades_captioning/lightning_logs/version_58/checkpoints/best_epoch_11.ckpt
+    override_dirname: ''
     id: ???
     num: ???
     config_name: train
@@ -162,11 +140,8 @@ hydra:
     - path: ''
       schema: structured
       provider: schema
-    output_dir: /home/ashok/Documents/blaze/Hav-Cocap/logs/charades_captioning
+    output_dir: /home/ashok/Documents/blaze/Hav-Cocap/outputs/2026-03-20/01-29-41
     choices:
-      exp/train: charades_captioning
-      dataset@val_dataloader.dataset: charades
-      dataset@train_dataloader.dataset: charades
       hydra/env: default
       hydra/callbacks: null
       hydra/job_logging: default
@@ -176,6 +151,4 @@ hydra:
       hydra/sweeper: basic
       hydra/launcher: basic
       hydra/output: default
-  verbose:
-  - __main__
-  - cocap
+  verbose: false

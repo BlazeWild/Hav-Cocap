@@ -44,3 +44,7 @@ HavCocap_new/Compressed-Video-Reader/ffmpeg/ffmpeg_install/
 *.so
 
 venv/
+
+
+
+ logs/charades_captioning/lightning_logs/

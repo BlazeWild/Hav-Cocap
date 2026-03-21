@@ -1,0 +1,17 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Evaluate Epoch 11 on Test Set",
+			"type": "shell",
+			"command": "source venv/bin/activate && python HavCocap_new/tools/test_net.py +exp/train=charades_captioning ++val_dataloader.dataset.split=test ckpt_path=\"HavCocap_new/logs/charades_captioning/lightning_logs/version_58/checkpoints/epoch=11-step=12108.ckpt\"",
+			"isBackground": true
+		},
+		{
+			"label": "Evaluate Epoch 11 on Test Set",
+			"type": "shell",
+			"command": "source venv/bin/activate && python HavCocap_new/tools/test_net.py +exp/train=charades_captioning ++val_dataloader.dataset.split=test ckpt_path=\"HavCocap_new/logs/charades_captioning/lightning_logs/version_58/checkpoints/epoch\\=11-step\\=12108.ckpt\"",
+			"isBackground": true
+		}
+	]
+}
