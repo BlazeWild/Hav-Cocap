@@ -1,7 +1,0 @@
-- +exp/train=charades_captioning
-- ++val_dataloader.dataset.split=test
-- ++val_dataloader.batch_size=2
-- ++val_dataloader.num_workers=6
-- ++train_dataloader.batch_size=2
-- ++train_dataloader.num_workers=6
-- ckpt_path=HavCocap_new/logs/charades_captioning/lightning_logs/version_58/checkpoints/best_epoch_11.ckpt

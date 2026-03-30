@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 from tensorboard.backend.event_processing.event_accumulator import EventAccumulator
 
-ea = EventAccumulator('HavCocap_new/logs/charades_captioning/lightning_logs/version_58/events.out.tfevents.1773862254.doece5-MS-7D88.835311.0')
+ea = EventAccumulator('HavCocap_new/logs/charades_captioning/lightning_logs/version_72/events.out.tfevents.1774196779.cslam-training.6340.0')
 ea.Reload()
 
 # Get data
@@ -30,7 +30,7 @@ ax2.set_ylabel('Validation CIDEr Score', color=color)
 ax2.plot(val_cider_epochs, val_cider, color=color, marker='s', linestyle='--', label='Val CIDEr')
 ax2.tick_params(axis='y', labelcolor=color)
 
-plt.title('Training Loss and Validation CIDEr over Epochs (version_58)')
+plt.title('Training Loss and Validation CIDEr over Epochs (version_72)')
 fig.tight_layout()  
 
 plt.savefig('training_validation_metrics.png', dpi=300)

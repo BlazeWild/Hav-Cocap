@@ -45,6 +45,42 @@ HavCocap_new/Compressed-Video-Reader/ffmpeg/ffmpeg_install/
 
 venv/
 
+upload_to_hf.py
+hf_check.py
 
 
  logs/charades_captioning/lightning_logs/
+
+
+
+ # HavCocap_COPE
+HavCocap_COPE/dataset/Charades/
+HavCocap_COPE/dataset/Charades_v1_240/
+HavCocap_COPE/dataset/Charades_v1_480/
+HavCocap_COPE/dataset/charades_captioning.json
+HavCocap_COPE/dataset/charades_video_plus_annotation.json
+HavCocap_COPE/model_zoo/clip_model/
+HavCocap_COPE/dataset/Charades/Charades_filtered_240/
+HavCocap_COPE/checkpoints/
+
+HavCocap_COPE/temp_jre/
+HavCocap_COPE/temp_bin/
+HavCocap_COPE/logs/charades_captioning/
+HavCocap_COPE/logs/charades_captioning/*.json
+HavCocap_COPE/Compressed-Video-Reader/ffmpeg/
+
+
+
+
+logs/
+
+# General Ignore Directives
+*.mp4
+*.zip
+*.log
+.gradio/
+
+# Heavy Machine Learning Weights & C++ Builds
+ffmpeg_source/
+ffmpeg_build/
+tinystories-33m/

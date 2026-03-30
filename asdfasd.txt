@@ -1,4 +1,4 @@
-
+d
 C:\hav_video_captioning\Hav-Cocap_avcaps\.venv\Lib\site-packages\torch\nn\utils\weight_norm.py:143: FutureWarning: `torch.nn.utils.weight_norm` is deprecated in favor of `torch.nn.utils.parametrizations.weight_norm`.
   WeightNorm.apply(module, name, dim)
 2026-02-09 16:06:35,740 - INFO - Loading CLIP weights from ViT-B/16...

@@ -21,8 +21,19 @@ source ../venv/bin/activate
 python tools/train_net.py --config-name exp/train/charades_captioning
 
 #if to train from a certain epoch
+
+
 cd HavCocap_new 
 export PYTHONPATH=".:$PYTHONPATH"
 source ../venv/bin/activate
-python tools/train_net.py --config-name exp/train/charades_captioning ++ckpt_path='"logs/charades_captioning/lightning_logs/version_54/checkpoints/epoch=5-step=6054.ckpt"'
+python tools/train_net.py --config-name exp/train/charades_captioning ++ckpt_path='"logs/charades_captioning/lightning_logs/version_64/checkpoints/epoch=13-step=14126.ckpt"'
 
+
+
+
+
+python tools/train_net.py --config-name exp/train/charades_captioning ++ckpt_path='"logs/charades_captioning/lightning_logs/version_64/checkpoints/epoch=13-step=14126.ckpt"'
+
+
+
+source venv/bin/activate && cd HavCocap_COPE && CUDA_LAUNCH_BLOCKING=1 python tools/train_net.py --config-name exp/train/charades_captioning ++ckpt_path='"logs/charades_captioning/lightning_logs/version_16/checkpoints/epoch=2-step=1515.ckpt"'
