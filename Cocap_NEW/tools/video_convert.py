@@ -9,8 +9,12 @@
 import argparse
 import os
 
+from pathlib import Path
+import sys
 import joblib
 import tqdm
+
+sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from cocap.utils.video import convert_video
 

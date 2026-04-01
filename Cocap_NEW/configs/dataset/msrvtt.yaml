@@ -1,6 +1,6 @@
 _target_: "cocap.data.datasets.compressed_video.dataset_msrvtt.MSRVTTCaptioningDataset"
 
-video_root: "./dataset/msrvtt/videos_h264_keyint_60"
+video_root: "./dataset/msrvtt/videos"
 metadata: "./dataset/msrvtt/MSRVTT_data.json"
 
 video_reader: "read_frames_compressed_domain"

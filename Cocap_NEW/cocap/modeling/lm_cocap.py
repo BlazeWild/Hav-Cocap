@@ -62,6 +62,11 @@ class CoCapLM(pl.LightningModule):
     ):
         super().__init__()
         self.model = cocap_model
+        
+        # Freeze the I-frame (RGB) encoder entirely as requested
+        for param in self.model.compressed_video_transformer.rgb_encoder.parameters():
+            param.requires_grad = False
+            
         self.loss = loss
         self.lr = lr
         self.clip_lr = clip_lr
@@ -109,7 +114,7 @@ class CoCapLM(pl.LightningModule):
                     no_decay.add(fpn)
                 elif pn.endswith("proj") or pn.endswith("projection"):
                     decay.add(fpn)
-                elif fpn.endswith("embedding"):
+                elif fpn.endswith("embedding") or fpn.endswith("query_tokens"):
                     no_decay.add(fpn)
                 elif pn.endswith("weight") and isinstance(m, whitelist_weight_modules):
                     decay.add(fpn)
@@ -237,7 +242,7 @@ class CoCapLM(pl.LightningModule):
         if not dist.is_initialized() or dist.get_rank() == 0:
             json_ref = self.trainer.val_dataloaders.dataset.json_ref
             metrics = evaluate(json_res, json_ref)
-            self.log_dict(metrics, on_step=False, on_epoch=True, logger=True)
+            self.log_dict(metrics, on_step=False, on_epoch=True, logger=True, sync_dist=True)
 
         if dist.is_initialized():
             dist.barrier()

@@ -6,11 +6,16 @@
 
 import logging
 from pathlib import Path
+import sys
+
+# Add the project root to sys.path so 'cocap' can be imported
+sys.path.insert(0, str(Path(__file__).parent.parent))
 
 import pytorch_lightning as pl
 from hydra_zen import builds, store, zen
 from omegaconf import MISSING
 from torch.utils.data import DataLoader
+
 
 from cocap.modeling.lm_cocap import cocap_lm_cfg
 
@@ -23,6 +28,21 @@ def train(
         val_dataloader: DataLoader,
         trainer: pl.Trainer
 ):
+    try:
+        from torchinfo import summary
+        # Print a detailed hierarchical table of the model's architecture and parameters
+        # `depth=5` controls how deeply nested modules are displayed
+        model_summary = summary(model, depth=5, verbose=0, col_names=("num_params", "trainable"))
+        print("\n" + "="*80)
+        print("MODEL SUMMARY (includes Trainable & Evaluation/Non-trainable params)")
+        print("="*80)
+        print(model_summary)
+        print("="*80 + "\n")
+    except ImportError:
+        logger.warning("torchinfo is not installed. Please `pip install torchinfo` to see the model summary.")
+    except Exception as e:
+        logger.warning(f"Could not print model summary: {e}")
+
     trainer.fit(model=model, train_dataloaders=train_dataloader, val_dataloaders=val_dataloader)
 
 

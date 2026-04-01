@@ -33,7 +33,8 @@ class EvalCap:
 
         gts = {}
         for imgId in self.annos:
-            gts[str(imgId)] = [{'caption': c} for c in self.annos[imgId]]
+            if str(imgId) in res:
+                gts[str(imgId)] = [{'caption': c} for c in self.annos[imgId]]
 
         # =================================================
         # Set up scorers

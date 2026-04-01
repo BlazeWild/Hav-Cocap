@@ -314,16 +314,10 @@ class CompressedVideoTransformer(nn.Module):
             layers=motion_layers,
             heads=motion_heads
         )
-        residual_encoder = VisionTransformer(
-            input_resolution=image_resolution,
-            patch_size=residual_patch_size,
-            width=vision_width, layers=residual_layers, heads=residual_heads,
-            output_dim=embed_dim,
-            in_channels=3
-        )
-        action_encoder = ActionEncoder(
-            width=embed_dim, layers=action_layers, heads=action_heads, n_bp=n_bp, n_bp_type=2
-        )
+        # The residual and action encoders are unused during forward passes.
+        # Setting them to None to save significant VRAM and avoid cluttering the summary!
+        residual_encoder = None
+        action_encoder = None
         return cls(
             rgb_encoder=rgb_encoder,
             motion_encoder=motion_encoder,
@@ -348,8 +342,8 @@ compressed_video_transformer_cfg = builds(
     CompressedVideoTransformer,
     rgb_encoder=iframe_encoder_cfg,
     motion_encoder=motion_encoder_cfg,
-    residual_encoder=residual_encoder_cfg,
-    action_encoder=action_encoder_cfg,
+    residual_encoder=None,
+    action_encoder=None,
     populate_full_signature=True
 )
 compressed_video_transformer_pretrained_cfg = builds(

@@ -130,7 +130,7 @@ class CaptionHead(nn.Module):
     @classmethod
     def from_pretrained(
             cls,
-            pretrained_clip_name_or_path: str = "ViT-B/16", max_v_len: int = 8 * 2, max_t_len: int = 77,
+            pretrained_clip_name_or_path: str = "ViT-B/16", max_v_len: int = 1928, max_t_len: int = 77,
             verbose: Optional[Union[int, bool]] = False
     ):
         model_path = get_model_path(pretrained_clip_name_or_path, download_root="model_zoo/clip_model")
