@@ -171,8 +171,8 @@ class TeacherTransformer(nn.Module):
 
     def forward(self, iframe_spatial, mv_tokens):
         # iframe_spatial: [Batch, 196, c]
-        # mv_tokens: [Batch, 16, c]
-        x = torch.cat([iframe_spatial, mv_tokens], dim=1) # [Batch, 212, c]
+        # mv_tokens: [Batch, num_tokens, c]
+        x = torch.cat([iframe_spatial, mv_tokens], dim=1) # [Batch, 196 + num_tokens, c]
         out = self.transformer(x)
         # Predict only the 196 spatial patches of the P-frame
         return self.proj(out[:, :196, :]) 
@@ -249,8 +249,8 @@ class CompressedVideoCaptioner(nn.Module):
             i_spatial = compressed_visual_features["feature_context_spatial"] # [bsz, n_gop, 196, c]
             i_spatial_expanded = i_spatial.unsqueeze(2).expand(bsz, n_gop, n_bp, 196, -1).reshape(-1, 196, gt_spatial.size(-1))
             
-            mv_tokens = compressed_visual_features["feature_motion"] # [bsz, n_gop, n_bp, 16, c]
-            mv_tokens_flat = mv_tokens.reshape(-1, 16, mv_tokens.size(-1))
+            mv_tokens = compressed_visual_features["feature_motion"] # [bsz, n_gop, n_bp, num_tokens, c]
+            mv_tokens_flat = mv_tokens.reshape(-1, num_tokens, mv_tokens.size(-1))
             
             # 4. Predict and Save
             predicted_spatial = self.teacher(i_spatial_expanded, mv_tokens_flat)

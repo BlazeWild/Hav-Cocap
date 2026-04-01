@@ -9,3 +9,8 @@ defaults:
 
 trainer:
   default_root_dir: "./logs/msvd_captioning"
+
+model:
+  cocap_model:
+    caption_head:
+      max_v_len: 456

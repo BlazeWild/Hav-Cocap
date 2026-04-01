@@ -1,6 +1,6 @@
 _target_: "cocap.data.datasets.compressed_video.dataset_msvd.MSVDCaptioningDataset"
 
-video_root: "./dataset/msvd/videos_240_h264_keyint_60"
+video_root: "./dataset/msvd/videos_240_h264_keyint_8_fps_8"
 metadata: "./dataset/msvd/MSVD_caption.json"
 
 video_reader: "read_frames_compressed_domain"
@@ -12,8 +12,8 @@ max_words: 77
 unfold_sentences: True
 cv_config:
   num_gop: 8
-  num_mv: 15
-  num_res: 15
+  num_mv: 7
+  num_res: 7
   with_residual: True
   with_bp_rgb: True
   use_pre_extract: False

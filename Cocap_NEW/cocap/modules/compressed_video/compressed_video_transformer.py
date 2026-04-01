@@ -111,7 +111,7 @@ class IFrameEncoder(VisionTransformer):
 
 
 class MotionPerceiver(nn.Module):
-    def __init__(self, in_channels: int, width: int, num_query_tokens: int = 16, layers: int = 2, heads: int = 8):
+    def __init__(self, in_channels: int, width: int, num_query_tokens: int = 8, layers: int = 2, heads: int = 8):
         super().__init__()
         self.conv = nn.Conv2d(in_channels, width, kernel_size=3, padding=1, stride=1)
         self.query_tokens = nn.Parameter(torch.randn(1, num_query_tokens, width) / (width ** 0.5))
@@ -310,7 +310,7 @@ class CompressedVideoTransformer(nn.Module):
         motion_encoder = MotionPerceiver(
             in_channels=4,
             width=embed_dim,
-            num_query_tokens=16,
+            num_query_tokens=8,
             layers=motion_layers,
             heads=motion_heads
         )

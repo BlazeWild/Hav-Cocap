@@ -45,6 +45,7 @@ def convert_video(input_file: AnyStr, output_file: AnyStr,
                   ffmpeg_exec: AnyStr = "/usr/bin/ffmpeg",
                   codec="libx264",
                   keyint: int = None,
+                  fps: int = None,
                   overwrite: bool = False,
                   verbose: bool = False,
                   resize: tuple = None) -> None:
@@ -86,6 +87,8 @@ def convert_video(input_file: AnyStr, output_file: AnyStr,
             command += ["-vf", f"scale={resize[0]}:{resize[1]}"]
         else:
             raise ValueError("size is not supported: {}".format(resize))
+    if fps is not None:
+        command += ["-r", str(fps)]
     command += ["-c:a", "copy", "-movflags", "faststart", f"{output_file}"]
 
     if overwrite:
