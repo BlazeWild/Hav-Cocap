@@ -1,0 +1,25 @@
+_target_: "havcocap_new.data.datasets.compressed_video.dataset_charades.CharadesCaptioningDataset"
+
+video_root: "dataset/Charades_filtered_240"
+metadata: "dataset/charades_filter_captioning.json"
+
+video_reader: "read_frames_compressed_domain"
+max_frames: 8
+video_size:
+  - 224
+  - 224
+max_words: 77
+unfold_sentences: True
+cv_config:
+  num_gop: 8
+  num_mv: 29
+  num_res: 29
+  with_residual: True
+  use_pre_extract: False
+  sample: "rand"
+
+
+audio_config:
+  fps: 30
+  gop_size: 30
+  sample_rate: 16000

@@ -193,6 +193,32 @@ class CoCapLM(pl.LightningModule):
                           "results": defaultdict(list),
                           "external_data": {"used": "true", "details": "ay"}}
 
+        # Print one-time validation diagnostics (rank 0 only in distributed)
+        if not dist.is_initialized() or dist.get_rank() == 0:
+            total_params = sum(p.numel() for p in self.model.parameters())
+            trainable_params = sum(p.numel() for p in self.model.parameters() if p.requires_grad)
+            non_trainable_params = total_params - trainable_params
+
+            val_dl = self.trainer.val_dataloaders
+            if isinstance(val_dl, list):
+                val_dl = val_dl[0]
+            val_dataset = getattr(val_dl, "dataset", None)
+
+            val_samples = len(val_dataset) if val_dataset is not None else -1
+            val_batch_size = getattr(val_dl, "batch_size", "unknown")
+            max_t_len = self.model.caption_head.cap_config.max_t_len
+            unfold_sentences = getattr(val_dataset, "unfold_sentences", "unknown") if val_dataset is not None else "unknown"
+
+            self.print(
+                "\n===== Validation Diagnostics =====\n"
+                f"params(total/trainable/non-trainable): {total_params}/{trainable_params}/{non_trainable_params}\n"
+                f"val_dataset_samples: {val_samples}\n"
+                f"val_batch_size: {val_batch_size}\n"
+                f"caption_max_t_len: {max_t_len}\n"
+                f"val_unfold_sentences: {unfold_sentences}\n"
+                "=================================\n"
+            )
+
     def validation_step(self, batch, batch_idx):
         inputs_ids = batch["input_ids"]
         input_masks = batch["input_mask"]
@@ -240,9 +266,13 @@ class CoCapLM(pl.LightningModule):
             save_json(json_res, res_filepath, save_pretty=True)
 
         if not dist.is_initialized() or dist.get_rank() == 0:
-            json_ref = self.trainer.val_dataloaders.dataset.json_ref
+            val_dl = self.trainer.val_dataloaders
+            if isinstance(val_dl, list):
+                val_dl = val_dl[0]
+            json_ref = val_dl.dataset.json_ref
             metrics = evaluate(json_res, json_ref)
-            self.log_dict(metrics, on_step=False, on_epoch=True, logger=True, sync_dist=True)
+            self.print(f"\n================ Validation Metrics ================\n{metrics}\n==================================================")
+            self.log_dict(metrics, on_step=False, on_epoch=True, logger=True, sync_dist=False)
 
         if dist.is_initialized():
             dist.barrier()

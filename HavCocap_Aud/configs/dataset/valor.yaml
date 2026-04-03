@@ -1,0 +1,32 @@
+# Target the new Valor dataset class
+_target_: "havcocap_new.data.datasets.compressed_video.dataset_valor.ValorCaptioningDataset"
+
+# Point to your HPC processed folders
+video_root: "dataset/valor32k/valor_mp4_240p_keyint=30"
+metadata: "dataset/valor32k/valor32k_captioning.json"
+
+video_reader: "read_frames_compressed_domain"
+
+# We strictly limit to 8 frames to save memory and increase batch size
+max_frames: 8 
+
+video_size:
+  - 224
+  - 224
+max_words: 77
+unfold_sentences: True
+
+# HavCocap Math for keyint=30
+cv_config:
+  num_gop: 8
+  num_mv: 29
+  num_res: 29
+  with_residual: True
+  use_pre_extract: False
+  sample: "rand"
+
+# The Audio Math dictating the 1.0-second VGGish windows
+audio_config:
+  fps: 30
+  gop_size: 30
+  sample_rate: 16000

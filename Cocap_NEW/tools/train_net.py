@@ -7,6 +7,7 @@
 import logging
 from pathlib import Path
 import sys
+from termcolor import colored
 
 # Add the project root to sys.path so 'cocap' can be imported
 sys.path.insert(0, str(Path(__file__).parent.parent))
@@ -43,8 +44,29 @@ def train(
     except Exception as e:
         logger.warning(f"Could not print model summary: {e}")
 
-    trainer.fit(model=model, train_dataloaders=train_dataloader, val_dataloaders=val_dataloader)
-
+    # Retrieve ckpt_path directly from Hydra config before passing to trainer kwargs mapping
+    ckpt_path = None
+    if "+ckpt_path" in sys.argv:
+        try:
+            ckpt_path = sys.argv[sys.argv.index("+ckpt_path") + 1].strip('"\'')
+        except ValueError:
+            pass
+    elif "++ckpt_path" in sys.argv:
+        try:
+            ckpt_path = sys.argv[sys.argv.index("++ckpt_path") + 1].strip('"\'')
+        except (ValueError, IndexError):
+            pass
+    
+    for arg in sys.argv:
+        if arg.startswith("++ckpt_path="):
+            # Split only on the first '=' in case there are '=' symbols in the checkpoint name itself 
+            ckpt_path = arg.split("=", 1)[1].strip('"\'')
+        elif arg.startswith("+ckpt_path="):
+            # Split only on the first '=' in case there are '=' symbols in the checkpoint name itself
+            ckpt_path = arg.split("=", 1)[1].strip('"\'')
+            
+    print(colored(f"DEBUG: Setting PL Trainer ckpt_path to: '{ckpt_path}'", "green", attrs=["bold"]))
+    trainer.fit(model=model, train_dataloaders=train_dataloader, val_dataloaders=val_dataloader, ckpt_path=ckpt_path)
 
 if __name__ == '__main__':
     store(

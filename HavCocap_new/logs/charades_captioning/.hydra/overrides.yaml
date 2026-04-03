@@ -1,3 +1,0 @@
-- +exp/train=charades_captioning
-- ++val_dataloader.dataset.split=test
-- ckpt_path="logs/charades_captioning/lightning_logs/version_72/checkpoints/epoch=16-step=17153.ckpt"

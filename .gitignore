@@ -22,7 +22,6 @@ Cocap_edited/checkpoints/
 Cocap_edited/model_zoo/
 Hav-Cocap/model_zoo/clip_model/
 Hav-Cocap/dataset/
-model_zoo/
 
 
 #HavCocap_new
@@ -71,7 +70,11 @@ HavCocap_COPE/Compressed-Video-Reader/ffmpeg/
 
 
 
-Cocap_NEW/dataset/msvd/
+Cocap_NEW/dataset/msvd/*
+!Cocap_NEW/dataset/msvd/*.py
+!Cocap_NEW/dataset/msvd/tests/
+Cocap_NEW/dataset/msvd/tests/*
+!Cocap_NEW/dataset/msvd/tests/**/*.py
 
 
 logs/
@@ -86,3 +89,59 @@ logs/
 ffmpeg_source/
 ffmpeg_build/
 tinystories-33m/
+
+
+# =========================
+# Keep code/docs, ignore data+weights+logs
+# for Cocap_NEW / HavCocap_Aud / HavCocap_new
+# =========================
+
+# Complete logs folders (do not upload)
+Cocap_NEW/logs/
+HavCocap_Aud/logs/
+HavCocap_new/logs/
+
+# Model zoo weights only (.pt). Keep scripts/config/docs.
+Cocap_NEW/model_zoo/**/*.pt
+HavCocap_Aud/model_zoo/**/*.pt
+HavCocap_new/model_zoo/**/*.pt
+
+# Dataset videos/archives only. Keep .py/.md/.json and other code/text files.
+Cocap_NEW/dataset/**/*.mp4
+Cocap_NEW/dataset/**/*.avi
+Cocap_NEW/dataset/**/*.mov
+Cocap_NEW/dataset/**/*.mkv
+Cocap_NEW/dataset/**/*.webm
+Cocap_NEW/dataset/**/*.zip
+
+HavCocap_Aud/dataset/**/*.mp4
+HavCocap_Aud/dataset/**/*.avi
+HavCocap_Aud/dataset/**/*.mov
+HavCocap_Aud/dataset/**/*.mkv
+HavCocap_Aud/dataset/**/*.webm
+HavCocap_Aud/dataset/**/*.zip
+
+HavCocap_new/dataset/**/*.mp4
+HavCocap_new/dataset/**/*.avi
+HavCocap_new/dataset/**/*.mov
+HavCocap_new/dataset/**/*.mkv
+HavCocap_new/dataset/**/*.webm
+HavCocap_new/dataset/**/*.zip
+
+# Global artifact ignores (all projects)
+*.pt
+*.pth
+*.ckpt
+*.zip
+
+# Video / media artifacts
+*.mp4
+*.avi
+*.mov
+*.mkv
+*.webm
+
+# Runtime and training outputs
+**/logs/
+**/checkpoints/
+**/lightning_logs/

@@ -37,3 +37,19 @@ python tools/train_net.py --config-name exp/train/charades_captioning ++ckpt_pat
 
 
 source venv/bin/activate && cd HavCocap_COPE && CUDA_LAUNCH_BLOCKING=1 python tools/train_net.py --config-name exp/train/charades_captioning ++ckpt_path='"logs/charades_captioning/lightning_logs/version_16/checkpoints/epoch=2-step=1515.ckpt"'
+
+
+
+cd /teamspace/studios/this_studio/Hav-Cocap/HavCocap_new &&PYTHONPATH=. python tools/train_net.py --config-name exp/train/valor_captioning ++ckpt_path='"logs/msvd_captioning/lightning_logs/version_1/checkpoints/epoch=0-step=3049.ckpt"'
+
+
+
+cd /teamspace/studios/this_studio/Hav-Cocap/HavCocap_Aud &&PYTHONPATH=. python tools/train_net.py --config-name exp/train/charades_captioning 
+
+
+#TRAIN COCAP_NEW
+cd /teamspace/studios/this_studio/Hav-Cocap/Cocap_NEW && PYTHONPATH=. python tools/train_net.py --config-name exp/train/msvd_captioning ++ckpt_path='logs/msvd_captioning/lightning_logs/version_1/checkpoints/epoch=0-step=3049.ckpt'
+
+#TRAIN HAVCOCAP_AUD
+cd /teamspace/studios/this_studio/Hav-Cocap/HavCocap_Aud && PYTHONPATH=. python tools/train_net.py --config-name exp/train/charades_captioning
+

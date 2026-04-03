@@ -56,6 +56,18 @@ class CoCapLM(pl.LightningModule):
     ):
         super().__init__()
         self.model = cocap_model
+
+        # Freeze I-frame encoder
+        if hasattr(self.model, "compressed_video_transformer") and \
+                hasattr(self.model.compressed_video_transformer, "rgb_encoder"):
+            for param in self.model.compressed_video_transformer.rgb_encoder.parameters():
+                param.requires_grad = False
+
+        # Freeze BEATs audio encoder
+        if hasattr(self.model, "audio_encoder") and self.model.audio_encoder is not None:
+            for param in self.model.audio_encoder.parameters():
+                param.requires_grad = False
+
         self.loss = loss
         self.lr = lr
         self.clip_lr = clip_lr

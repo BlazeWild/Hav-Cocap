@@ -31,7 +31,8 @@ class MSVDCaptioningDataset(data.Dataset):
             metadata: str,
             video_reader: str,
             cv_config: CVConfig,
-            split: Literal["train", "test"],
+        split: Literal["train", "val", "test"],
+        max_train_videos: int | None = None,
     ):
         self.split = split
         self.video_root = video_root
@@ -44,6 +45,9 @@ class MSVDCaptioningDataset(data.Dataset):
         metadata = load_json(metadata)
 
         split_video_ids = metadata[split].copy()
+        if split == "train" and max_train_videos is not None:
+            # Keep deterministic subset for smoke-testing
+            split_video_ids = split_video_ids[:max_train_videos]
         if self.unfold_sentences:
             for item in metadata["metadata"]:
                 if item["video_id"] in split_video_ids:
@@ -67,7 +71,7 @@ class MSVDCaptioningDataset(data.Dataset):
                 DictRandomHorizontalFlip(),
                 normalize
             ])
-        elif split == "test":
+        elif split in ("test", "val"):
             self.transform = transforms.Compose([
                 DictCenterCrop((self.height, self.width)),
                 normalize
@@ -75,7 +79,7 @@ class MSVDCaptioningDataset(data.Dataset):
         else:
             raise NotImplementedError
 
-        if split == "test":
+        if split in ("test", "val"):
             json_ref = {k: [] for k in metadata[split]}
             for sentence in metadata["metadata"]:
                 if sentence["video_id"] in json_ref:

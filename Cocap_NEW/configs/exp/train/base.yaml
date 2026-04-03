@@ -61,7 +61,7 @@ trainer:
 train_dataloader:
   dataset:
     split: "train"
-  num_workers: 14
+  num_workers: 6
   batch_size: 2
   prefetch_factor: null
   shuffle: True
@@ -71,8 +71,8 @@ train_dataloader:
 val_dataloader:
   dataset:
     split: "test"
-  num_workers: 12
-  batch_size: 1
+  num_workers: 6
+  batch_size: 2
   prefetch_factor: null
   shuffle: False
   pin_memory: True

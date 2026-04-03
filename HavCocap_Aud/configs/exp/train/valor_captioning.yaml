@@ -1,0 +1,25 @@
+# @package _global_
+
+defaults:
+  - /train 
+  # Map the dataloaders to use the valor.yaml dataset config
+  - /dataset@train_dataloader.dataset: valor
+  - /dataset@val_dataloader.dataset: valor
+  - /exp/train/base
+  - _self_
+
+trainer:
+  # Isolate logging for your Pulchowk project
+  default_root_dir: "./logs/valor_captioning"
+
+val_dataloader:
+  dataset:
+    split: "val"
+
+model:
+  cocap_model:
+    # Activate the VGGish pipeline
+    use_audio: True
+    caption_head:
+      # Sequence Math: 8 GOPs * 3 tokens ([Context] + [Action] + [Audio]) = 24
+      max_v_len: 24

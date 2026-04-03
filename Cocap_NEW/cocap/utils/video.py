@@ -46,6 +46,7 @@ def convert_video(input_file: AnyStr, output_file: AnyStr,
                   codec="libx264",
                   keyint: int = None,
                   fps: int = None,
+                  bframes: int = None,
                   overwrite: bool = False,
                   verbose: bool = False,
                   resize: tuple = None) -> None:
@@ -59,7 +60,8 @@ def convert_video(input_file: AnyStr, output_file: AnyStr,
     :param verbose:
     :param resize:
     """
-    assert codec is None or codec in ["libx264", "libx265"], "Video codec {} is not supported.".format(codec)
+    assert codec is None or codec in ["libx264", "libx265", "h264_nvenc", "hevc_nvenc"], \
+        "Video codec {} is not supported.".format(codec)
     assert keyint is None or codec is not None, "Codec must be specified if keyint is not None."
 
     os.makedirs(os.path.dirname(output_file), exist_ok=True)
@@ -68,12 +70,31 @@ def convert_video(input_file: AnyStr, output_file: AnyStr,
     if codec is not None:
         # use specified codec
         command += ["-c:v", codec]
-        if codec == "libx265":
+        if codec in ["libx265", "hevc_nvenc"]:
             command += ["-vtag", "hvc1"]
-        if keyint is not None and codec == "libx264":
-            command += ["-x264-params", f"keyint={keyint}"]
-        elif keyint is not None and codec == "libx265":
-            command += ["-x265-params", f"keyint={keyint}"]
+        if codec == "libx264":
+            x264_params = []
+            if keyint is not None:
+                # Force fixed GOP (no scenecut insertion)
+                x264_params.extend([f"keyint={keyint}", f"min-keyint={keyint}", "scenecut=0"])
+            if bframes is not None:
+                x264_params.append(f"bframes={bframes}")
+            if x264_params:
+                command += ["-x264-params", ":".join(x264_params)]
+        elif codec == "libx265":
+            x265_params = []
+            if keyint is not None:
+                x265_params.append(f"keyint={keyint}")
+            if bframes is not None:
+                x265_params.append(f"bframes={bframes}")
+            if x265_params:
+                command += ["-x265-params", ":".join(x265_params)]
+        elif codec in ["h264_nvenc", "hevc_nvenc"]:
+            # NVENC options for fixed GOP and optional B-frame control
+            if keyint is not None:
+                command += ["-g", str(keyint), "-keyint_min", str(keyint)]
+            if bframes is not None:
+                command += ["-bf", str(bframes)]
     if resize is not None:
         if isinstance(resize, int):  # resize height
             assert resize % 2 == 0, "size is not divisible by 2"
@@ -88,7 +109,7 @@ def convert_video(input_file: AnyStr, output_file: AnyStr,
         else:
             raise ValueError("size is not supported: {}".format(resize))
     if fps is not None:
-        command += ["-r", str(fps)]
+        command += ["-r", str(fps), "-vsync", "cfr"]
     command += ["-c:a", "copy", "-movflags", "faststart", f"{output_file}"]
 
     if overwrite:
