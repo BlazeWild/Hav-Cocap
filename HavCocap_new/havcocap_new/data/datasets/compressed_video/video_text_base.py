@@ -16,13 +16,28 @@ import torchaudio
 logger = logging.getLogger(__name__)
 
 
-def extract_audio_from_video(video_path, max_length_sec=40, sample_rate=16000):
+def extract_audio_from_video(
+    video_path,
+    max_length_sec=15,
+    sample_rate=16000,
+    audio_config=None,
+    **kwargs,
+):
     """
     Extracts the audio track from the given video file.
     First checks if a pre-extracted .pt tensor exists to drastically speed up data loading.
     If not, uses FFmpeg to extract, resample, and pad to max_length_sec.
+
+    Extra kwargs are accepted for compatibility with dataset-specific callers
+    (e.g. max_frames, sample_mode) and are intentionally ignored here.
     """
-    max_samples = max_length_sec * sample_rate
+    if audio_config:
+        # Optional per-dataset overrides (kept backward compatible)
+        sample_rate = int(audio_config.get("sample_rate", sample_rate))
+        # Some configs use `audio_length` in seconds
+        max_length_sec = float(audio_config.get("audio_length", max_length_sec))
+
+    max_samples = int(max_length_sec * sample_rate)
     
     # Try loading pre-calculated .pt file to save 99% of IO/CPU cost
     video_dir = os.path.dirname(video_path)

@@ -19,6 +19,8 @@ val_dataloader:
 model:
   cocap_model:
     use_audio: True
+    compressed_video_transformer:
+      n_bp: 29
     caption_head:
       # HavCocap Math: 
       # 8 sampled GOPs * 3 tokens per GOP ([Context] + [Action] + [Audio]) = 24 tokens total.

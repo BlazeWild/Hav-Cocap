@@ -14,6 +14,7 @@ import pytorch_lightning as pl
 from hydra_zen import builds, store, zen
 from omegaconf import MISSING
 from torch.utils.data import DataLoader
+from torchinfo import summary as torchinfo_summary
 
 import sys
 from pathlib import Path
@@ -24,6 +25,14 @@ from havcocap_new.modeling.lm_cocap import cocap_lm_cfg
 logger = logging.getLogger(__name__)
 
 
+def _print_box_summary(model: pl.LightningModule) -> None:
+    """Print default torchinfo summary output."""
+    try:
+        print(torchinfo_summary(model))
+    except Exception as exc:
+        logger.warning("torchinfo summary failed: %s", exc)
+
+
 def train(
         model: pl.LightningModule,
         train_dataloader: DataLoader,
@@ -31,6 +40,7 @@ def train(
         trainer: pl.Trainer,
         ckpt_path: str = None
 ):
+    _print_box_summary(model)
     trainer.fit(model=model, train_dataloaders=train_dataloader, val_dataloaders=val_dataloader, ckpt_path=ckpt_path)
 
 

@@ -77,5 +77,18 @@ class BEATsAudioEncoder(nn.Module):
         Reshape the sequence of tokens to group them by GOP bins.
         """
         batch_size, n_tokens, feat_dim = audio_tokens.shape
-        tokens_per_gop = n_tokens // num_gop
+        if num_gop <= 0:
+            raise ValueError(f"num_gop must be > 0, got {num_gop}")
+
+        # Make sequence length divisible by num_gop to avoid invalid `.view(...)`
+        tokens_per_gop = max(1, (n_tokens + num_gop - 1) // num_gop)  # ceil division
+        target_tokens = tokens_per_gop * num_gop
+
+        if n_tokens < target_tokens:
+            pad_tokens = target_tokens - n_tokens
+            pad = audio_tokens.new_zeros(batch_size, pad_tokens, feat_dim)
+            audio_tokens = torch.cat([audio_tokens, pad], dim=1)
+        elif n_tokens > target_tokens:
+            audio_tokens = audio_tokens[:, :target_tokens, :]
+
         return audio_tokens.view(batch_size, num_gop, tokens_per_gop, feat_dim)
