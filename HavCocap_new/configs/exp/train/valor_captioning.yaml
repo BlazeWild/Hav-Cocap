@@ -1,0 +1,26 @@
+# @package _global_
+
+defaults:
+  - /train # defined in code
+  - /dataset@train_dataloader.dataset: valor
+  - /dataset@val_dataloader.dataset: valor
+  - /exp/train/base
+  - _self_
+
+trainer:
+  default_root_dir: "./logs/valor_captioning"
+
+# Override val_dataloader to explicitly use the "val" split we created
+val_dataloader:
+  dataset:
+    split: "val"
+
+# Override model parameters for audio integration
+model:
+  cocap_model:
+    use_audio: True
+    caption_head:
+      # HavCocap Math: 
+      # 8 sampled GOPs * 3 tokens per GOP ([Context] + [Action] + [Audio]) = 24 tokens total.
+      # This highly compressed sequence length is what allows fast 5-epoch convergence.
+      max_v_len: 24

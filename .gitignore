@@ -75,7 +75,17 @@ Cocap_NEW/dataset/msvd/*
 !Cocap_NEW/dataset/msvd/tests/
 Cocap_NEW/dataset/msvd/tests/*
 !Cocap_NEW/dataset/msvd/tests/**/*.py
+Cocap_NEW/model_zoo/clip_model/
 
+# Ignore environments and installers
+env/
+Miniconda3-latest-Linux-*.sh*
+
+# Ignore large data and zip files
+**/dataset/Valor/
+**/*.zip
+**/*.json
+**/*.log
 
 logs/
 

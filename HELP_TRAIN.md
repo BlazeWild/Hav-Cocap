@@ -29,7 +29,11 @@ source ../venv/bin/activate
 python tools/train_net.py --config-name exp/train/charades_captioning ++ckpt_path='"logs/charades_captioning/lightning_logs/version_64/checkpoints/epoch=13-step=14126.ckpt"'
 
 
+cd HavCocap_new 
+export PYTHONPATH=".:$PYTHONPATH" 
+python tools/train_net.py --config-name exp/train/valor_captioning 
 
+++ckpt_path='"logs/charades_captioning/lightning_logs/version_64/checkpoints/epoch=13-step=14126.ckpt"'
 
 
 python tools/train_net.py --config-name exp/train/charades_captioning ++ckpt_path='"logs/charades_captioning/lightning_logs/version_64/checkpoints/epoch=13-step=14126.ckpt"'

@@ -45,8 +45,8 @@ model:
 trainer:
   # default_root_dir: # Required
   strategy: "ddp_find_unused_parameters_true"
-  max_epochs: 20
-  accumulate_grad_batches: 8
+  max_epochs: 30
+  accumulate_grad_batches: 4
   logger:
     _target_: "pytorch_lightning.loggers.tensorboard.TensorBoardLogger"
     save_dir: ${trainer.default_root_dir}
@@ -61,8 +61,8 @@ trainer:
 train_dataloader:
   dataset:
     split: "train"
-  num_workers: 6
-  batch_size: 2
+  num_workers: 16
+  batch_size: 8
   prefetch_factor: null
   shuffle: True
   pin_memory: True
@@ -71,8 +71,8 @@ train_dataloader:
 val_dataloader:
   dataset:
     split: "test"
-  num_workers: 6
-  batch_size: 2
+  num_workers: 16
+  batch_size: 8
   prefetch_factor: null
   shuffle: False
   pin_memory: True

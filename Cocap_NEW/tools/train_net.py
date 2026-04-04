@@ -7,6 +7,7 @@
 import logging
 from pathlib import Path
 import sys
+import os
 from termcolor import colored
 
 # Add the project root to sys.path so 'cocap' can be imported
@@ -27,7 +28,8 @@ def train(
         model: pl.LightningModule,
         train_dataloader: DataLoader,
         val_dataloader: DataLoader,
-        trainer: pl.Trainer
+    trainer: pl.Trainer,
+    ckpt_path: str = None,
 ):
     try:
         from torchinfo import summary
@@ -44,27 +46,9 @@ def train(
     except Exception as e:
         logger.warning(f"Could not print model summary: {e}")
 
-    # Retrieve ckpt_path directly from Hydra config before passing to trainer kwargs mapping
-    ckpt_path = None
-    if "+ckpt_path" in sys.argv:
-        try:
-            ckpt_path = sys.argv[sys.argv.index("+ckpt_path") + 1].strip('"\'')
-        except ValueError:
-            pass
-    elif "++ckpt_path" in sys.argv:
-        try:
-            ckpt_path = sys.argv[sys.argv.index("++ckpt_path") + 1].strip('"\'')
-        except (ValueError, IndexError):
-            pass
-    
-    for arg in sys.argv:
-        if arg.startswith("++ckpt_path="):
-            # Split only on the first '=' in case there are '=' symbols in the checkpoint name itself 
-            ckpt_path = arg.split("=", 1)[1].strip('"\'')
-        elif arg.startswith("+ckpt_path="):
-            # Split only on the first '=' in case there are '=' symbols in the checkpoint name itself
-            ckpt_path = arg.split("=", 1)[1].strip('"\'')
-            
+    if ckpt_path is None:
+        ckpt_path = os.environ.get("CKPT_PATH")
+
     print(colored(f"DEBUG: Setting PL Trainer ckpt_path to: '{ckpt_path}'", "green", attrs=["bold"]))
     trainer.fit(model=model, train_dataloaders=train_dataloader, val_dataloaders=val_dataloader, ckpt_path=ckpt_path)
 

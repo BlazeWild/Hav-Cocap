@@ -7,7 +7,7 @@ from typing import Union, List
 
 import torch
 from PIL import Image
-from pkg_resources import packaging
+from packaging import version
 from torchvision.transforms import Compose, Resize, CenterCrop, ToTensor, Normalize
 from tqdm import tqdm
 
@@ -21,7 +21,7 @@ try:
 except ImportError:
     BICUBIC = Image.BICUBIC
 
-if packaging.version.parse(torch.__version__) < packaging.version.parse("1.7.1"):
+if version.parse(torch.__version__) < version.parse("1.7.1"):
     warnings.warn("PyTorch version 1.7.1 or higher is recommended")
 
 __all__ = ["available_models", "load", "tokenize", "get_model_path"]
@@ -233,7 +233,7 @@ def tokenize(texts: Union[str, List[str]], context_length: int = 77, truncate: b
     sot_token = _tokenizer.encoder["<|startoftext|>"]
     eot_token = _tokenizer.encoder["<|endoftext|>"]
     all_tokens = [[sot_token] + _tokenizer.encode(text) + [eot_token] for text in texts]
-    if packaging.version.parse(torch.__version__) < packaging.version.parse("1.8.0"):
+    if version.parse(torch.__version__) < version.parse("1.8.0"):
         result = torch.zeros(len(all_tokens), context_length, dtype=torch.long)
     else:
         result = torch.zeros(len(all_tokens), context_length, dtype=torch.int)
