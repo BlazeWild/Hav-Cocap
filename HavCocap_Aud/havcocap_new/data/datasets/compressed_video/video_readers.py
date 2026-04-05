@@ -225,11 +225,13 @@ def read_frames_compressed_domain(
             i_frame_gop = i_frame_gop[:resample_num_gop]
             mv_frame_gop = mv_frame_gop[:resample_num_gop]
             res_frame_gop = res_frame_gop[:resample_num_gop]
+            sampled_gop_indices = list(range(len(i_frame_gop)))
         else:
             idxs = sample_frames(num_frames=resample_num_gop, vlen=len(mv_frame_gop), sample=sample)
             i_frame_gop = [i_frame_gop[i] for i in idxs]
             mv_frame_gop = [mv_frame_gop[i] for i in idxs]
             res_frame_gop = [res_frame_gop[i] for i in idxs]
+            sampled_gop_indices = [int(i) for i in idxs]
         timer("sample")
         # stack iframe
         if with_bp_rgb or pre_extract:
@@ -242,6 +244,7 @@ def read_frames_compressed_domain(
                                       dtype=torch.bool)
         if sample == "pad" and iframe.size(0) < resample_num_gop:
             iframe = pad_tensor(iframe, target_size=resample_num_gop, dim=0)
+            sampled_gop_indices = sampled_gop_indices + [-1] * (resample_num_gop - len(sampled_gop_indices))
         assert iframe.size(0) == resample_num_gop
         timer("stack_iframe")
         # encode motion
@@ -286,7 +289,8 @@ def read_frames_compressed_domain(
             "motion vector mv number is not correct, got {}, expect {}".format(motion_vector.size(1), resample_num_mv)
         timer("stack_motion")
         ret = {"iframe": iframe, "motion_vector": motion_vector,
-               "input_mask_gop": input_mask_gop, "input_mask_mv": input_mask_mv, "type_ids_mv": type_ids_mv}
+             "input_mask_gop": input_mask_gop, "input_mask_mv": input_mask_mv, "type_ids_mv": type_ids_mv,
+             "sampled_gop_indices": torch.tensor(sampled_gop_indices, dtype=torch.long)}
         if with_residual:
             residual = []
             input_mask_res = []
@@ -327,7 +331,8 @@ def read_frames_compressed_domain(
             "input_mask_gop": torch.ones((resample_num_gop,), dtype=torch.bool),
             "input_mask_mv": torch.ones((resample_num_gop, resample_num_mv), dtype=torch.bool),
             "input_mask_res": torch.ones((resample_num_gop, resample_num_mv), dtype=torch.bool),
-            "type_ids_mv": torch.zeros((resample_num_gop, resample_num_mv), dtype=torch.long)
+            "type_ids_mv": torch.zeros((resample_num_gop, resample_num_mv), dtype=torch.long),
+            "sampled_gop_indices": torch.full((resample_num_gop,), -1, dtype=torch.long)
         }
         if with_residual:
             ret["residual"] = torch.zeros((resample_num_gop, resample_num_res, 3, 224, 224), dtype=torch.uint8)

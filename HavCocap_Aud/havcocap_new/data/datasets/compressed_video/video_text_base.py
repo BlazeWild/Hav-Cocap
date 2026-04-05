@@ -46,6 +46,13 @@ def extract_audio_for_gops(video_path, sampled_gop_indices, fps=30, gop_size=30,
     audio_slices = []
 
     for gop_idx in sampled_gop_indices:
+        gop_idx = int(gop_idx)
+
+        # padded/invalid GOP slots -> zero audio
+        if gop_idx < 0:
+            audio_slices.append(torch.zeros(required_samples_per_window))
+            continue
+
         # Math: Find the exact center of this GOP in seconds
         gop_start_time = gop_idx * gop_duration_sec
         gop_center_time = gop_start_time + (gop_duration_sec / 2.0)
@@ -76,6 +83,35 @@ def extract_audio_for_gops(video_path, sampled_gop_indices, fps=30, gop_size=30,
 
     # Stack into shape: [Num_GOPs, 16000]
     return torch.stack(audio_slices)
+
+
+def extract_audio_from_video(
+        video_path,
+        max_frames=8,
+        sampled_gop_indices=None,
+        audio_config=None,
+        **kwargs,
+):
+    """
+    Backward-compatible wrapper.
+    If GOP indices are given, extract 1s centered clips per GOP.
+    Otherwise, use sequential GOPs [0..max_frames-1].
+    """
+    audio_config = audio_config or {}
+    fps = int(audio_config.get("fps", 30))
+    gop_size = int(audio_config.get("gop_size", 30))
+    sample_rate = int(audio_config.get("sample_rate", 16000))
+
+    if sampled_gop_indices is None:
+        sampled_gop_indices = list(range(max_frames))
+
+    return extract_audio_for_gops(
+        video_path=video_path,
+        sampled_gop_indices=sampled_gop_indices,
+        fps=fps,
+        gop_size=gop_size,
+        sample_rate=sample_rate,
+    )
 
     
 

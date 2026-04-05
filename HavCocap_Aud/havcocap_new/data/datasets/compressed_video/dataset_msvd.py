@@ -17,7 +17,7 @@ from havcocap_new.modules.clip import clip
 from havcocap_new.utils.json import load_json
 from .transforms import (DictNormalize, DictCenterCrop, DictRandomHorizontalFlip)
 from .video_readers import VIDEO_READER_REGISTRY
-from .video_text_base import get_video, CVConfig, extract_audio_from_video
+from .video_text_base import get_video, CVConfig, extract_audio_for_gops
 
 
 class MSVDCaptioningDataset(data.Dataset):
@@ -32,6 +32,7 @@ class MSVDCaptioningDataset(data.Dataset):
             video_reader: str,
             cv_config: CVConfig,
             split: Literal["train", "test"],
+                audio_config: dict = None,
     ):
         self.split = split
         self.video_root = video_root
@@ -41,6 +42,7 @@ class MSVDCaptioningDataset(data.Dataset):
         self.height, self.width = video_size
         self.sentences = []  # (vid, [sentence, ...])
         self.h265_cfg = cv_config
+        self.audio_config = audio_config or {"fps": 30, "gop_size": 30, "sample_rate": 16000}
         metadata = load_json(metadata)
 
         split_video_ids = metadata[split].copy()
@@ -93,8 +95,14 @@ class MSVDCaptioningDataset(data.Dataset):
                                       sample="rand" if self.split == "train" else "uniform",
                                       hevc_config=self.h265_cfg)
         
-        # Audio extraction
-        audio = extract_audio_from_video(video_path)
+        sampled_indices = video.get("sampled_gop_indices", list(range(self.max_frames)))
+        audio = extract_audio_for_gops(
+            video_path=video_path,
+            sampled_gop_indices=sampled_indices,
+            fps=self.audio_config.get("fps", 30),
+            gop_size=self.audio_config.get("gop_size", 30),
+            sample_rate=self.audio_config.get("sample_rate", 16000),
+        )
         
         if self.transform is not None:
             video = self.transform(video)

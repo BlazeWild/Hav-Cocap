@@ -16,6 +16,17 @@ from .video_readers import VIDEO_READER_REGISTRY
 from .video_text_base import get_video, CVConfig, extract_audio_for_gops
 
 
+def _resolve_existing_path(primary_path: str, candidates: list[str]) -> str:
+    all_candidates = [primary_path] + candidates
+    for p in all_candidates:
+        if os.path.exists(p):
+            return p
+    raise FileNotFoundError(
+        f"None of the candidate paths exist: {all_candidates}. "
+        f"Please check dataset location on this machine."
+    )
+
+
 class ValorCaptioningDataset(data.Dataset):
 
     def __init__(
@@ -43,7 +54,22 @@ class ValorCaptioningDataset(data.Dataset):
         # Audio config defaults specifically for our 30 FPS / 30 GOP HPC run
         self.audio_config = audio_config or {"fps": 30, "gop_size": 30, "sample_rate": 16000}
         
-        metadata_dict = load_json(metadata)
+        metadata_path = _resolve_existing_path(
+            metadata,
+            [
+                "dataset/valor32k/valor32k_captioning.json",
+                "dataset/Valor/valor_master_annotations.json",
+            ],
+        )
+        self.video_root = _resolve_existing_path(
+            self.video_root,
+            [
+                "dataset/valor32k/valor_mp4_240p_keyint=30",
+                "dataset/Valor/valor_mp4_240p_keyint=30",
+            ],
+        )
+
+        metadata_dict = load_json(metadata_path)
 
         split_video_ids = set()
         for v in metadata_dict['videos']:
@@ -106,7 +132,7 @@ class ValorCaptioningDataset(data.Dataset):
                                       hevc_config=self.h265_cfg)
         
         # Grab the exact GOP indices the video reader decided to sample
-        sampled_indices = video.get("sampled_indices", list(range(self.max_frames)))
+        sampled_indices = video.get("sampled_gop_indices", video.get("sampled_indices", list(range(self.max_frames))))
         
         # Extract exactly 1.0s of audio centered perfectly on those visual GOPs
         audio = extract_audio_for_gops(

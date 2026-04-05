@@ -1,0 +1,27 @@
+# @package _global_
+
+defaults:
+  - /train # define in code
+  - /dataset@train_dataloader.dataset: msvd
+  - /dataset@val_dataloader.dataset: msvd
+  - /exp/train/base
+  - _self_
+
+trainer:
+  default_root_dir: "./logs/msvd_captioning_smoke10"
+  max_epochs: 1
+  accumulate_grad_batches: 1
+
+train_dataloader:
+  dataset:
+    split: "train"
+    max_train_videos: 10
+
+val_dataloader:
+  dataset:
+    split: "test"
+
+model:
+  cocap_model:
+    caption_head:
+      max_v_len: 616

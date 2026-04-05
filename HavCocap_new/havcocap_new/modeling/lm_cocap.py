@@ -57,16 +57,8 @@ class CoCapLM(pl.LightningModule):
         super().__init__()
         self.model = cocap_model
 
-        # Freeze I-frame encoder
-        if hasattr(self.model, "compressed_video_transformer") and \
-                hasattr(self.model.compressed_video_transformer, "rgb_encoder"):
-            for param in self.model.compressed_video_transformer.rgb_encoder.parameters():
-                param.requires_grad = False
-
-        # Freeze BEATs audio encoder
-        if hasattr(self.model, "audio_encoder") and self.model.audio_encoder is not None:
-            for param in self.model.audio_encoder.parameters():
-                param.requires_grad = False
+        # Freeze selected pretrained backbones.
+        self._freeze_pretrained_backbones()
 
         self.loss = loss
         self.lr = lr
@@ -75,6 +67,28 @@ class CoCapLM(pl.LightningModule):
         self.lr_decay_gamma = lr_decay_gamma
 
         self.batch_res = None
+
+    def _freeze_pretrained_backbones(self) -> None:
+        # Freeze I-frame encoder (CLIP visual branch)
+        if hasattr(self.model, "compressed_video_transformer") and \
+                hasattr(self.model.compressed_video_transformer, "rgb_encoder"):
+            rgb_encoder = self.model.compressed_video_transformer.rgb_encoder
+            rgb_encoder.eval()
+            for param in rgb_encoder.parameters():
+                param.requires_grad = False
+            logger.info("Frozen I-frame encoder params: %d", sum(p.numel() for p in rgb_encoder.parameters()))
+
+        # Freeze full audio encoder (BEATs + projection).
+        if hasattr(self.model, "audio_encoder") and self.model.audio_encoder is not None:
+            audio_encoder = self.model.audio_encoder
+            audio_encoder.eval()
+            for param in audio_encoder.parameters():
+                param.requires_grad = False
+            if hasattr(audio_encoder, "beats") and audio_encoder.beats is not None:
+                logger.info("Frozen BEATs backbone params: %d", sum(p.numel() for p in audio_encoder.beats.parameters()))
+            else:
+                logger.warning("Audio encoder is enabled but BEATs backbone is not loaded.")
+            logger.info("Frozen full audio encoder params: %d", sum(p.numel() for p in audio_encoder.parameters()))
 
     @property
     def total_steps(self):
@@ -107,6 +121,8 @@ class CoCapLM(pl.LightningModule):
         blacklist_weight_modules = (nn.LayerNorm, nn.BatchNorm2d, nn.Embedding, BertLayerNorm)
         for mn, m in model.named_modules():
             for pn, p in m.named_parameters():
+                if not p.requires_grad:
+                    continue
                 fpn = '%s.%s' % (mn, pn) if mn else pn  # full param name
 
                 if any(fpn.startswith(p_fpn) for p_fpn in pretrained_modules):  # pretrained
@@ -122,7 +138,7 @@ class CoCapLM(pl.LightningModule):
                 elif pn.endswith("weight") and isinstance(m, blacklist_weight_modules):
                     no_decay.add(fpn)
 
-        param_dict = {pn: p for pn, p in model.named_parameters()}
+        param_dict = {pn: p for pn, p in model.named_parameters() if p.requires_grad}
         inter_params = decay & no_decay
         union_params = decay | no_decay
         assert len(inter_params) == 0, "parameters %s made it into both decay/no_decay sets!" % (str(inter_params),)
@@ -183,7 +199,7 @@ class CoCapLM(pl.LightningModule):
         outputs = self.model(batch)
         loss = self.loss(batch, outputs)
         self.log("loss", loss, on_step=True, on_epoch=True, prog_bar=True, logger=True,
-                 batch_size=batch["input_labels"].size(0))
+                 batch_size=batch["input_labels"].size(0), sync_dist=dist.is_initialized())
         return loss
 
     def on_validation_epoch_start(self) -> None:
@@ -237,10 +253,20 @@ class CoCapLM(pl.LightningModule):
             os.makedirs(os.path.dirname(res_filepath), exist_ok=True)
             save_json(json_res, res_filepath, save_pretty=True)
 
-        if not dist.is_initialized() or dist.get_rank() == 0:
-            json_ref = self.trainer.val_dataloaders.dataset.json_ref
-            metrics = evaluate(json_res, json_ref)
-            self.log_dict(metrics, on_step=False, on_epoch=True, logger=True, prog_bar=True)
+        json_ref = self.trainer.val_dataloaders.dataset.json_ref
+        metrics = evaluate(json_res, json_ref)
+        self.log_dict(
+            metrics,
+            on_step=False,
+            on_epoch=True,
+            logger=True,
+            prog_bar=True,
+            sync_dist=dist.is_initialized()
+        )
+
+        if self.trainer.is_global_zero:
+            metric_msg = " | ".join([f"{k}={v:.4f}" for k, v in metrics.items()])
+            logger.info("Validation metrics: %s", metric_msg)
 
         if dist.is_initialized():
             dist.barrier()

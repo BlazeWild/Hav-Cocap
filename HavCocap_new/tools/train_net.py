@@ -3,6 +3,12 @@
 # @Author  : Yaojie Shen
 # @Project : CoCap
 # @File    : train_net.py
+import torch
+import pytorch_lightning as pl
+
+# Then import the rest
+import cv2
+import numpy as np
 
 import logging
 from pathlib import Path

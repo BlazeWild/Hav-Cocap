@@ -1,4 +1,12 @@
 #!/bin/bash
+set -euo pipefail
+
 echo "Downloading BEATs Iter3+ (AS2M) Model..."
-wget "https://valle.blob.core.windows.net/share/BEATs/BEATs_iter3_plus_AS2M.pt?sv=2020-08-04&st=2023-03-01T07%3A51%3A05Z&se=2033-03-02T07%3A51%3A00Z&sr=c&sp=rl&sig=QJXmX0T5BxKI1I1s01CQFlLy6ROTrWEIllByrxicmXQ%3D" -O BEATs_iter3_plus_AS2M.pt
-echo "Downloaded Successfully to model_zoo/BEATs_iter3_plus_AS2M.pt"
+wget "https://huggingface.co/datasets/Blazewild/processed_msvd_8fps/resolve/main/Cocap/BEATs_iter3_plus_AS2M_finetuned_on_AS2M_cpt2.pt?download=true" -O BEATs_iter3_plus_AS2M.pt
+
+if [[ ! -s BEATs_iter3_plus_AS2M.pt ]]; then
+	echo "Download failed or produced empty file: model_zoo/BEATs_iter3_plus_AS2M.pt"
+	exit 1
+fi
+
+echo "Downloaded successfully to model_zoo/BEATs_iter3_plus_AS2M.pt"

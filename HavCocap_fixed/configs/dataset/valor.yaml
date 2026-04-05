@@ -1,0 +1,27 @@
+_target_: "havcocap_new.data.datasets.compressed_video.dataset_valor.ValorCaptioningDataset"
+
+# Pointing to the specific folder you just generated with the HPC script
+video_root: "dataset/Valor/valor_mp4_240p_keyint=30"
+metadata: "dataset/Valor/valor_master_annotations.json"
+
+video_reader: "read_frames_compressed_domain"
+max_frames: 8 
+video_size:
+  - 224
+  - 224
+max_words: 77
+unfold_sentences: True
+
+cv_config:
+  num_gop: 8           # We sample 8 GOPs per video for GPU memory safety
+  num_mv: 29           # keyint=30 means exactly 1 I-Frame + 29 P-Frames
+  num_res: 29          # Residuals must match the number of Motion Vectors
+  with_residual: True
+  use_pre_extract: False
+  sample: "rand"       # Uniform random sampling across the 10 available GOPs
+
+# Added this block since HavCocap is an Audio-Visual model and needs the 1.0s slices
+audio_config:
+  audio_root: "dataset/Valor/valor_mp4_240p_keyint=30" # Can read audio directly from intact mp4s
+  sample_rate: 16000
+  audio_length: 1.0    # The perfectly aligned 1.0-second VGGish window

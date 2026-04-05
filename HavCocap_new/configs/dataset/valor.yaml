@@ -24,4 +24,4 @@ cv_config:
 audio_config:
   audio_root: "dataset/Valor/valor_mp4_240p_keyint=30" # Can read audio directly from intact mp4s
   sample_rate: 16000
-  audio_length: 1.0    # The perfectly aligned 1.0-second VGGish window
+  audio_length: 10.0    # The perfectly aligned 1.0-second VGGish window

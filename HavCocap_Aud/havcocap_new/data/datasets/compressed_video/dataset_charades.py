@@ -104,7 +104,7 @@ class CharadesCaptioningDataset(data.Dataset):
         # --- NEW HAVCOCAP AUDIO EXTRACTION ---
         # 1. Grab the exact GOP indices the video reader decided to sample.
         # (Make sure your compressed_domain_reader adds "sampled_indices" to the video dict)
-        sampled_indices = video.get("sampled_indices", list(range(self.max_frames)))
+        sampled_indices = video.get("sampled_gop_indices", video.get("sampled_indices", list(range(self.max_frames))))
         
         # 2. Extract exactly 1.0s of audio centered perfectly on those visual GOPs
         audio = extract_audio_for_gops(

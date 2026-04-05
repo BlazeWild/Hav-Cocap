@@ -7,6 +7,7 @@ import logging
 import os.path
 import random
 from dataclasses import dataclass
+from typing import Optional
 
 import torch
 import subprocess
@@ -21,6 +22,8 @@ def extract_audio_from_video(
     max_length_sec=15,
     sample_rate=16000,
     audio_config=None,
+    gop_center_frame_idx: Optional[torch.Tensor] = None,
+    video_fps: Optional[float] = None,
     **kwargs,
 ):
     """
@@ -31,54 +34,117 @@ def extract_audio_from_video(
     Extra kwargs are accepted for compatibility with dataset-specific callers
     (e.g. max_frames, sample_mode) and are intentionally ignored here.
     """
+    gop_window_sec = 1.0
     if audio_config:
         # Optional per-dataset overrides (kept backward compatible)
         sample_rate = int(audio_config.get("sample_rate", sample_rate))
         # Some configs use `audio_length` in seconds
         max_length_sec = float(audio_config.get("audio_length", max_length_sec))
+        gop_window_sec = float(audio_config.get("gop_audio_window_sec", gop_window_sec))
 
     max_samples = int(max_length_sec * sample_rate)
     
-    # Try loading pre-calculated .pt file to save 99% of IO/CPU cost
+    # Try loading pre-calculated .pt file to save IO/CPU cost.
     video_dir = os.path.dirname(video_path)
     video_name = os.path.splitext(os.path.basename(video_path))[0]
     # Assuming standard structure where Charades_audio_tensors is next to Charades_filtered_240
     audio_pt_path = os.path.join(os.path.dirname(video_dir), "Charades_audio_tensors", f"{video_name}.pt")
-    
+
+    waveform = None
     if os.path.exists(audio_pt_path):
         try:
             waveform = torch.load(audio_pt_path)
-            return waveform
-        except:
-            pass
+            if isinstance(waveform, torch.Tensor) and waveform.dim() > 1:
+                waveform = waveform.squeeze(0)
+        except Exception:
+            waveform = None
 
-    # Fallback to slow realtime extraction (NOT RECOMMENDED for large batches)
+    # Fallback to realtime extraction via ffmpeg when cached audio is unavailable.
+    # Important: when GOP slicing is requested we decode full audio (no -t truncation).
     with tempfile.NamedTemporaryFile(suffix='.wav') as tmp_wav:
         cmd = [
-            'ffmpeg', '-y', '-i', video_path, 
-            '-vn', '-ac', '1', '-ar', str(sample_rate), 
-            '-t', str(max_length_sec),
-            '-f', 'wav', tmp_wav.name
+            'ffmpeg', '-y', '-i', video_path,
+            '-vn', '-ac', '1', '-ar', str(sample_rate)
         ]
+        if gop_center_frame_idx is None:
+            cmd += ['-t', str(max_length_sec)]
+        cmd += ['-f', 'wav', tmp_wav.name]
         
         try:
-            subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
-            waveform, sr = torchaudio.load(tmp_wav.name)
-            
-            # shape is usually [1, num_samples]. We want to pad or truncate it to max_samples
-            num_samples = waveform.shape[1]
+            if waveform is None:
+                subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
+                waveform, _ = torchaudio.load(tmp_wav.name)
+                waveform = waveform.squeeze(0)
+
+            # GOP-centered slicing mode: return [num_gop, gop_window_sec * sample_rate]
+            if gop_center_frame_idx is not None:
+                if isinstance(gop_center_frame_idx, torch.Tensor):
+                    center_idx = gop_center_frame_idx.to(torch.float32).view(-1)
+                else:
+                    center_idx = torch.tensor(gop_center_frame_idx, dtype=torch.float32).view(-1)
+
+                # Keep valid (non-padding) GOP entries only.
+                valid_mask = center_idx > 0
+                if valid_mask.any():
+                    center_idx = center_idx[valid_mask]
+                num_gop_total = int(gop_center_frame_idx.numel() if isinstance(gop_center_frame_idx, torch.Tensor)
+                                    else len(gop_center_frame_idx))
+
+                if video_fps is None or float(video_fps) <= 0:
+                    # If fps metadata is missing, use uniform centers over available audio duration.
+                    duration_sec = float(max(1, waveform.numel()) / sample_rate)
+                    if center_idx.numel() == 0:
+                        center_times = torch.linspace(0.5, max(0.5, duration_sec - 0.5), steps=max(1, num_gop_total))
+                    else:
+                        center_times = torch.linspace(0.5, max(0.5, duration_sec - 0.5), steps=center_idx.numel())
+                else:
+                    center_times = center_idx / float(video_fps)
+
+                win_samples = int(round(gop_window_sec * sample_rate))
+                half = win_samples // 2
+                clips = []
+                total_samples = waveform.numel()
+                for t in center_times.tolist():
+                    center_sample = int(round(t * sample_rate))
+                    start = center_sample - half
+                    end = start + win_samples
+                    left_pad = max(0, -start)
+                    right_pad = max(0, end - total_samples)
+                    start = max(0, start)
+                    end = min(total_samples, end)
+                    segment = waveform[start:end]
+                    if left_pad or right_pad:
+                        segment = torch.nn.functional.pad(segment, (left_pad, right_pad))
+                    if segment.numel() != win_samples:
+                        segment = torch.nn.functional.pad(segment[:win_samples], (0, max(0, win_samples - segment.numel())))
+                    clips.append(segment)
+
+                if len(clips) == 0:
+                    clips = [torch.zeros(win_samples)]
+
+                clips = torch.stack(clips, dim=0)
+                # Re-pad back to requested GOP count when padded GOPs were present.
+                if clips.size(0) < num_gop_total:
+                    pad = clips.new_zeros(num_gop_total - clips.size(0), win_samples)
+                    clips = torch.cat([clips, pad], dim=0)
+                return clips
+
+            # Legacy fixed-length single-audio mode: return [max_samples]
+            num_samples = waveform.shape[0]
             if num_samples < max_samples:
-                # pad with zeros
                 pad = max_samples - num_samples
                 waveform = torch.nn.functional.pad(waveform, (0, pad))
             elif num_samples > max_samples:
-                waveform = waveform[:, :max_samples]
-                
-            return waveform.squeeze(0)  # Shape: [max_samples]
-            
+                waveform = waveform[:max_samples]
+            return waveform
+
         except Exception as e:
-            # If video has no audio or ffmpeg fails, return a tensor of zeros
-            return torch.zeros(max_samples)
+            # If video has no audio or ffmpeg fails, return zeros with expected shape.
+            if gop_center_frame_idx is not None:
+                n_gop = int(gop_center_frame_idx.numel()) if isinstance(gop_center_frame_idx, torch.Tensor) else len(gop_center_frame_idx)
+                win_samples = int(round(gop_window_sec * sample_rate))
+                return torch.zeros((n_gop, win_samples), dtype=torch.float32)
+            return torch.zeros(max_samples, dtype=torch.float32)
 
 def get_tokenized_words(sentence: str, tokenizer, max_words):
     words = tokenizer.tokenize(sentence)

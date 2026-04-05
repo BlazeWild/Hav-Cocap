@@ -18,8 +18,10 @@ val_dataloader:
 
 model:
   cocap_model:
-    # Activate the VGGish pipeline
+    # Activate audio pipeline
     use_audio: True
+    compressed_video_transformer:
+      n_bp: 29
     caption_head:
       # Sequence Math: 8 GOPs * 3 tokens ([Context] + [Action] + [Audio]) = 24
       max_v_len: 24

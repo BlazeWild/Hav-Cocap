@@ -137,7 +137,20 @@ class ActionEncoder(nn.Module):
         :param self_mask: attention mask
         :return:
         """
-        assert feature_bp.size(1) == self.positional_embedding.num_embeddings
+        target_n_bp = self.positional_embedding.num_embeddings
+        cur_n_bp = feature_bp.size(1)
+
+        if cur_n_bp > target_n_bp:
+            feature_bp = feature_bp[:, :target_n_bp, :]
+            bp_type_ids = bp_type_ids[:, :target_n_bp]
+        elif cur_n_bp < target_n_bp:
+            pad_len = target_n_bp - cur_n_bp
+            pad_feat = feature_bp.new_zeros(feature_bp.size(0), pad_len, feature_bp.size(2))
+            feature_bp = torch.cat([feature_bp, pad_feat], dim=1)
+
+            pad_ids = bp_type_ids.new_zeros(bp_type_ids.size(0), pad_len)
+            bp_type_ids = torch.cat([bp_type_ids, pad_ids], dim=1)
+
         bsz = feature_bp.size(0)
 
         positional_embedding = self.positional_embedding(

@@ -1,1 +1,0 @@
-config:c:x86_64:generic:linux:gcc 13 (Ubuntu 13.3.0-6ubuntu2~24.04.1):--prefix=../ffmpeg_install --pkg-config-flags=--static --extra-cflags='-I../ffmpeg_install/include -static' --extra-ldflags='-L../ffmpeg_install/lib -static' --extra-libs='-lpthread -lm' --bindir=../ffmpeg_install/bin --enable-pic --disable-yasm --disable-doc --disable-programs --disable-asm --disable-x86asm

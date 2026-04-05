@@ -28,7 +28,7 @@ from havcocap_new.modules.clip.clip import get_model_path
 from havcocap_new.modules.clip.model import CLIP
 from havcocap_new.modules.compressed_video.compressed_video_transformer import CompressedVideoTransformer, \
     compressed_video_transformer_pretrained_cfg, compressed_video_transformer_cfg
-from havcocap_new.modules.audio.audio_encoder import VGGishAudioEncoder
+from havcocap_new.modules.audio.audio_encoder import BEATsAudioEncoder
 
 logger = logging.getLogger(__name__)
 
@@ -189,17 +189,17 @@ class CompressedVideoCaptioner(nn.Module):
             motion_dropout_prob: float = 0.2,
             residual_dropout_prob: float = 0.2,
             use_audio: bool = False,
-            audio_encoder: Optional[VGGishAudioEncoder] = None,
+            audio_encoder: Optional[BEATsAudioEncoder] = None,
     ):
         super().__init__()
         self.compressed_video_transformer = compressed_video_transformer
         self.caption_head = caption_head
         self.use_audio = use_audio
         
-        # Initialize VGGish. We dynamically pass the CaptionHead's hidden size (usually 768) 
+        # Initialize BEATs. We dynamically pass the CaptionHead's hidden size (usually 768) 
         # so the audio tokens perfectly match the visual tokens.
         if use_audio and audio_encoder is None:
-            self.audio_encoder = VGGishAudioEncoder(output_dim=caption_head.cap_config.hidden_size)
+            self.audio_encoder = BEATsAudioEncoder(output_dim=caption_head.cap_config.hidden_size)
         else:
             self.audio_encoder = audio_encoder
             
@@ -237,7 +237,7 @@ class CompressedVideoCaptioner(nn.Module):
                 # The dataloader now gives us shape: [Batch, Num_GOP, 16000]
                 audio_tensor = inputs["audio"] 
                 
-                # Forward to VGGish encoder. 
+                # Forward to BEATs encoder. 
                 # Output shape is automatically: [Batch, Num_GOP, 768]
                 audio_features = self.audio_encoder(audio_tensor)
                 

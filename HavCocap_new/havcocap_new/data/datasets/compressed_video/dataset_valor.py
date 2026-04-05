@@ -111,6 +111,8 @@ class ValorCaptioningDataset(data.Dataset):
         audio = extract_audio_from_video(
             video_path=video_path,
             audio_config=self.audio_config,
+            gop_center_frame_idx=video.get("gop_center_frame_idx", None),
+            video_fps=float(video.get("video_fps", torch.tensor(0.0)).item()) if "video_fps" in video else None,
             max_frames=self.max_frames,
             sample_mode="rand" if self.split == "train" else "uniform"
         )
