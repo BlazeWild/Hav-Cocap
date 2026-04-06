@@ -1,0 +1,20 @@
+_target_: "cocap.data.datasets.compressed_video.dataset_vatex.VATEXCaptioningDataset"
+
+video_root: "./dataset/vatex/videos_240_h264_keyint_60"
+metadata: "./dataset/vatex/VATEX_caption.json"
+
+video_reader: "read_frames_compressed_domain"
+max_frames: 8
+video_size:
+  - 224
+  - 224
+max_words: 35
+unfold_sentences: True
+cv_config:
+  num_gop: 8
+  num_mv: 29 # we are extracting 29 p frames and then later made into 8.
+  num_res: 0
+  with_residual: False
+  with_bp_rgb: False
+  use_pre_extract: False
+  sample: "pad"

@@ -1,0 +1,116 @@
+# @package _global_
+
+# =====================================================================
+# HAV-COCAP PHASE CHEAT SHEET
+# =====================================================================
+# PHASE 1 (Distillation): phase: 1 | lr: 2e-4 | max_epochs: 100 | accumulate_grad_batches: 16 | patience: 5
+# PHASE 2 (Alignment)   : phase: 2 | lr: 5e-5 | max_epochs: 10  | accumulate_grad_batches: 8  | patience: 3
+# PHASE 3 (SFT)         : phase: 3 | lr: 5e-5 | max_epochs: 20  | accumulate_grad_batches: 8  | patience: 3
+# =====================================================================
+
+hydra:
+  run:
+    dir: ${trainer.default_root_dir}
+  sweep:
+    dir: ${trainer.default_root_dir}
+    subdir: ${hydra.job.override_dirname}
+
+  job_logging:
+    version: 1
+    formatters:
+      default:
+        format: "[%(asctime)s][%(levelname)s] %(name)s %(lineno)d: %(message)s"
+      colorful:
+        '()': 'colorlog.ColoredFormatter'
+        format: "[%(yellow)s%(asctime)s%(reset)s][%(log_color)s%(levelname)s%(reset)s][%(blue)s%(name)s L%(lineno)d%(reset)s]: %(message)s"
+        datefmt: "%Y-%m-%d %H:%M:%S"
+        log_colors:
+          DEBUG: purple
+          INFO: green
+          WARNING: yellow
+          ERROR: red
+          CRITICAL: red
+    handlers:
+      console:
+        level: INFO
+        class: logging.StreamHandler
+        formatter: colorful
+      file:
+        level: DEBUG
+        formatter: default
+        filename: "${hydra.runtime.output_dir}/${hydra.job.name}.log"
+    root:
+      level: INFO
+      handlers: [ file, console ]
+  verbose: [ "__main__", "cocap" ]
+
+model:
+  # --- Hav-CoCap Phase Control ---
+  phase: 1
+  mask_ratio: 0.75
+  lr: 2e-4
+  weight_decay: 0.01
+  clip_lr: 1e-6
+  warmup_ratio: 0.05
+  lr_decay_gamma: 0.95
+
+  # --- Phase-Aware Loss ---
+  loss:
+    _target_: cocap.modeling.loss.PhaseAwareLoss
+    label_smoothing: 0.1
+    ignore_index: -100
+    target_vocab_size: 50257   # CRITICAL: GPT-2 Vocab Size
+
+    # Distillation Weights (Automatically ignored in Phase 2 & 3)
+    lambda_mse: 10.0
+    lambda_cos: 1.0
+    lambda_reg: 0.1
+
+trainer:
+  # default_root_dir: # Required (Set this in your terminal or a higher-level config)
+  strategy: "ddp_find_unused_parameters_true"
+  
+  max_epochs: 100
+  accumulate_grad_batches: 16  # 16 x batch_size 4 = Effective Batch 64
+  
+  log_every_n_steps: 1
+  num_sanity_val_steps: 0
+  
+  logger:
+    _target_: pytorch_lightning.loggers.tensorboard.TensorBoardLogger
+    save_dir: ${trainer.default_root_dir}
+    
+  callbacks:
+    - _target_: pytorch_lightning.callbacks.LearningRateMonitor
+      logging_interval: "step"
+      
+    - _target_: pytorch_lightning.callbacks.ModelCheckpoint
+      save_top_k: 1
+      monitor: "train_loss"
+      mode: "min"
+
+    - _target_: pytorch_lightning.callbacks.EarlyStopping
+      monitor: "train_loss"
+      patience: 5
+      mode: "min"
+      min_delta: 0.001
+
+train_dataloader:
+  dataset:
+    split: "train"
+  num_workers: 16
+  batch_size: 4
+  prefetch_factor: null
+  shuffle: True
+  pin_memory: True
+  multiprocessing_context: "fork"
+
+val_dataloader:
+  dataset:
+    split: "val"
+  num_workers: 16
+  batch_size: 4
+  prefetch_factor: null
+  shuffle: False
+  pin_memory: True
+  multiprocessing_context: "fork"

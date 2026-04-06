@@ -1,0 +1,48 @@
+# @package _global_
+
+# Quick validation check run:
+# - train on only first 10 train videos
+# - validate on full val split
+# - keep torchinfo/model summary + epoch/validation logging from tools/train_net.py and lm_cocap.py
+
+defaults:
+  - /train # define in code
+  - /dataset@train_dataloader.dataset: msvd
+  - /dataset@val_dataloader.dataset: msvd
+  - /exp/train/base
+  - _self_
+
+trainer:
+  default_root_dir: "./logs/msvd_valcheck_10videos"
+  strategy: "auto"
+  accelerator: "gpu"
+  devices: 1
+  max_epochs: 1
+  accumulate_grad_batches: 1
+  log_every_n_steps: 1
+  num_sanity_val_steps: 0
+
+train_dataloader:
+  dataset:
+    split: "train"
+    max_train_videos: 5
+  num_workers: 2
+  batch_size: 1
+  prefetch_factor: null
+  shuffle: True
+  pin_memory: True
+
+val_dataloader:
+  dataset:
+    split: "val"
+    unfold_sentences: False
+  num_workers: 2
+  batch_size: 2
+  prefetch_factor: null
+  shuffle: False
+  pin_memory: True
+
+model:
+  cocap_model:
+    caption_head:
+      max_v_len: 616
