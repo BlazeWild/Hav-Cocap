@@ -1,20 +1,16 @@
 # -*- coding: utf-8 -*-
 # @Time    : 8/2/23
-# @Author  : Yaojie Shen
+# @Author  : Yaojie Shen (Updated for HavCocap MGDTR Architecture)
 # @Project : CoCap
 # @File    : compressed_video_transformer.py
 
 __all__ = [
     "IFrameEncoder",
-    "ActionEncoder",
     "CompressedVideoTransformer",
     "iframe_encoder_cfg",
     "iframe_encoder_pretrained_cfg",
-    "action_encoder_cfg",
-    "motion_encoder_cfg",
     "compressed_video_transformer_cfg",
     "compressed_video_transformer_pretrained_cfg",
-    "MotionPerceiver",
 ]
 
 import logging
@@ -23,10 +19,14 @@ from typing import Optional, Dict, Tuple
 import einops
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
 from hydra_zen import builds
 
 from cocap.modules.clip.clip import get_model_path
-from cocap.modules.clip.model import VisionTransformer, CrossResidualAttentionBlock, LayerNorm, CLIP
+from cocap.modules.clip.model import VisionTransformer, LayerNorm, CLIP
+
+# IMPORT YOUR CUSTOM MOTION STUDENT
+from .motion_encoder import MotionStudent 
 
 logger = logging.getLogger(__name__)
 
@@ -47,41 +47,34 @@ class IFrameEncoder(VisionTransformer):
         self.proj_hidden = nn.Parameter(scale * torch.randn(width, output_dim))
 
     def forward(self, x: torch.Tensor, output_all_features: bool = False, output_attention_map: bool = False):
-        x = self.conv1(x)  # shape = [*, width, grid, grid]
+        x = self.conv1(x)  
         grid = x.size(2)
-        x = x.reshape(x.shape[0], x.shape[1], -1)  # shape = [*, width, grid ** 2]
-        x = x.permute(0, 2, 1)  # shape = [*, grid ** 2, width]
+        x = x.reshape(x.shape[0], x.shape[1], -1)  
+        x = x.permute(0, 2, 1)  
         x = torch.cat(
             [self.class_embedding.to(x.dtype) +
              torch.zeros(x.shape[0], 1, x.shape[-1], dtype=x.dtype, device=x.device), x],
             dim=1
-        )  # shape = [*, grid ** 2 + 1, width]
+        )  
         x = x + self.positional_embedding.to(x.dtype)
         x = self.ln_pre(x)
 
-        x = x.permute(1, 0, 2)  # NLD -> LND
+        x = x.permute(1, 0, 2)  
         x, attn = self.transformer(x)
-        x = x.permute(1, 0, 2)  # LND -> NLD
+        x = x.permute(1, 0, 2)  
 
         cls_feature = self.ln_post(x[:, 0, :]) @ self.proj
 
         outputs = (cls_feature,)
         if output_all_features:
-            # cls token is not included
             outputs += (self.ln_post_hidden(x[:, 1:, :]) @ self.proj_hidden,)
         if output_attention_map:
-            # attention_map: n_layers, batch_size, n_heads, h, w
             outputs += (einops.rearrange(attn[:, :, :, 0, 1:],
                                          "n_layers b n_heads (h w)->n_layers b n_heads h w", h=grid, w=grid),)
         return outputs
 
     @classmethod
     def from_pretrained(cls, pretrained_clip_name_or_path: str) -> Tuple["IFrameEncoder", int, int, int]:
-        """
-        Load from pretrained CLIP model
-        :param pretrained_clip_name_or_path: the name of pretrained CLIP model
-        :return: IFrameEncoder, image_resolution, vision_width, embed_dim
-        """
         model_path = get_model_path(pretrained_clip_name_or_path)
         pretrained_model: CLIP = torch.jit.load(model_path, map_location="cpu")
         state_dict = pretrained_model.state_dict()
@@ -102,7 +95,6 @@ class IFrameEncoder(VisionTransformer):
             output_dim=embed_dim
         )
         visual_state_dict = pretrained_model.visual.state_dict()
-        # manually build the state dict to make sure pretrained weights are loaded exactly
         visual_state_dict.update({k: v for k, v in rgb_encoder.state_dict().items() if k.startswith("ln_post_hidden")})
         visual_state_dict.update({k: v for k, v in rgb_encoder.state_dict().items() if k.startswith("proj_hidden")})
         rgb_encoder.load_state_dict(visual_state_dict, strict=True)
@@ -110,113 +102,89 @@ class IFrameEncoder(VisionTransformer):
         return rgb_encoder, image_resolution, vision_width, embed_dim
 
 
-class MotionPerceiver(nn.Module):
-    def __init__(self, in_channels: int, width: int, num_query_tokens: int = 4, layers: int = 2, heads: int = 8):
+class MotionGuidedDynamicTokenRouter(nn.Module):
+    def __init__(self, embed_dim: int, total_tokens: int = 64, base_tokens: int = 2, max_gops: int = 8):
         super().__init__()
-        self.conv = nn.Conv2d(in_channels, width, kernel_size=3, padding=1, stride=1)
-        self.query_tokens = nn.Parameter(torch.randn(1, num_query_tokens, width) / (width ** 0.5))
+        self.total_tokens = total_tokens
+        self.base_tokens = base_tokens
         
-        self.layers = nn.ModuleList([
-            nn.ModuleDict({
-                'cross_attn': nn.MultiheadAttention(width, heads, batch_first=True),
-                'ln_q': nn.LayerNorm(width),
-                'ln_kv': nn.LayerNorm(width),
-                'ffn': nn.Sequential(
-                    nn.Linear(width, width * 4),
-                    nn.GELU(),
-                    nn.Linear(width * 4, width)
-                ),
-                'ln_ffn': nn.LayerNorm(width)
-            }) for _ in range(layers)
-        ])
-        self.ln_post = nn.LayerNorm(width)
-        self.output_dim = width
+        self.q_proj = nn.Linear(embed_dim, embed_dim)
+        self.k_proj = nn.Linear(embed_dim, embed_dim)
+        self.temporal_embed = nn.Embedding(max_gops, embed_dim)
 
-    def forward(self, x, output_all_features=True, output_attention_map=False):
-        B = x.shape[0]
-        kv = self.conv(x) # [B, width, H, W]
-        kv = kv.flatten(2).transpose(1, 2) # [B, H*W, width]
+    def forward(self, spatial_patches, motion_tokens, gop_mask):
+        B, num_gops, num_patches, D = spatial_patches.shape
         
-        q = self.query_tokens.expand(B, -1, -1)
+        # 1. GOP-level Motion Weights
+        motion_magnitude = motion_tokens.norm(dim=-1).mean(dim=2) # [B, 8]
+        valid_mask = (gop_mask == 0).float()
+        motion_magnitude = motion_magnitude * valid_mask
         
-        for layer in self.layers:
-            q_norm = layer['ln_q'](q)
-            kv_norm = layer['ln_kv'](kv)
-            attn_out, _ = layer['cross_attn'](query=q_norm, key=kv_norm, value=kv_norm)
-            q = q + attn_out
-            q = q + layer['ffn'](layer['ln_ffn'](q))
+        batch_selected_tokens = []
+        
+        for b in range(B):
+            valid_gops = valid_mask[b].nonzero(as_tuple=True)[0]
+            num_valid = len(valid_gops)
             
-        q = self.ln_post(q)
-        return q, None
-
-
-
-class ActionEncoder(nn.Module):
-    def __init__(self, width: int, layers: int, heads: int, n_bp: int, n_bp_type: int, attn_mask: torch.Tensor = None):
-        super().__init__()
-        self.width = width
-        self.layers = layers
-        self.resblocks = nn.Sequential(*[CrossResidualAttentionBlock(width, heads, attn_mask) for _ in range(layers)])
-
-        self.positional_embedding = nn.Embedding(n_bp, width)
-        self.bp_type_embedding = nn.Embedding(n_bp_type, width)
-
-        self.ln_post = LayerNorm(width)
-
-    def forward(
-            self,
-            feature_bp: torch.FloatTensor,
-            bp_type_ids: torch.LongTensor,
-            feature_ctx: torch.FloatTensor = None,
-            self_mask: torch.Tensor = None
-    ):
-        """
-        Fuse I-frames, motion vectors and residuals.
-        The feature dimension of feature_bp and feature_ctx are the same.
-        :param feature_bp:  (bsz n_gop) n_bp c
-        :param bp_type_ids: (bsz n_gop) n_bp
-        :param feature_ctx: (bsz n_gop) (h w) c
-        :param self_mask: attention mask
-        :return:
-        """
-        assert feature_bp.size(1) == self.positional_embedding.num_embeddings
-        bsz = feature_bp.size(0)
-
-        positional_embedding = self.positional_embedding(
-            torch.LongTensor(list(range(feature_bp.size(1)))).to(feature_bp.device).unsqueeze(0).repeat(bsz, 1)
-        )
-        bp_type_embedding = self.bp_type_embedding(bp_type_ids)
-        feature_bp = feature_bp + positional_embedding + bp_type_embedding
-
-        feature_bp, _, _ = self.resblocks([feature_bp.permute(1, 0, 2), feature_ctx.permute(1, 0, 2), self_mask])
-        feature_bp = torch.mean(feature_bp.permute(1, 0, 2), dim=1)  # pooling
-        return self.ln_post(feature_bp)
+            if num_valid == 0:
+                batch_selected_tokens.append(torch.zeros(self.total_tokens, D, device=spatial_patches.device))
+                continue
+                
+            # 2. Dynamic Budget Allocation
+            budget = self.total_tokens - (num_valid * self.base_tokens)
+            weights = motion_magnitude[b, valid_gops] / (motion_magnitude[b, valid_gops].sum() + 1e-6)
+            
+            exact_allocation = weights * budget
+            floor_allocation = exact_allocation.floor().int()
+            remainder = int(budget - floor_allocation.sum().item())
+            
+            fractional_parts = exact_allocation - floor_allocation
+            top_remainder_indices = torch.topk(fractional_parts, remainder).indices
+            floor_allocation[top_remainder_indices] += 1
+            
+            final_allocation = floor_allocation + self.base_tokens 
+            
+            # 3. Localized Selection with Gradient Bridge
+            video_tokens = []
+            for idx, gop_idx in enumerate(valid_gops):
+                k = final_allocation[idx].item()
+                
+                gop_motion_query = self.q_proj(motion_tokens[b, gop_idx].mean(dim=0)) 
+                gop_spatial_keys = self.k_proj(spatial_patches[b, gop_idx])           
+                
+                relevance = torch.einsum('d, sd -> s', gop_motion_query, gop_spatial_keys) 
+                
+                topk_indices = torch.topk(relevance, k).indices
+                selected_patches = spatial_patches[b, gop_idx, topk_indices] 
+                
+                # ---> THE GRADIENT BRIDGE (Allows GPT-2 Loss to train MotionStudent) <---
+                patch_weights = F.softmax(relevance[topk_indices], dim=-1).unsqueeze(-1)
+                selected_patches = selected_patches * patch_weights 
+                
+                # Add temporal embedding for GPT-2
+                selected_patches = selected_patches + self.temporal_embed(gop_idx)
+                
+                video_tokens.append(selected_patches)
+                
+            batch_selected_tokens.append(torch.cat(video_tokens, dim=0))
+            
+        return torch.stack(batch_selected_tokens, dim=0) # [B, 64, D]
 
 
 class CompressedVideoTransformer(nn.Module):
     def __init__(
             self,
             rgb_encoder: nn.Module,
-            motion_encoder: Optional[nn.Module],
-            residual_encoder: Optional[nn.Module],
-            action_encoder: Optional[nn.Module],
+            motion_encoder: nn.Module,
             output_dim: int,
     ):
-        """
-        Encode visual feature from video compressed domain
-        :param rgb_encoder:
-        :param motion_encoder:
-        :param residual_encoder:
-        :param action_encoder: ActionEncoder used to fuse the rgb, motion and residual features
-        :param output_dim: width of output visual feature
-        """
         super().__init__()
-        assert motion_encoder is not None or residual_encoder is not None
         self.rgb_encoder = rgb_encoder
         self.motion_encoder = motion_encoder
-        self.residual_encoder = residual_encoder
-        self.action_encoder = action_encoder
         self.output_dim = output_dim
+        
+        # Initialize MGDTR
+        self.mgdtr = MotionGuidedDynamicTokenRouter(embed_dim=output_dim, total_tokens=64, base_tokens=2)
 
     def forward(
             self,
@@ -224,105 +192,72 @@ class CompressedVideoTransformer(nn.Module):
             motion: torch.FloatTensor,
             residual: torch.FloatTensor,
             bp_type_ids: torch.LongTensor,
+            input_mask_gop: torch.Tensor,
+            input_mask_mv: torch.Tensor,
             bp_rgb: Optional[torch.FloatTensor] = None,
     ) -> Dict[str, torch.Tensor]:
-        """
 
-        :param iframe:      bsz n_gop c h w
-        :param motion:      bsz n_gop n_bp c_mv h/4 w/4
-        :param residual:    bsz n_gop n_bp c h w
-        :param bp_type_ids: bsz n_gop n_bp
-        :param bp_rgb:      bsz n_gop n_bp c h w (Optional)
-        """
-        # a long list of dimension check
-        assert (len(iframe.shape) == 5 and len(motion.shape) == 6 and len(residual.shape) == 6 and
-                len(bp_type_ids.shape) == 3)
-        assert iframe.size(0) == motion.size(0) == residual.size(0) == bp_type_ids.size(0), "batch size should be equal"
-        assert iframe.size(1) == motion.size(1) == residual.size(1) == bp_type_ids.size(1), "n_gop should be equal"
-        assert motion.size(2) == residual.size(2) == bp_type_ids.size(2), "n_mv and n_res should be equal"
-        assert iframe.size(2) == 3 and motion.size(3) == 4 and residual.size(3) == 3, "channel number is not correct"
-        assert iframe.size(3) == residual.size(4) and motion.size(4) == iframe.size(3) // 4, "height is not correct"
-        assert iframe.size(4) == residual.size(5) and motion.size(5) == iframe.size(4) // 4, "width is not correct"
+        # FIX: Ensure motion has 2 channels (dx, dy)
+        assert iframe.size(2) == 3 and motion.size(3) == 2 and residual.size(3) == 3, "channel number is not correct"
 
         _bsz, n_gop, n_bp = iframe.size(0), motion.size(1), motion.size(2)
 
-        # encode iframe in batches
-        f_ctx_cls, f_ctx_all_hidden, iframe_attn = self.rgb_encoder(
-            einops.rearrange(iframe, "bsz n_gop c h w->(bsz n_gop) c h w"),
-            output_all_features=True, output_attention_map=True
+        # 1. ENCODE I-FRAMES
+        f_ctx_cls, f_ctx_all_hidden, _ = self.rgb_encoder(
+            einops.rearrange(iframe, "bsz n_gop c h w -> (bsz n_gop) c h w"),
+            output_all_features=True, output_attention_map=False
         )
-        f_ctx_cls = einops.rearrange(f_ctx_cls, "(bsz n_gop) c->bsz n_gop c", bsz=_bsz)
-        f_ctx_all_hidden = einops.rearrange(f_ctx_all_hidden, "(bsz n_gop) hw c->bsz n_gop hw c", bsz=_bsz)
-        iframe_attn = einops.rearrange(
-            iframe_attn, "n_layers (bsz n_gop) n_heads h w->n_layers bsz n_gop n_heads h w",
-            bsz=_bsz
-        )
-        # encode motion in batches
-        mv_tokens, mv_attn = self.motion_encoder(
-            einops.rearrange(motion, "bsz n_gop n_bp c_mv h_4 w_4->(bsz n_gop n_bp) c_mv h_4 w_4"),
-            output_all_features=True, output_attention_map=True
-        )
-        mv_tokens = einops.rearrange(mv_tokens, "(bsz n_gop n_bp) num_t c->bsz n_gop n_bp num_t c",
-                                  bsz=_bsz, n_gop=n_gop, n_bp=n_bp)
-        mv_attn = None # Perceiver dummy attention
+        f_ctx_all_hidden = einops.rearrange(f_ctx_all_hidden, "(bsz n_gop) hw c -> bsz n_gop hw c", bsz=_bsz)
 
-        # # fuse rgb, mv and res features through action encoder
-        # if self.training and residual is not None:
-        #     f_bp = mv_cls + res_cls
-        # else:
-        #     #during inference, we rely entirely on the motion features
-        #     f_bp = mv_cls
-        # f_act = self.action_encoder(  # squeeze n_gop into batch before forwarding
-        #     einops.rearrange(f_bp, "bsz n_gop n_bp c->(bsz n_gop) n_bp c"),
-        #     einops.rearrange(bp_type_ids, "bsz n_gop n_bp->(bsz n_gop) n_bp"),
-        #     einops.rearrange(f_ctx_all_hidden, "bsz n_gop hw c->(bsz n_gop) hw c")
-        # )
-        # f_act = einops.rearrange(f_act, "(bsz n_gop) c->bsz n_gop c", bsz=_bsz, n_gop=n_gop)
+        # 2. ENCODE MOTION
+        flat_mask_mv = einops.rearrange(input_mask_mv, "bsz n_gop n_bp -> (bsz n_gop) n_bp")
+        
+        # Output is exactly [B*G, 8, embed_dim]
+        mv_tokens = self.motion_encoder(
+            einops.rearrange(motion, "bsz n_gop n_bp c_mv h w -> (bsz n_gop) n_bp c_mv h w"),
+            input_mask_mv=flat_mask_mv
+        )
+        
+        mv_tokens = einops.rearrange(mv_tokens, "(bsz n_gop) num_t c -> bsz n_gop num_t c", 
+                                     bsz=_bsz, n_gop=n_gop)
+        
+        # 3. MGDTR ROUTING
+        routed_spatial_tokens = self.mgdtr(
+            spatial_patches=f_ctx_all_hidden, 
+            motion_tokens=mv_tokens, 
+            gop_mask=input_mask_gop
+        )
 
         return {
             "feature_context": f_ctx_cls,
-            # "feature_action": f_act,
-            "feature_context_spatial": f_ctx_all_hidden,# [bsz n_gop ,196,c] (16 patches for teacher)
-            # "iframe_attention_map": iframe_attn,
-            # "motion_vector_attention_map": mv_attn,
-            # "residual_attention_map": res_attn,
+            "feature_context_spatial": f_ctx_all_hidden,
+            "routed_spatial_tokens": routed_spatial_tokens,
             "feature_motion": mv_tokens, 
-            "bp_rgb": bp_rgb,
             "residual": residual
         }
 
     @classmethod
     def from_pretrained(
             cls,
-            # rgb encoder cfgs
             pretrained_clip_name_or_path: str = "ViT-B/16",
-            # motion encoder cfgs
-            motion_patch_size: int = 14, motion_layers: int = 2, motion_heads: int = 8,
-            # residual encoder cfgs
-            residual_patch_size: int = 64, residual_layers: int = 2, residual_heads: int = 8,
-            # action encoder cfgs
-            action_layers: int = 1, action_heads: int = 8, n_bp: int = 15
+            motion_embed_dim: int = 256, motion_layers: int = 4, motion_heads: int = 4,
     ):
         rgb_encoder, image_resolution, vision_width, embed_dim = IFrameEncoder.from_pretrained(
             pretrained_clip_name_or_path
         )
 
-        motion_encoder = MotionPerceiver(
-            in_channels=4,
-            width=embed_dim,
-            num_query_tokens=4,
-            layers=motion_layers,
-            heads=motion_heads
+        # Initialize the custom MotionStudent imported from motion_encoder.py
+        motion_encoder = MotionStudent(
+            in_channels=2, 
+            embed_dim=motion_embed_dim, 
+            num_heads=motion_heads, 
+            num_layers=motion_layers
         )
-        # The residual and action encoders are unused during forward passes.
-        # Setting them to None to save significant VRAM and avoid cluttering the summary!
-        residual_encoder = None
-        action_encoder = None
+        
+        # We pass output_dim=embed_dim to ensure MGDTR projects cleanly to 768 later
         return cls(
             rgb_encoder=rgb_encoder,
             motion_encoder=motion_encoder,
-            residual_encoder=residual_encoder,
-            action_encoder=action_encoder,
             output_dim=embed_dim
         )
 
@@ -331,19 +266,10 @@ class CompressedVideoTransformer(nn.Module):
 iframe_encoder_cfg = builds(IFrameEncoder, populate_full_signature=True)
 iframe_encoder_pretrained_cfg = builds(IFrameEncoder.from_pretrained, populate_full_signature=True)
 
-action_encoder_cfg = builds(ActionEncoder, populate_full_signature=True)
-
-# Register the new MotionPerceiver for the config!
-motion_encoder_cfg = builds(MotionPerceiver, populate_full_signature=True)
-residual_encoder_cfg = builds(VisionTransformer, populate_full_signature=True)
-
-
 compressed_video_transformer_cfg = builds(
     CompressedVideoTransformer,
     rgb_encoder=iframe_encoder_cfg,
-    motion_encoder=motion_encoder_cfg,
-    residual_encoder=None,
-    action_encoder=None,
+    motion_encoder=None, # Will be injected by the main script
     populate_full_signature=True
 )
 compressed_video_transformer_pretrained_cfg = builds(

@@ -200,6 +200,14 @@ HavCocap_fixed/dataset/**/*.webm
 HavCocap_fixed/dataset/**/*.zip
 
 
+Cocap_Distilled_MAE/dataset/**/*.mp4
+Cocap_Distilled_MAE/dataset/**/*.avi
+Cocap_Distilled_MAE/dataset/**/*.mov
+Cocap_Distilled_MAE/dataset/**/*.mkv
+Cocap_Distilled_MAE/dataset/**/*.webm
+Cocap_Distilled_MAE/dataset/**/*.zip
+
+
 # Global artifact ignores (all projects)
 *.pt
 *.pth

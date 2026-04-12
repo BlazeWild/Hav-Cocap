@@ -71,7 +71,7 @@ trainer:
   strategy: "ddp_find_unused_parameters_true"
   
   max_epochs: 100
-  accumulate_grad_batches: 16  # 16 x batch_size 4 = Effective Batch 64
+  accumulate_grad_batches: 4  # 8 x batch_size 8 = Effective Batch 64
   
   log_every_n_steps: 1
   num_sanity_val_steps: 0
@@ -99,8 +99,8 @@ train_dataloader:
   dataset:
     split: "train"
   num_workers: 16
-  batch_size: 4
-  prefetch_factor: null
+  batch_size: 16
+  prefetch_factor: 2
   shuffle: True
   pin_memory: True
   multiprocessing_context: "fork"
@@ -109,8 +109,8 @@ val_dataloader:
   dataset:
     split: "val"
   num_workers: 16
-  batch_size: 4
-  prefetch_factor: null
+  batch_size: 16
+  prefetch_factor: 2
   shuffle: False
   pin_memory: True
   multiprocessing_context: "fork"

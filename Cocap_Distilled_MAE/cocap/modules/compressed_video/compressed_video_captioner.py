@@ -1,14 +1,11 @@
 # -*- coding: utf-8 -*-
 # @Time    : 8/6/23
-# @Author  : Yaojie Shen
+# @Author  : Yaojie Shen (Updated for HavCocap GPT-2 136-Token Architecture)
 # @Project : CoCap
 # @File    : compressed_video_captioner.py
 
 __all__ = [
-    "CaptionHead",
     "CompressedVideoCaptioner",
-    "caption_head_cfg",
-    "caption_head_pretrained_cfg",
     "compressed_video_captioner_cfg",
     "compressed_video_captioner_pretrained_cfg",
 ]
@@ -16,275 +13,166 @@ __all__ = [
 import logging
 from typing import *
 
-import numpy as np
 import torch
-from easydict import EasyDict as edict
-from hydra_zen import builds
 from torch import Tensor
 from torch import nn
+from hydra_zen import builds
 
 from cocap.modules.hav_cocap_gpt2 import HavCoCapGPT2
-from cocap.modules.clip.clip import get_model_path
-from cocap.modules.clip.model import CLIP
 from cocap.modules.compressed_video.compressed_video_transformer import CompressedVideoTransformer, \
     compressed_video_transformer_pretrained_cfg, compressed_video_transformer_cfg
 
 logger = logging.getLogger(__name__)
 
-
-class CaptionHead(nn.Module):
-
-    def __init__(
-            self,
-            word_embedding_size: int, visual_feature_size: int,
-            max_v_len: int, max_t_len: int, hidden_size: int,
-            vocab_size: int, verbose: Optional[Union[int, bool]] = False
-    ):
-        super(CaptionHead, self).__init__()
-        self.model_network = "Self"
-        self.cap_config = edict(
-            word_vec_size=word_embedding_size,
-            max_v_len=max_v_len,
-            max_t_len=max_t_len,
-            hidden_size=hidden_size,
-            video_feature_size=visual_feature_size,
-            layer_norm_eps=1e-12,  # bert layernorm
-            hidden_dropout_prob=0.1,  # applies everywhere except attention
-            num_hidden_layers=2,  # number of transformer modules
-            num_attention_heads=8,
-            share_wd_cls_weight=False,
-            vocab_size=vocab_size,
-            BOS_id=vocab_size - 2,
-            EOS_id=vocab_size - 1,
-            PAD_id=0
-        )
-        logger.debug("Caption Head Configuration: %s", self.cap_config)
-        self.cap_sa_decoder = BertSelfEncoder(self.cap_config)
-        self.prediction_head = BertLMPredictionHead(self.cap_config, self.cap_sa_decoder.word_embeddings.weight)
-        # debug output cfgs
-        if verbose:
-            if isinstance(verbose, bool):
-                self.log_interval = 1
-            else:
-                self.log_interval = int(verbose)
-        else:
-            self.log_interval = float("inf")
-        self.step_counter = 1
-
-    @staticmethod
-    @torch.no_grad()
-    def probability2text(predict_scores=None):
-        predict_ids = predict_scores.max(-1)[1]
-        return CaptionHead.ids2text(predict_ids)
-
-    @staticmethod
-    @torch.no_grad()
-    def ids2text(gt_ids: Union[np.ndarray, Tensor]):
-        from cocap.trainer.cocap_trainer import convert_ids_to_sentence
-        if isinstance(gt_ids, np.ndarray) or isinstance(gt_ids, Tensor):
-            assert 0 < len(gt_ids.shape) <= 2, f"gt_ids should be a 1 dim or 2 dim array/tensor, got {gt_ids.shape}"
-        else:
-            raise ValueError("gt_ids should be np.ndarray or Tensor")
-        if isinstance(gt_ids, Tensor):
-            gt_ids = gt_ids.detach().cpu().numpy()
-        if len(gt_ids.shape) == 1:
-            return convert_ids_to_sentence(gt_ids.tolist())
-        else:
-            return [convert_ids_to_sentence(_gt_ids) for _gt_ids in gt_ids.tolist()]
-
-    def forward(self, visual_output, input_ids, input_mask):
-        assert input_ids.size(1) == self.cap_config.max_t_len
-        
-        f_ctx_spatial = visual_output["feature_context_spatial"]  # [bsz, n_gop, 196, c]
-        f_mot = visual_output["feature_motion"]  # [bsz, n_gop, n_bp, num_query_tokens, c]
-
-        # Pool I-frame spatial tokens from 196 (14x14) to 49 (7x7) per GOP.
-        bsz_ctx, n_gop_ctx, n_ctx, c_ctx = f_ctx_spatial.shape
-        assert n_ctx == 196, f"Expected 196 I-frame spatial tokens, got {n_ctx}"
-        f_ctx = f_ctx_spatial.reshape(bsz_ctx, n_gop_ctx, 14, 14, c_ctx)
-        f_ctx = f_ctx.reshape(bsz_ctx, n_gop_ctx, 7, 2, 7, 2, c_ctx).mean(dim=(3, 5))
-        f_ctx = f_ctx.reshape(bsz_ctx, n_gop_ctx, 49, c_ctx)
-        f_ctx_flat = f_ctx.reshape(bsz_ctx, n_gop_ctx * 49, c_ctx)
-
-        # flatten GOP, BP, and motion tokens into a continuous sequence
-        bsz, n_gop, n_bp, num_tokens, c = f_mot.shape
-        f_mot_flat = f_mot.reshape(bsz, n_gop*n_bp*num_tokens, c)
-
-        input_types = torch.concat(
-            [
-                torch.full((f_ctx_flat.size(0), f_ctx_flat.size(1)), 1, dtype=torch.long, device=f_ctx_flat.device),
-                torch.full((f_mot_flat.size(0), f_mot_flat.size(1)), 0, dtype=torch.long, device=f_mot_flat.device),
-                torch.full((input_ids.size(0), input_ids.size(1)), 2, dtype=torch.long, device=input_ids.device)
-            ], dim=1
-        )
-        visual_concat = torch.cat([f_ctx_flat, f_mot_flat], dim=1)
-
-        input_mask = torch.concat(
-            [
-                torch.ones(size=(visual_concat.size(0), visual_concat.size(1)),
-                           dtype=torch.long, device=visual_concat.device),
-                input_mask
-            ], dim=1
-        )
-        hidden = self.cap_sa_decoder.forward(visual_concat, input_ids, input_mask, input_types)
-        prediction_scores = self.prediction_head(hidden[:, -self.cap_config.max_t_len:])
-
-        if self.step_counter % self.log_interval == 0:
-            logger.debug("GT  : %s", self.ids2text(input_ids))
-            logger.debug("Pred: %s", self.probability2text(prediction_scores))
-        self.step_counter += 1
-        return prediction_scores
-
-    @classmethod
-    def from_pretrained(
-            cls,
-            pretrained_clip_name_or_path: str = "ViT-B/16", max_v_len: int = 1928, max_t_len: int = 77,
-            verbose: Optional[Union[int, bool]] = False
-    ):
-        model_path = get_model_path(pretrained_clip_name_or_path, download_root="model_zoo/clip_model")
-        pretrained_model: CLIP = torch.jit.load(model_path, map_location="cpu")
-        state_dict = pretrained_model.state_dict()
-
-        embed_dim = state_dict["text_projection"].shape[1]
-        vocab_size = state_dict["token_embedding.weight"].shape[0]
-        transformer_width = state_dict["ln_final.weight"].shape[0]
-
-        head = cls(
-            word_embedding_size=transformer_width,
-            visual_feature_size=embed_dim,
-            max_v_len=max_v_len,
-            max_t_len=max_t_len,
-            hidden_size=embed_dim,
-            vocab_size=vocab_size,
-            verbose=verbose
-        )
-        logger.debug(
-            "Pretrained embedding parameters: %s",
-            [k for k, v in state_dict.items() if k.startswith("token_embedding")]
-        )
-        pretrained_embedding = {k.lstrip("token_embedding."): v for k, v in state_dict.items()
-                                if k.startswith("token_embedding")}
-        head.cap_sa_decoder.word_embeddings.load_state_dict(pretrained_embedding, strict=True)
-        head.prediction_head.decoder.load_state_dict(pretrained_embedding, strict=True)
-        assert torch.equal(head.cap_sa_decoder.word_embeddings.weight, head.prediction_head.decoder.weight)
-        return head
-
-
-class TeacherTransformer(nn.Module):
-    def __init__(self, d_model: int, n_head: int = 8, layers: int = 2):
-        super().__init__()
-        encoder_layer = nn.TransformerEncoderLayer(d_model=d_model, nhead=n_head, batch_first=True)
-        self.transformer = nn.TransformerEncoder(encoder_layer, num_layers=layers)
-        self.proj = nn.Linear(d_model, d_model)
-
-    def forward(self, iframe_spatial, mv_tokens):
-        # iframe_spatial: [Batch, 196, c]
-        # mv_tokens: [Batch, num_tokens, c]
-        x = torch.cat([iframe_spatial, mv_tokens], dim=1) # [Batch, 196 + num_tokens, c]
-        out = self.transformer(x)
-        # Predict only the 196 spatial patches of the P-frame
-        return self.proj(out[:, :196, :]) 
-
-
 class CompressedVideoCaptioner(nn.Module):
     def __init__(
             self,
             compressed_video_transformer: CompressedVideoTransformer,
-            caption_head: CaptionHead,
+            gpt2_model_path: str = "model_zoo/gpt2_model",
             motion_dropout_prob: float = 0.2,
-            residual_dropout_prob: float = 0.2,
     ):
         super().__init__()
         self.compressed_video_transformer = compressed_video_transformer
-        self.caption_head = caption_head
-        
-        # ADDED THE TEACHER
-        self.teacher = TeacherTransformer(d_model=caption_head.cap_config.video_feature_size)
         self.dropout_motion = nn.Dropout(motion_dropout_prob)
 
+        # 1. Initialize GPT-2 Decoder
+        self.gpt2 = HavCoCapGPT2.from_pretrained(gpt2_model_path)
+        
+        # Determine the hidden dimensions
+        gpt_dim = self.gpt2.config.hidden_size # 768
+        cv_dim = self.compressed_video_transformer.output_dim # 768 (from CLIP ViT-B)
+        
+        # ==========================================================
+        # THE PROJECTION LAYERS (The "Translators")
+        # No residuals. Just raw linear translation.
+        # ==========================================================
+        self.proj_spatial = nn.Linear(cv_dim, gpt_dim)
+        
+        # Motion queries have their own projection to map them to text space
         if hasattr(self.compressed_video_transformer.motion_encoder, 'output_dim'):
             mv_width = self.compressed_video_transformer.motion_encoder.output_dim
-            self.mv_proj = nn.Linear(mv_width, caption_head.cap_config.video_feature_size)
+            self.proj_motion = nn.Linear(mv_width, gpt_dim)
         else:
-            self.mv_proj = nn.Identity()
+            self.proj_motion = nn.Linear(cv_dim, gpt_dim)
 
     def forward(self, inputs: Dict[str, Union[Tensor, Dict[str, Tensor]]]):
+        """
+        Phase 2 Forward Pass:
+        Extracts visual tokens via MGDTR, builds the 136-token Visual Prefix, and feeds it to GPT-2.
+        """
+        # --- 1. VISUAL EXTRACTION ---
         if "visual_output" not in inputs:
             iframe = inputs["video"]["iframe"]
             motion = self.dropout_motion(inputs["video"]["motion_vector"])
-            residual = inputs["video"]["residual"] / 128 - 1  
-            bp_type_ids = inputs["video"]["type_ids_mv"]
-            # No longer need bp_rgb since we are doing Delta Distillation
-            bp_rgb = inputs["video"].get("bp_rgb", None)
+            input_mask_gop = inputs["video"]["input_mask_gop"]
+            input_mask_mv = inputs["video"]["input_mask_mv"]
 
+            # Process through the backbone and MGDTR
             compressed_visual_features = self.compressed_video_transformer(
-                iframe=iframe, motion=motion, residual=residual, 
-                bp_type_ids=bp_type_ids, bp_rgb=bp_rgb
+                iframe=iframe, 
+                motion=motion, 
+                residual=torch.zeros_like(iframe), # Dummy to satisfy signature
+                bp_type_ids=torch.zeros((iframe.size(0), iframe.size(1), motion.size(2)), dtype=torch.long, device=iframe.device),
+                input_mask_gop=input_mask_gop,
+                input_mask_mv=input_mask_mv
             )
         else:
             compressed_visual_features = inputs["visual_output"]
 
+        # --- 2. TRANSLATE VISUALS TO GPT-2 SPACE ---
+        # A. I-Frame Context [B, 8, 768]
+        f_ctx_proj = self.proj_spatial(compressed_visual_features["feature_context"])
+        
+        # B. MGDTR Routed Spatial Patches [B, 64, 768]
+        f_spatial_proj = self.proj_spatial(compressed_visual_features["routed_spatial_tokens"])
+        
+        # C. Motion Queries [B, 8, 8, 256] -> Flatten to [B, 64, 256] -> Translate to [B, 64, 768]
         f_mot = compressed_visual_features["feature_motion"]
-        if f_mot.size(-1) != self.caption_head.cap_config.video_feature_size:
-            compressed_visual_features["feature_motion"] = self.mv_proj(f_mot)
+        B, n_gop, num_t, mv_width = f_mot.shape # num_t is exactly 8 from your MotionStudent
+        f_mot_flat = f_mot.reshape(B, n_gop * num_t, mv_width) 
+        f_mot_proj = self.proj_motion(f_mot_flat) # [B, 64, 768]
+        
+        # ORDER: Context (8) -> Spatial Details (64) -> Temporal Motion (64)
+        visual_prompt = torch.cat([f_ctx_proj, f_spatial_proj, f_mot_proj], dim=1) # [B, 136, 768]
+        visual_mask = torch.ones((B, visual_prompt.size(1)), dtype=torch.long, device=visual_prompt.device)
 
-        prediction_scores = self.caption_head(
-            compressed_visual_features, inputs["input_ids"], inputs["input_mask"]
+        # --- 3. CONCATENATE WITH TEXT & BOS TOKEN ---
+        text_ids = inputs["input_ids"] # [B, max_words] (Starts with <BOS>)
+        text_mask = inputs["input_mask"]
+        text_labels = inputs["input_labels"]
+        
+        # Grab GPT-2's internal word embedding matrix to translate IDs into embeddings
+        text_embeds = self.gpt2.transformer.wte(text_ids) # [B, max_words, 768]
+        
+        # Sequence: [Visual Tokens (136)] + [<BOS> + Text Tokens (max_words)]
+        full_embeds = torch.cat([visual_prompt, text_embeds], dim=1)
+        full_mask = torch.cat([visual_mask, text_mask], dim=1)
+        
+        # For the labels, pad the 136 visual tokens with -100 to prevent calculating text loss on video frames
+        visual_labels = torch.full((B, visual_prompt.size(1)), -100, dtype=torch.long, device=text_labels.device)
+        full_labels = torch.cat([visual_labels, text_labels], dim=1)
+
+        # --- 4. GPT-2 FORWARD PASS ---
+        outputs = self.gpt2(
+            inputs_embeds=full_embeds,
+            attention_mask=full_mask,
+            labels=full_labels
         )
         
-        ret_dict = {
-            "prediction_scores": prediction_scores, 
+        return {
+            "loss": outputs.loss,
+            "prediction_scores": outputs.logits, 
             "visual_output": compressed_visual_features
         }
 
-        # --- TEACHER LOGIC (LATENT DELTA DISTILLATION) ---
-        if self.training:
-            # 1. Extract raw I-frames
-            iframe = inputs["video"]["iframe"] if "video" in inputs else inputs["iframe"]
-            bsz, n_gop = iframe.shape[:2]
-            
-            # 2. The T+1 Shift Hack (No Dataloader changes needed)
-            # Shift by 1, duplicate the last frame to maintain shape
-            next_iframe = torch.cat([iframe[:, 1:], iframe[:, -1:]], dim=1)
-            flat_next_iframe = next_iframe.reshape(-1, 3, 224, 224)
-            
-            # 3. Get Ground Truth 196 Patches of the NEXT I-frame
-            with torch.no_grad():
-                gt_outputs = self.compressed_video_transformer.rgb_encoder(flat_next_iframe, output_all_features=True)
-                gt_spatial_next = gt_outputs[1] # [bsz*n_gop, 196, c]
-            
-            # 4. Get Current I-frame Spatial Tokens
-            i_spatial = compressed_visual_features["feature_context_spatial"] # [bsz, n_gop, 196, c]
-            i_spatial_flat = i_spatial.reshape(-1, 196, gt_spatial_next.size(-1))
-            
-            # 5. Calculate Target Delta (CLIP_{t+1} - CLIP_t)
-            target_delta = gt_spatial_next - i_spatial_flat
-            
-            # 6. Predict Delta using Teacher
-            mv_tokens = compressed_visual_features["feature_motion"] # [bsz, n_gop, n_bp, num_tokens, c]
-            num_tokens = mv_tokens.size(-2)
-            mv_tokens_flat = mv_tokens.reshape(-1, num_tokens, mv_tokens.size(-1))
-            
-            predicted_delta = self.teacher(i_spatial_flat, mv_tokens_flat)
-            
-            ret_dict["teacher_predicted"] = predicted_delta
-            ret_dict["teacher_target"] = target_delta
+    @torch.no_grad()
+    def generate(self, inputs: Dict[str, Union[Tensor, Dict[str, Tensor]]], max_new_tokens: int = 20):
+        """
+        Called during validation/testing to auto-regressively generate captions.
+        """
+        iframe = inputs["video"]["iframe"]
+        motion = inputs["video"]["motion_vector"]
+        input_mask_gop = inputs["video"]["input_mask_gop"]
+        input_mask_mv = inputs["video"]["input_mask_mv"]
 
-        return ret_dict
+        visual_features = self.compressed_video_transformer(
+            iframe=iframe, 
+            motion=motion, 
+            residual=torch.zeros_like(iframe), 
+            bp_type_ids=torch.zeros((iframe.size(0), iframe.size(1), motion.size(2)), dtype=torch.long, device=iframe.device),
+            input_mask_gop=input_mask_gop,
+            input_mask_mv=input_mask_mv
+        )
+        
+        f_ctx_proj = self.proj_spatial(visual_features["feature_context"])
+        f_spatial_proj = self.proj_spatial(visual_features["routed_spatial_tokens"])
+        
+        f_mot = visual_features["feature_motion"]
+        B, n_gop, num_t, mv_width = f_mot.shape
+        f_mot_proj = self.proj_motion(f_mot.reshape(B, n_gop * num_t, mv_width))
+        
+        visual_prompt = torch.cat([f_ctx_proj, f_spatial_proj, f_mot_proj], dim=1)
+        visual_attention_mask = torch.ones((B, visual_prompt.size(1)), dtype=torch.long, device=visual_prompt.device)
+        
+        generated_ids = self.gpt2.generate(
+            inputs_embeds=visual_prompt,
+            attention_mask=visual_attention_mask,
+            max_new_tokens=max_new_tokens,
+            bos_token_id=self.gpt2.config.bos_token_id,
+            eos_token_id=self.gpt2.config.eos_token_id,
+            pad_token_id=self.gpt2.config.eos_token_id
+        )
+        
+        return generated_ids
 
 # Build configs for organizing modules with hydra
-caption_head_cfg = builds(CaptionHead, populate_full_signature=True)
-caption_head_pretrained_cfg = builds(CaptionHead.from_pretrained, populate_full_signature=True)
-
 compressed_video_captioner_cfg = builds(
     CompressedVideoCaptioner,
     compressed_video_transformer=compressed_video_transformer_cfg,
-    caption_head=caption_head_cfg,
     populate_full_signature=True
 )
 compressed_video_captioner_pretrained_cfg = builds(
     CompressedVideoCaptioner,
     compressed_video_transformer=compressed_video_transformer_pretrained_cfg,
-    caption_head=caption_head_pretrained_cfg,
     populate_full_signature=True
 )

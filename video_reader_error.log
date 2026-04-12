@@ -790,3 +790,29 @@ Traceback (most recent call last):
   File "/home/ashok/Documents/blaze/Hav-Cocap/HavCocap_new/havcocap_new/data/datasets/compressed_video/video_readers.py", line 165, in read_frames_compressed_domain
     import cv_reader
 ModuleNotFoundError: No module named 'cv_reader'
+Traceback (most recent call last):
+  File "/home/blaze/Hav-Cocap/Cocap_Distilled_MAE/cocap/data/datasets/compressed_video/video_readers.py", line 182, in read_frames_compressed_domain
+    with open(f"{video_path}.{t}", "rb") as f:
+FileNotFoundError: [Errno 2] No such file or directory: '/home/blaze/Hav-Cocap/Cocap_Distilled_MAE/dataset/vatex/videos_240_h264_keyint_60/Ul2_fxFirsY_000214_000224.mp4.pict_type'
+Traceback (most recent call last):
+  File "/home/blaze/Hav-Cocap/Cocap_Distilled_MAE/cocap/data/datasets/compressed_video/video_readers.py", line 277, in read_frames_compressed_domain
+    iframe = [cur_gop["rgb"] for cur_gop in i_frame_gop]
+  File "/home/blaze/Hav-Cocap/Cocap_Distilled_MAE/cocap/data/datasets/compressed_video/video_readers.py", line 277, in <listcomp>
+    iframe = [cur_gop["rgb"] for cur_gop in i_frame_gop]
+KeyError: 'rgb'
+Traceback (most recent call last):
+  File "/home/blaze/Hav-Cocap/Cocap_Distilled_MAE/cocap/data/datasets/compressed_video/video_readers.py", line 277, in read_frames_compressed_domain
+    iframe = [cur_gop["rgb"] for cur_gop in i_frame_gop]
+  File "/home/blaze/Hav-Cocap/Cocap_Distilled_MAE/cocap/data/datasets/compressed_video/video_readers.py", line 277, in <listcomp>
+    iframe = [cur_gop["rgb"] for cur_gop in i_frame_gop]
+KeyError: 'rgb'
+Traceback (most recent call last):
+  File "/home/blaze/Hav-Cocap/Cocap_Distilled_MAE/cocap/data/datasets/compressed_video/video_readers.py", line 277, in read_frames_compressed_domain
+    iframe = [cur_gop["rgb"] for cur_gop in i_frame_gop]
+  File "/home/blaze/Hav-Cocap/Cocap_Distilled_MAE/cocap/data/datasets/compressed_video/video_readers.py", line 277, in <listcomp>
+    iframe = [cur_gop["rgb"] for cur_gop in i_frame_gop]
+KeyError: 'rgb'
+Traceback (most recent call last):
+  File "/home/blaze/Hav-Cocap/Cocap_Distilled_MAE/cocap/data/datasets/compressed_video/video_readers.py", line 252, in read_frames_compressed_domain
+    mag = mag_per_frame[i].item()
+RuntimeError: a Tensor with 2 elements cannot be converted to Scalar

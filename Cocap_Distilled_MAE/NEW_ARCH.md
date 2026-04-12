@@ -29,7 +29,7 @@
 * **Core:** 2-layer Transformer ($d_{model}=512$, $heads=8$).
 * **MAE Masking:** Applies a **0.75 (75%) random masking ratio** to the current I-frame ($I_t$) spatial patches to force reliance on motion vectors.
 * **Latent Glue:** Projects Student features ($256 \to 512$) and prefixes them to the masked $I_t$ patches.
-* **Task:** Predicts the **Latent Semantic Delta** ($CLIP_{t+1} - CLIP_t$).
+* **Task:** Predicts the **Latent Semantic Delta** ($CLIP(P_{Last\_Valid}) - CLIP(I_t)$) — a **closed-loop** target within the same GOP.
 
 ### C. Language Bridge & Decoder
 * **Vision Backbone:** Frozen CLIP ViT-B/16.
@@ -61,7 +61,7 @@ $$\mathcal{L}_{Phase1} = \lambda_{mse} ||\Delta_{pred} - \Delta_{target}||^2 + \
 ---
 
 ## 4. Auditor/Reviewer Checklist
-- [ ] **Shift Hack:** Ensure `lm_cocap.py` implements the $t+1$ tensor shift for target generation.
+- [ ] **Closed-Loop GOP:** Ensure Phase 1 target uses `CLIP(P_LastValid) - CLIP(I_t)` (NOT cross-GOP shift hack).
 - [ ] **Strict Offline:** Check `HavCoCapGPT2` and `tokenizer` for `local_files_only=True`.
 - [ ] **Stride Fix:** Verify `MotionStudent` Conv3D stem uses `stride=(1, 2, 2)`.
 - [ ] **Phase Toggling:** Confirm `PhaseAwareLoss` dynamically switches loss functions based on `self.phase`.

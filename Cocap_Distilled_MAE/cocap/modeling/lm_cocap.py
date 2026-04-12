@@ -138,18 +138,24 @@ class CoCapLM(pl.LightningModule):
 
     def training_step(self, batch, batch_idx):
         iframes = batch["video"]["iframe"] if "video" in batch else batch["iframe"]
+        motion_vectors = batch["video"]["motion_vector"] if "video" in batch else batch["motion"]
         
-        # --- THE T+1 SHIFT HACK ---
-        # Shift frames left by 1 to get t+1. Duplicate the last frame to maintain G=8.
-        next_iframes = torch.cat([iframes[:, 1:], iframes[:, -1:]], dim=1)
+        # CLOSED-LOOP GOP: Last valid P-frame per GOP (from dataloader)
+        # Used by Phase 1 & 3 for target = CLIP(P_last) - CLIP(I_t)
+        last_p_frames = None
+        if "video" in batch and "last_p_frame" in batch["video"]:
+            last_p_frames = batch["video"]["last_p_frame"]
+        elif "last_p_frame" in batch:
+            last_p_frames = batch["last_p_frame"]
         
-        # Pass the shifted frames to the model
+        # Pass to model — Phase 1 needs last_p_frames for distillation target
         outputs = self.model(
             iframes=iframes, 
-            motion_vectors=batch["video"]["motion_vector"] if "video" in batch else batch["motion"], 
+            motion_vectors=motion_vectors,
             input_ids=batch["input_ids"], 
             attention_mask=batch["input_mask"], 
-            labels=batch["input_labels"]
+            labels=batch["input_labels"],
+            last_p_frames=last_p_frames
         )
         
         loss = self.loss(target=batch, output=outputs, phase=self.phase)
@@ -242,11 +248,22 @@ class CoCapLM(pl.LightningModule):
 # =====================================================================
 # HYDRA CONFIGURATION BUILDERS
 # =====================================================================
+from cocap.modules.compressed_video.motion_encoder import MotionTransformer
+
+# Use absolute paths because Hydra changes the current working directory during execution
+_BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # 1. Build the Hav-CoCap GPT-2 Architecture
 hav_cocap_cfg = builds(
     HavCoCapGPT2,
-    gpt2_model_path="./model_zoo/gpt2_model", # MUST point to your local offline folder!
+    gpt2_model_path=os.path.join(_BASE_DIR, "model_zoo", "gpt2_model"), 
+    
+    # --- ADDED MISSING MANDATORY VALUES ---
+    clip_state_dict=os.path.join(_BASE_DIR, "model_zoo", "clip_model", "ViT-B-16.pt"),
+    
+    motion_encoder=builds(MotionTransformer, populate_full_signature=True), 
+    # --------------------------------------
+    
     populate_full_signature=True
 )
 

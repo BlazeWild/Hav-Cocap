@@ -35,7 +35,7 @@ class VATEXCaptioningDataset(data.Dataset):
             metadata: str,
             video_reader: str,
             cv_config: CVConfig,
-            split: Literal["train", "val", "test"], # ADDED "val"
+            split: Literal["train", "val", "test"],
     ):
         self.split = split
         self.video_root = video_root
@@ -43,32 +43,51 @@ class VATEXCaptioningDataset(data.Dataset):
         self.max_frames = max_frames
         self.unfold_sentences = unfold_sentences  
         self.height, self.width = video_size
-        self.sentences = []  
         self.h265_cfg = cv_config
         metadata = load_json(metadata)
 
-        # Initialize the correct tokenizer for Phase 3 SFT
-        self.tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
-        self.tokenizer.pad_token = self.tokenizer.eos_token
-
-        split_video_ids = metadata[split].copy()
+        # --- HAV-COCAP CHANGE: Offline Tokenizer Loading ---
+        _BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))))
+        offline_gpt2_path = os.path.join(_BASE_DIR, "model_zoo", "gpt2_model")
         
+        self.tokenizer = GPT2Tokenizer.from_pretrained(
+            offline_gpt2_path, 
+            local_files_only=True
+        )
+        self.tokenizer.pad_token = self.tokenizer.eos_token
+        # --------------------------------------------------
+
+        split_video_ids = {v["video_id"] for v in metadata["videos"] if v["split"] == split}
+        
+        all_candidate_sentences = []
         if self.unfold_sentences:
-            for item in metadata["metadata"]:
+            for item in metadata["annotations"]:
                 if item["video_id"] in split_video_ids:
-                    self.sentences.append([item["video_id"], [item["sentence"]]])
+                    all_candidate_sentences.append([item["video_id"], [item["caption"]]])
                     if split in ("val", "test"):
-                        split_video_ids.remove(item["video_id"])
+                        if item["video_id"] in split_video_ids:
+                            split_video_ids.remove(item["video_id"])
         else:
             vid2sentence = defaultdict(list)
-            for item in metadata["metadata"]:
+            for item in metadata["annotations"]:
                 if item["video_id"] in split_video_ids:
-                    vid2sentence[item["video_id"]].append(item["sentence"])
-            self.sentences = list(vid2sentence.items())
+                    vid2sentence[item["video_id"]].append(item["caption"])
+            all_candidate_sentences = list(vid2sentence.items())
+
+        # --- HAV-COCAP CHANGE: Dataset Filtering ---
+        print(f"--- Initializing VATEX {split} split with {len(all_candidate_sentences)} total entries ---")
+        self.sentences = []
+        for vid_id, caps in all_candidate_sentences:
+            v_path = self._get_video_path(vid_id)
+            if os.path.exists(v_path):
+                self.sentences.append([vid_id, caps])
+        
+        print(f"--- Filtering Complete: Found {len(self.sentences)} valid video files out of {len(all_candidate_sentences)} entries ---")
+        # ---------------------------------------------
 
         self.video_reader = VIDEO_READER_REGISTRY.get(video_reader)
         
-        # Transforms (Perfectly safe for our 2-channel MVs)
+        # Transforms (Perfectly safe for our 2-channel MVs thanks to the physics fix)
         normalize = DictNormalize(mean=(0.485, 0.456, 0.406), std=(0.229, 0.224, 0.225))
         if split == "train":
             self.transform = transforms.Compose([
@@ -76,7 +95,7 @@ class VATEXCaptioningDataset(data.Dataset):
                 DictRandomHorizontalFlip(),
                 normalize
             ])
-        elif split in ("val", "test"): # ADDED "val"
+        elif split in ("val", "test"):
             self.transform = transforms.Compose([
                 DictCenterCrop((self.height, self.width)),
                 normalize
@@ -84,11 +103,12 @@ class VATEXCaptioningDataset(data.Dataset):
         else:
             raise NotImplementedError
 
-        if split in ("val", "test"): # ADDED "val"
-            json_ref = {k: [] for k in metadata[split]}
-            for sentence in metadata["metadata"]:
-                if sentence["video_id"] in json_ref:
-                    json_ref[sentence["video_id"]].append(sentence["sentence"])
+        if split in ("val", "test"):
+            ids_for_ref = {v["video_id"] for v in metadata["videos"] if v["split"] == split}
+            json_ref = {k: [] for k in ids_for_ref}
+            for anno in metadata["annotations"]:
+                if anno["video_id"] in json_ref:
+                    json_ref[anno["video_id"]].append(anno["caption"])
             self.json_ref = json_ref
 
     def __len__(self):
@@ -109,12 +129,16 @@ class VATEXCaptioningDataset(data.Dataset):
 
     def __getitem__(self, idx):
         video_id, sentence_list = self.sentences[idx]
-        sentence = random.choice(sentence_list)
+        raw_sentence = random.choice(sentence_list)
 
-        # --- HAV-COCAP CHANGE: GPT-2 Tokenization ---
-        # Encode the text using GPT-2's BPE vocabulary
+        # ==========================================================
+        # FIX: GPT-2 EOS TOKEN APPENDING
+        # If you don't do this, the model will never learn to stop typing.
+        # ==========================================================
+        sentence_with_eos = raw_sentence + " " + self.tokenizer.eos_token
+
         encoded_dict = self.tokenizer(
-            sentence,
+            sentence_with_eos,
             max_length=self.max_words,
             padding="max_length",
             truncation=True,
@@ -126,17 +150,17 @@ class VATEXCaptioningDataset(data.Dataset):
 
         # Autoregressive shifting for GPT-2 targets
         input_labels = input_ids.clone()
-        # tell pytorch to ignore padding in the loss calculation
+        # Tell PyTorch's CrossEntropyLoss to ignore the padding tokens
         input_labels[input_ids == self.tokenizer.pad_token_id] = -100
-        # --------------------------------------------
 
+        # video is a dictionary containing: iframe, motion_vector, last_p_frame, input_mask_gop, input_mask_mv
         video, video_mask = self._get_video(video_id)
         
         return {
-            "video": video,
-            "video_mask": video_mask,
-            "input_ids": input_ids,
-            "input_labels": input_labels,
-            "input_mask": input_mask,
-            "metadata": (video_id, sentence)
+            "video": video,                 # Your nested dict of 2D Sub-GOP tensors
+            "video_mask": video_mask,       # Standard global max_frames mask
+            "input_ids": input_ids,         # GPT-2 text tokens
+            "input_labels": input_labels,   # GPT-2 targets (with -100 for padding)
+            "input_mask": input_mask,       # GPT-2 attention mask
+            "metadata": (video_id, raw_sentence)
         }

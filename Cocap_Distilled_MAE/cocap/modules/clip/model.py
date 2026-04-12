@@ -260,8 +260,10 @@ class VisionTransformer(nn.Module):
 
         outputs = (cls_feature,)
         if output_all_features:
-            # cls token is not included
-            outputs += (x[:, 1:, :],)
+            # RETURN FULL 197-TOKEN UNPROJECTED TENSOR (Shape: [Batch, 197, 768])
+            # This applies LayerNorm to everything and completely bypasses self.proj
+            outputs += (self.ln_post(x),)
+            
         if output_attention_map:
             # attention_map: n_layers, batch_size, n_heads, h, w
             outputs += (einops.rearrange(attn[:, :, :, 0, 1:],

@@ -1,7 +1,7 @@
 _target_: "cocap.data.datasets.compressed_video.dataset_vatex.VATEXCaptioningDataset"
 
-video_root: "./dataset/vatex/videos_240_h264_keyint_60"
-metadata: "./dataset/vatex/VATEX_caption.json"
+video_root: "${hydra:runtime.cwd}/dataset/vatex/videos_240_h264_keyint_60"
+metadata: "${hydra:runtime.cwd}/dataset/vatex/VATEX_caption.json"
 
 video_reader: "read_frames_compressed_domain"
 max_frames: 8

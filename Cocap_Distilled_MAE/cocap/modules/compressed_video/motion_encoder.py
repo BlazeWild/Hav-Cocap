@@ -1,44 +1,14 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from typing import Optional, Tuple
+from typing import Optional
 
 # =====================================================================
-# 1. PRE-PROCESSING: CAUSAL MASKING & SAFE POOLER
-# =====================================================================
-def safe_causal_motion_pooling(p_frame_mvs, eps=0.01, cut_threshold=0.15):
-    """
-    Strips out imposter P-frames and duplicate zero-MV frames before 
-    pooling the 29 GOP MVs down to 8 tokens.
-    """
-    B_G, C, T, H, W = p_frame_mvs.shape
-    
-    # Filter Duplicates
-    mag = p_frame_mvs.abs().mean(dim=(1, 3, 4))
-    is_real = (mag > eps).float() 
-    
-    # Detect Scene Cuts (Cosine similarity between consecutive MVs)
-    flat_mvs = p_frame_mvs.permute(0, 2, 1, 3, 4).reshape(B_G, T, -1)
-    sim = F.cosine_similarity(flat_mvs[:, :-1, :], flat_mvs[:, 1:, :], dim=2)
-    sim = torch.cat([torch.ones(B_G, 1, device=sim.device), sim], dim=1)
-    
-    # Causal Mask: Once a cut is detected, everything after it is ignored
-    valid_scene = ((sim < cut_threshold).float().cumsum(dim=1) == 0).float()
-    final_mask = (is_real * valid_scene).view(B_G, 1, T, 1, 1)
-    
-    # Safe Masked Pooling
-    pool_raw = F.adaptive_avg_pool3d(p_frame_mvs * final_mask, (8, H, W))
-    pool_mask = F.adaptive_avg_pool3d(final_mask, (8, 1, 1))
-    
-    corrected = pool_raw / pool_mask.clamp(min=1e-3)
-    return corrected.masked_fill(pool_mask < eps, 0.0)
-
-# =====================================================================
-# 2. HELPER: RANDOM MASKING (MAE STYLE)
+# 1. HELPER: RANDOM MASKING (MAE STYLE)
 # =====================================================================
 def random_masking(x, mask_ratio):
     """
-    Standard MAE masking logic.
+    Standard MAE masking logic for the spatial patches.
     """
     N, L, D = x.shape
     len_keep = int(L * (1 - mask_ratio))
@@ -57,43 +27,88 @@ def random_masking(x, mask_ratio):
     return x_masked, mask, ids_restore
 
 # =====================================================================
-# 3. CLASS: MOTION STUDENT (The Inference Encoder)
+# 2. CLASS: MOTION STUDENT (The Phase 1 Encoder & Phase 2 Backbone)
 # =====================================================================
 class MotionStudent(nn.Module):
-    def __init__(self, embed_dim=256, num_heads=4, num_layers=3):
+    def __init__(self, in_channels=2, embed_dim=256, num_heads=4, num_layers=4):
         super().__init__()
-        # Conv3D Stem: Stride (1, 2, 2) to maintain the 8 temporal tokens
-        self.stem = nn.Sequential(
-            nn.Conv3d(2, 64, kernel_size=(5, 3, 3), stride=(1, 2, 2), padding=(2, 1, 1)),
-            nn.BatchNorm3d(64),
-            nn.GELU(),
-            nn.Conv3d(64, embed_dim, kernel_size=(3, 3, 3), stride=(1, 2, 2), padding=(1, 1, 1)),
-            nn.BatchNorm3d(embed_dim),
-            nn.GELU()
-        )
-        self.pool = nn.AdaptiveAvgPool3d((8, 1, 1))
         
+        # 1. Spatial Stem (Process variable frames independently)
+        self.stem = nn.Sequential(
+            nn.Conv2d(in_channels, 64, kernel_size=3, stride=2, padding=1),
+            nn.BatchNorm2d(64),
+            nn.GELU(),
+            nn.Conv2d(64, embed_dim, kernel_size=3, stride=2, padding=1),
+            nn.BatchNorm2d(embed_dim),
+            nn.GELU(),
+            nn.AdaptiveAvgPool2d((1, 1)) # Condense each frame to a single vector
+        )
+        
+        # 2. The Bottleneck: 8 Learnable Motion Queries
+        self.motion_queries = nn.Parameter(torch.randn(1, 8, embed_dim) / (embed_dim ** 0.5))
+        
+        # 3. Cross-Attention (Squashes variable frames -> exactly 8 tokens)
+        self.cross_attn = nn.MultiheadAttention(embed_dim, num_heads, batch_first=True)
+        self.ln_q = nn.LayerNorm(embed_dim)
+        self.ln_kv = nn.LayerNorm(embed_dim)
+        
+        # 4. Temporal Transformer (Chronological reasoning)
         encoder_layer = nn.TransformerEncoderLayer(
             d_model=embed_dim, nhead=num_heads, dim_feedforward=embed_dim*4, batch_first=True
         )
         self.transformer = nn.TransformerEncoder(encoder_layer, num_layers=num_layers)
 
-    def forward(self, mvs):
-        # MVs come in as [B*G, 29, 2, 56, 56]
-        x = mvs.permute(0, 2, 1, 3, 4)      # [B*G, 2, 29, 56, 56]
-        x = safe_causal_motion_pooling(x)   # [B*G, 2, 8, 56, 56]
+    def forward(self, mvs, input_mask_mv=None):
+        """
+        mvs: [B*G, T, 2, H, W]  (Note: T is up to 29)
+        input_mask_mv: [B*G, T] (1 = padding/ignore, 0 = valid frame)
+        """
+        BG, T, C, H, W = mvs.shape
         
-        x = self.stem(x) 
-        x = self.pool(x).flatten(2).transpose(1, 2) # [B*G, 8, embed_dim]
-        return self.transformer(x)
+        # --- A. Frame-by-Frame Spatial Extraction ---
+        x = mvs.view(BG * T, C, H, W)
+        x = self.stem(x)              # [BG*T, embed_dim, 1, 1]
+        x = x.view(BG, T, -1)         # [BG, T, embed_dim]
+        
+        # --- B. Prevent PyTorch NaN Crash ---
+        # If a GOP is completely empty (all True padding), MultiheadAttention returns NaN.
+        # We safely unmask the first frame of entirely empty sequences (loss ignores them later).
+        if input_mask_mv is not None:
+            safe_mask = input_mask_mv.bool().clone()
+            all_masked = safe_mask.all(dim=1)
+            safe_mask[all_masked, 0] = False 
+        else:
+            safe_mask = None
+            
+        # --- C. The Cross-Attention Bottleneck ---
+        q = self.motion_queries.expand(BG, -1, -1) # [BG, 8, embed_dim]
+        
+        q_norm = self.ln_q(q)
+        kv_norm = self.ln_kv(x)
+        
+        # The mask physically blocks queries from seeing the padded zero frames
+        attn_out, _ = self.cross_attn(
+            query=q_norm, 
+            key=kv_norm, 
+            value=kv_norm, 
+            key_padding_mask=safe_mask 
+        ) 
+        q = q + attn_out # Residual connection
+        
+        # --- D. Temporal Interaction ---
+        return self.transformer(q) # Output is exactly [BG, 8, embed_dim]
 
 # =====================================================================
-# 4. CLASS: DISTILLATION DECODER (The Phase 1 Teacher)
+# 3. CLASS: DISTILLATION DECODER (The Phase 1 Teacher)
 # =====================================================================
 class DistillationDecoder(nn.Module):
-    def __init__(self, student_dim=256, d_model=512, n_layers=2):
+    def __init__(self, student_dim=256, d_model=768, clip_dim=768, n_layers=2):
         super().__init__()
+        # Align Student latent to Decoder
         self.proj_in = nn.Linear(student_dim, d_model)
+        
+        # Project CLIP spatial patches (Optional, if clip_dim == d_model this is just a linear mix)
+        self.proj_clip = nn.Linear(clip_dim, d_model)
         
         decoder_layer = nn.TransformerEncoderLayer(
             d_model=d_model, nhead=8, dim_feedforward=d_model*4, batch_first=True
@@ -101,19 +116,21 @@ class DistillationDecoder(nn.Module):
         self.decoder = nn.TransformerEncoder(decoder_layer, num_layers=n_layers)
         
         self.mask_token = nn.Parameter(torch.zeros(1, 1, d_model))
-        self.proj_delta = nn.Linear(d_model, 512) # CLIP latent dimension
+        self.proj_delta = nn.Linear(d_model, clip_dim)
 
     def forward(self, latent, iframe_spatial, mask_ratio=0.75):
-        # 1. Align Student latent (256) to Decoder (512)
-        motion_tokens = self.proj_in(latent) # [B*G, 8, 512]
+        # 1. Align Student latent (256) to Decoder (768)
+        motion_tokens = self.proj_in(latent) # [B*G, 8, 768]
         
-        # 2. Mask the current I-frame spatial patches (The Anchor)
-        x_masked, _, ids_restore = random_masking(iframe_spatial, mask_ratio)
+        # 2. Project CLIP spatial patches (768)
+        iframe_projected = self.proj_clip(iframe_spatial.float()) # [B*G, 196, 768]
         
-        # 3. Build sequence: [Motion Tokens (8) + Masked I-frame + Mask Tokens]
+        # 3. Mask the current I-frame spatial patches (The Anchor)
+        x_masked, _, ids_restore = random_masking(iframe_projected, mask_ratio)
+        
+        # 4. Build sequence: [Motion Tokens (8) + Masked I-frame + Mask Tokens]
         combined = torch.cat([motion_tokens, x_masked], dim=1)
         
-        # Add mask tokens to fill back to 196 + 8
         num_mask_tokens = ids_restore.shape[1] - x_masked.shape[1]
         mask_tokens = self.mask_token.repeat(combined.shape[0], num_mask_tokens, 1)
         
@@ -125,32 +142,32 @@ class DistillationDecoder(nn.Module):
             torch.gather(x_full[:, 8:, :], dim=1, index=ids_restore.unsqueeze(-1).repeat(1, 1, x_full.shape[-1]))
         ], dim=1)
         
-        # 4. Decode the CLIP Delta
+        # 5. Decode the CLIP Delta
         decoded = self.decoder(x_restored)
-        return self.proj_delta(decoded[:, 8:, :]) # Extract only the 196 spatial deltas
+        
+        # Extract only the 196 spatial deltas (Ignore the 8 motion tokens at the front)
+        return self.proj_delta(decoded[:, 8:, :]) # [B*G, 196, 768]
 
 # =====================================================================
-# 5. CLASS: MOTION TRANSFORMER (The Hydra-Targetable Wrapper)
+# 4. CLASS: MOTION TRANSFORMER (The Phase 1 Pretraining Wrapper)
 # =====================================================================
 class MotionTransformer(nn.Module):
-    def __init__(self, embed_dim: int = 256, d_model: int = 512, num_heads: int = 4, num_layers: int = 3):
+    """
+    This is strictly a wrapper for Phase 1 Distilled MAE Pretraining.
+    It holds the Student and Decoder together to calculate the loss.
+    """
+    def __init__(self, embed_dim: int = 256, d_model: int = 768, num_heads: int = 8, num_layers: int = 3):
         super().__init__()
-        self.student = MotionStudent(embed_dim=embed_dim, num_heads=num_heads, num_layers=num_layers)
-        self.decoder = DistillationDecoder(student_dim=embed_dim, d_model=d_model)
-        
-        # GPT-2 projection head
-        self.proj_gpt = nn.Linear(embed_dim, 768)
+        # We explicitly enforce in_channels=2 for the dx/dy motion vectors
+        self.student = MotionStudent(in_channels=2, embed_dim=embed_dim, num_heads=num_heads, num_layers=num_layers)
+        self.decoder = DistillationDecoder(student_dim=embed_dim, d_model=d_model, n_layers=2)
 
-    def forward(self, mvs: torch.Tensor, iframe_spatial: Optional[torch.Tensor] = None, 
-                mask_ratio: float = 0.75, return_for_gpt: bool = True):
+    def forward(self, mvs: torch.Tensor, input_mask_mv: torch.Tensor, iframe_spatial: torch.Tensor, mask_ratio: float = 0.75):
         
-        # 1. Run the core student encoder
-        latent = self.student(mvs) # [B*G, 8, 256]
+        # 1. Run the core student encoder with the Frame-Level Padding Mask
+        latent = self.student(mvs, input_mask_mv) # [B*G, 8, 256]
         
-        if return_for_gpt:
-            # PHASE 2 & 3: Return features for GPT-2
-            return self.proj_gpt(latent)
+        # 2. Run the Distillation Decoder to predict the CLIP delta
+        predicted_delta = self.decoder(latent, iframe_spatial, mask_ratio) # [B*G, 196, 768]
         
-        # 2. Run the Distillation Decoder (PHASE 1 ONLY)
-        # This predicted delta will be compared against CLIP(I_t+1) - CLIP(I_t)
-        return self.decoder(latent, iframe_spatial, mask_ratio)
+        return predicted_delta
