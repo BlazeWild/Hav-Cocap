@@ -7,7 +7,7 @@ from tqdm.auto import tqdm
 # ==========================================
 # CONFIGURATION
 # ==========================================
-DATASET_ROOT = "/home/blaze/Hav-Cocap/Cocap_Distilled_MAE/dataset/vatex"
+DATASET_ROOT = "/teamspace/studios/this_studio/Hav-Cocap/Cocap_Distilled_MAE/dataset/vatex"
 INPUT_DIR = os.path.join(DATASET_ROOT, "videos")
 OUTPUT_DIR = os.path.join(DATASET_ROOT, "videos_h264_240p")
 

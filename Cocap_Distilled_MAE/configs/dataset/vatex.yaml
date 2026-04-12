@@ -1,7 +1,14 @@
 _target_: "cocap.data.datasets.compressed_video.dataset_vatex.VATEXCaptioningDataset"
 
-video_root: "${hydra:runtime.cwd}/dataset/vatex/videos_240_h264_keyint_60"
+# Two actual data sources:
+# - video_root_mp4: compressed videos (raw decode path)
+# - video_root_pt : pre-extracted tensor dicts (no CLIP needed)
+video_root_mp4: "${hydra:runtime.cwd}/dataset/vatex/videos_h264_240p"
+video_root_pt: "${hydra:runtime.cwd}/dataset/vatex/video_preextracted_pt"
+# Legacy fallback alias used only if one of the above is missing.
+video_root: "${.video_root_mp4}"
 metadata: "${hydra:runtime.cwd}/dataset/vatex/VATEX_caption.json"
+use_preextracted_features: ${model.use_preextracted_features}
 
 video_reader: "read_frames_compressed_domain"
 max_frames: 8

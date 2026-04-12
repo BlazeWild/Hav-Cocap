@@ -206,6 +206,8 @@ Cocap_Distilled_MAE/dataset/**/*.mov
 Cocap_Distilled_MAE/dataset/**/*.mkv
 Cocap_Distilled_MAE/dataset/**/*.webm
 Cocap_Distilled_MAE/dataset/**/*.zip
+Cocap_Distilled_MAE/outputs/
+Cocap_Distilled_MAE/logs/
 
 
 # Global artifact ignores (all projects)

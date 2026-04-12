@@ -47,12 +47,63 @@ hydra:
 model:
   # --- Hav-CoCap Phase Control ---
   phase: 1
+  # Single switch for data source:
+  # true  -> use pre-extracted .pt features
+  # false -> use raw .mp4 videos
+  use_preextracted_features: false
+  init_weights_ckpt: ""
+  init_motion_ckpt: ""
+  init_mgdtr_ckpt: ""
   mask_ratio: 0.75
-  lr: 2e-4
-  weight_decay: 0.01
+  lr: 1.5e-4
+  weight_decay: 0.05
   clip_lr: 1e-6
   warmup_ratio: 0.05
   lr_decay_gamma: 0.95
+
+  # =====================================================
+  # Phase profiles (single source of truth for phase-wise
+  # lr/epochs/patience consumed by train_net + lm_cocap)
+  # =====================================================
+  phase_hparams:
+    phase1:
+      name: "Motion Physics Distillation"
+      max_epochs: 100
+      warmup_epochs: 3
+      early_stopping_patience: 7
+      learning_rates:
+        motion_student: 1.5e-4
+        proj_student_to_distill: 1.5e-4
+        distillation_decoder: 1.5e-4
+        clip_vit: 0.0
+
+    phase2:
+      name: "MGDTR Token Router Warmup"
+      max_epochs: 10
+      warmup_epochs: 2
+      early_stopping_patience: 3
+      learning_rates:
+        motion_student: 0.0
+        proj_student_to_distill: 0.0
+        distillation_decoder: 0.0
+        proj_student_to_mgdtr: 5.0e-5
+        mgdtr_selector: 5.0e-5
+        clip_vit: 0.0
+
+    phase3:
+      name: "Generative SFT with GPT-2"
+      max_epochs: 25
+      warmup_epochs: 3
+      early_stopping_patience: 5
+      learning_rates:
+        motion_student_backbone: 1.0e-6
+        motion_student_transformer: 5.0e-6
+        proj_student_to_mgdtr: 1.0e-5
+        mgdtr_selector: 1.0e-5
+        proj_spatial_to_gpt: 5.0e-5
+        proj_student_to_gpt: 5.0e-5
+        gpt2_decoder: 0.0
+        clip_vit: 0.0
 
   # --- Phase-Aware Loss ---
   loss:
@@ -61,10 +112,12 @@ model:
     ignore_index: -100
     target_vocab_size: 50257   # CRITICAL: GPT-2 Vocab Size
 
-    # Distillation Weights (Automatically ignored in Phase 2 & 3)
-    lambda_mse: 10.0
-    lambda_cos: 1.0
-    lambda_reg: 0.1
+    # Strict Hyperparameters from your table
+    l_mse_scale_factor: 5.0
+    lambda_delta: 0.5
+    rho_min_tokens: 4.0
+    lambda_coverage: 0.5
+    lambda_reg: 0.05
 
 trainer:
   # default_root_dir: # Required (Set this in your terminal or a higher-level config)
@@ -88,17 +141,28 @@ trainer:
       save_top_k: 1
       monitor: "train_loss"
       mode: "min"
+      dirpath: "${trainer.default_root_dir}/checkpoints/best"
+      filename: "best-epoch{epoch:03d}-step{step}"
+      auto_insert_metric_name: false
+      save_last: true
+
+    - _target_: pytorch_lightning.callbacks.ModelCheckpoint
+      save_top_k: -1
+      every_n_epochs: 10
+      filename: "epoch{epoch:03d}-step{step}"
+      auto_insert_metric_name: false
+      dirpath: "${trainer.default_root_dir}/checkpoints/periodic"
 
     - _target_: pytorch_lightning.callbacks.EarlyStopping
       monitor: "train_loss"
-      patience: 5
+      patience: 7   # overwritten per phase from model.phase_hparams
       mode: "min"
       min_delta: 0.001
 
 train_dataloader:
   dataset:
     split: "train"
-  num_workers: 16
+  num_workers: 8
   batch_size: 16
   prefetch_factor: 2
   shuffle: True
@@ -108,7 +172,7 @@ train_dataloader:
 val_dataloader:
   dataset:
     split: "val"
-  num_workers: 16
+  num_workers: 8
   batch_size: 16
   prefetch_factor: 2
   shuffle: False

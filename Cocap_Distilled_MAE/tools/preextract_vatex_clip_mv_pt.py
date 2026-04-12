@@ -3,7 +3,7 @@ import json
 import os
 import random
 import sys
-from typing import List
+from typing import List, Optional
 
 import torch
 from torchvision import transforms
@@ -26,19 +26,19 @@ def parse_args():
     parser.add_argument(
         "--videos-dir",
         type=str,
-        default="/home/blaze/Hav-Cocap/Cocap_Distilled_MAE/dataset/vatex/videos_h264_240p",
+        default="/teamspace/studios/this_studio/Hav-Cocap/Cocap_Distilled_MAE/dataset/vatex/videos_h264_240p",
         help="Directory containing .mp4 videos",
     )
     parser.add_argument(
         "--output-dir",
         type=str,
-        default="/home/blaze/Hav-Cocap/Cocap_Distilled_MAE/dataset/vatex/video_preextracted_pt",
+        default="/teamspace/studios/this_studio/Hav-Cocap/Cocap_Distilled_MAE/dataset/vatex/video_preextracted_pt",
         help="Directory to save per-video .pt files",
     )
     parser.add_argument(
         "--clip-checkpoint",
         type=str,
-        default="/home/blaze/Hav-Cocap/Cocap_Distilled_MAE/model_zoo/clip_model/ViT-B-16.pt",
+        default="/teamspace/studios/this_studio/Hav-Cocap/Cocap_Distilled_MAE/model_zoo/clip_model/ViT-B-16.pt",
         help="Path to CLIP checkpoint",
     )
     parser.add_argument(
@@ -149,6 +149,38 @@ def validate_output_shapes(data: dict, resample_num_gop: int, resample_num_mv: i
     return True, "ok"
 
 
+def cast_floating_tensors_to_fp16(data: dict) -> dict:
+    out = {}
+    for k, v in data.items():
+        if torch.is_tensor(v) and v.is_floating_point() and v.dtype != torch.float16:
+            out[k] = v.half()
+        else:
+            out[k] = v
+    return out
+
+
+def estimate_tensor_payload_bytes(data: dict, float_bytes: Optional[int] = None) -> int:
+    total = 0
+    for v in data.values():
+        if not torch.is_tensor(v):
+            continue
+        if float_bytes is not None and v.is_floating_point():
+            total += v.numel() * float_bytes
+        else:
+            total += v.numel() * v.element_size()
+    return total
+
+
+def format_bytes(num_bytes: int) -> str:
+    units = ["B", "KB", "MB", "GB", "TB"]
+    size = float(num_bytes)
+    idx = 0
+    while size >= 1024.0 and idx < len(units) - 1:
+        size /= 1024.0
+        idx += 1
+    return f"{size:.2f} {units[idx]}"
+
+
 def main():
     args = parse_args()
 
@@ -172,6 +204,7 @@ def main():
     print(f"[INFO] Batch size (videos per CLIP pass): {args.batch_size}")
 
     saved, skipped, failed = 0, 0, 0
+    printed_estimate = False
     errors_path = os.path.join(args.output_dir, "_extract_errors.jsonl")
 
     bs = max(1, int(args.batch_size))
@@ -214,6 +247,7 @@ def main():
             for (video_id, video_path, out_path), ret in zip(batch_meta, batch_ret):
                 try:
                     one_data = encode_clip_for_batch([ret], clip_model, args.device, args.resample_num_gop)[0]
+                    one_data = cast_floating_tensors_to_fp16(one_data)
                     ok, msg = validate_output_shapes(one_data, args.resample_num_gop, args.resample_num_mv)
                     if not ok:
                         if args.strict:
@@ -222,6 +256,19 @@ def main():
                         with open(errors_path, "a", encoding="utf-8") as ef:
                             ef.write(json.dumps({"video_id": video_id, "video_path": video_path, "error": msg}) + "\n")
                         continue
+
+                    if not printed_estimate:
+                        est_fp16 = estimate_tensor_payload_bytes(one_data)
+                        est_fp32 = estimate_tensor_payload_bytes(one_data, float_bytes=4)
+                        savings = 100.0 * (est_fp32 - est_fp16) / max(est_fp32, 1)
+                        print(
+                            "[INFO] Estimated 1 .pt tensor payload: "
+                            f"fp16={format_bytes(est_fp16)} ({est_fp16:,} bytes), "
+                            f"fp32={format_bytes(est_fp32)} ({est_fp32:,} bytes), "
+                            f"saving~{savings:.2f}%"
+                        )
+                        printed_estimate = True
+
                     tmp_path = out_path + ".tmp"
                     torch.save(one_data, tmp_path)
                     os.replace(tmp_path, out_path)
@@ -234,6 +281,7 @@ def main():
 
         for (video_id, video_path, out_path), data in zip(batch_meta, batch_data):
             try:
+                data = cast_floating_tensors_to_fp16(data)
                 ok, msg = validate_output_shapes(data, args.resample_num_gop, args.resample_num_mv)
                 if not ok:
                     if args.strict:
@@ -242,6 +290,18 @@ def main():
                     with open(errors_path, "a", encoding="utf-8") as ef:
                         ef.write(json.dumps({"video_id": video_id, "video_path": video_path, "error": msg}) + "\n")
                     continue
+
+                if not printed_estimate:
+                    est_fp16 = estimate_tensor_payload_bytes(data)
+                    est_fp32 = estimate_tensor_payload_bytes(data, float_bytes=4)
+                    savings = 100.0 * (est_fp32 - est_fp16) / max(est_fp32, 1)
+                    print(
+                        "[INFO] Estimated 1 .pt tensor payload: "
+                        f"fp16={format_bytes(est_fp16)} ({est_fp16:,} bytes), "
+                        f"fp32={format_bytes(est_fp32)} ({est_fp32:,} bytes), "
+                        f"saving~{savings:.2f}%"
+                    )
+                    printed_estimate = True
 
                 tmp_path = out_path + ".tmp"
                 torch.save(data, tmp_path)

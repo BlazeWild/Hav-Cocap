@@ -6,7 +6,7 @@ import json
 import os
 import random
 from collections import defaultdict
-from typing import Literal
+from typing import Literal, Optional
 
 import torch
 from torch.utils import data
@@ -36,15 +36,37 @@ class VATEXCaptioningDataset(data.Dataset):
             video_reader: str,
             cv_config: CVConfig,
             split: Literal["train", "val", "test"],
+            use_preextracted_features: Optional[bool] = None,
+            video_root_mp4: Optional[str] = None,
+            video_root_pt: Optional[str] = None,
     ):
         self.split = split
         self.video_root = video_root
+        self.video_root_mp4 = video_root_mp4
+        self.video_root_pt = video_root_pt
         self.max_words = max_words
         self.max_frames = max_frames
         self.unfold_sentences = unfold_sentences  
         self.height, self.width = video_size
         self.h265_cfg = cv_config
         metadata = load_json(metadata)
+
+        if use_preextracted_features is None:
+            # Legacy auto-detect fallback only when flag is not provided.
+            probe_root = self.video_root_pt or self.video_root
+            self.use_pt_features = os.path.isdir(probe_root) and any(
+                name.endswith(".pt") for name in os.listdir(probe_root)
+            )
+        else:
+            self.use_pt_features = bool(use_preextracted_features)
+
+        # Resolve active source root from the explicit toggle:
+        # - True  => video_root_pt (pre-extracted tensor dicts)
+        # - False => video_root_mp4 (raw compressed mp4)
+        if self.use_pt_features:
+            self.video_root = self.video_root_pt or self.video_root
+        else:
+            self.video_root = self.video_root_mp4 or self.video_root
 
         # --- HAV-COCAP CHANGE: Offline Tokenizer Loading ---
         _BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))))
@@ -85,11 +107,13 @@ class VATEXCaptioningDataset(data.Dataset):
         print(f"--- Filtering Complete: Found {len(self.sentences)} valid video files out of {len(all_candidate_sentences)} entries ---")
         # ---------------------------------------------
 
-        self.video_reader = VIDEO_READER_REGISTRY.get(video_reader)
+        self.video_reader = None if self.use_pt_features else VIDEO_READER_REGISTRY.get(video_reader)
         
         # Transforms (Perfectly safe for our 2-channel MVs thanks to the physics fix)
         normalize = DictNormalize(mean=(0.485, 0.456, 0.406), std=(0.229, 0.224, 0.225))
-        if split == "train":
+        if self.use_pt_features:
+            self.transform = None
+        elif split == "train":
             self.transform = transforms.Compose([
                 DictCenterCrop((self.height, self.width)),
                 DictRandomHorizontalFlip(),
@@ -114,10 +138,42 @@ class VATEXCaptioningDataset(data.Dataset):
     def __len__(self):
         return len(self.sentences)
 
+    @staticmethod
+    def _to_ytid(video_id: str) -> str:
+        # VATEX video_id format: <ytid>_<start>_<end>
+        return video_id.split("_", 1)[0]
+
     def _get_video_path(self, video_id):
-        return os.path.join(self.video_root, f"{video_id}.mp4")
+        if self.use_pt_features:
+            return os.path.join(self.video_root, f"{self._to_ytid(video_id)}.pt")
+        full_id_path = os.path.join(self.video_root, f"{video_id}.mp4")
+        if os.path.exists(full_id_path):
+            return full_id_path
+        # VATEX mp4 files are usually named by YT id only.
+        return os.path.join(self.video_root, f"{self._to_ytid(video_id)}.mp4")
 
     def _get_video(self, video_id):
+        if self.use_pt_features:
+            video = torch.load(self._get_video_path(video_id), map_location="cpu", weights_only=False)
+            if "motion_vectors" in video and "motion_vector" not in video:
+                video["motion_vector"] = video["motion_vectors"]
+            if "clip_i_cls" in video and torch.is_tensor(video["clip_i_cls"]):
+                video["clip_i_cls"] = video["clip_i_cls"].float()
+            if "clip_i_spatial" in video and torch.is_tensor(video["clip_i_spatial"]):
+                video["clip_i_spatial"] = video["clip_i_spatial"].float()
+            if "clip_p_spatial" in video and torch.is_tensor(video["clip_p_spatial"]):
+                video["clip_p_spatial"] = video["clip_p_spatial"].float()
+            if "motion_vector" in video and torch.is_tensor(video["motion_vector"]):
+                video["motion_vector"] = video["motion_vector"].float()
+            if "input_mask_mv" not in video and "motion_vector" in video:
+                mv = video["motion_vector"]
+                video["input_mask_mv"] = torch.zeros((mv.shape[0], mv.shape[1]), dtype=torch.long)
+            if "input_mask_gop" not in video and "motion_vector" in video:
+                mv = video["motion_vector"]
+                video["input_mask_gop"] = torch.zeros((mv.shape[0],), dtype=torch.long)
+            video_mask = torch.ones((self.max_frames,), dtype=torch.int)
+            return video, video_mask
+
         video, video_mask = get_video(video_reader=self.video_reader,
                                       video_path=self._get_video_path(video_id),
                                       max_frames=self.max_frames,
