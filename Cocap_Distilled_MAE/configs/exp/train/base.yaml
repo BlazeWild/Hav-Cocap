@@ -82,6 +82,7 @@ model:
       max_epochs: 10
       warmup_epochs: 2
       early_stopping_patience: 3
+      accumulate_grad_batches: 8
       learning_rates:
         motion_student: 0.0
         proj_student_to_distill: 0.0
@@ -95,6 +96,7 @@ model:
       max_epochs: 25
       warmup_epochs: 3
       early_stopping_patience: 5
+      accumulate_grad_batches: 8
       learning_rates:
         motion_student_backbone: 1.0e-6
         motion_student_transformer: 5.0e-6
@@ -102,6 +104,7 @@ model:
         mgdtr_selector: 1.0e-5
         proj_spatial_to_gpt: 5.0e-5
         proj_student_to_gpt: 5.0e-5
+        lora: 1.0e-4
         gpt2_decoder: 0.0
         clip_vit: 0.0
 
@@ -115,7 +118,7 @@ model:
     # Strict Hyperparameters from your table
     l_mse_scale_factor: 5.0
     lambda_delta: 0.5
-    rho_min_tokens: 4.0
+    rho_min_tokens: 6.0
     lambda_coverage: 0.5
     lambda_reg: 0.05
 
@@ -124,7 +127,9 @@ trainer:
   strategy: "ddp_find_unused_parameters_true"
   
   max_epochs: 100
-  accumulate_grad_batches: 4  # 8 x batch_size 8 = Effective Batch 64
+  # Default for Phase 1 (16 × batch_size 4 = effective 64).
+  # Phase 2/3 override to 8 (→ effective 32) via model.phase_hparams in train_net.py.
+  accumulate_grad_batches: 16
   
   log_every_n_steps: 1
   num_sanity_val_steps: 0
@@ -162,8 +167,8 @@ trainer:
 train_dataloader:
   dataset:
     split: "train"
-  num_workers: 8
-  batch_size: 16
+  num_workers: 2
+  batch_size: 4
   prefetch_factor: 2
   shuffle: True
   pin_memory: True
@@ -172,8 +177,8 @@ train_dataloader:
 val_dataloader:
   dataset:
     split: "val"
-  num_workers: 8
-  batch_size: 16
+  num_workers: 2
+  batch_size: 4
   prefetch_factor: 2
   shuffle: False
   pin_memory: True

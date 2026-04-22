@@ -412,21 +412,5 @@ def read_frames_compressed_domain(
         return ret, True
 
     except Exception as e:
-        import os
-        if os.environ.get('DEBUG_VIDEO_READER') == '1':
-            raise e
-        print(f"video load error: {video_path}")
-        # Keep default logs concise for large dataset runs.
-        # Set DEBUG_VIDEO_READER=1 to raise and inspect full traceback.
-        logger.warning(f"video read failed: {type(e).__name__}: {e}")
-        
-        # Safe dummy return matching the 2D MV shape
-        ret = {
-            "iframe": torch.zeros((resample_num_gop, 3, 224, 224), dtype=torch.float),
-            "motion_vector": torch.zeros((resample_num_gop, resample_num_mv, 2, 56, 56), dtype=torch.float),
-            "last_p_frame": torch.zeros((resample_num_gop, 3, 224, 224), dtype=torch.float),
-            "input_mask_gop": torch.ones((resample_num_gop,), dtype=torch.bool),
-            "input_mask_mv": torch.ones((resample_num_gop, resample_num_mv), dtype=torch.bool),
-            "type_ids_mv": torch.full((resample_num_gop, resample_num_mv), 2, dtype=torch.long)
-        }
-        return ret, False
+        logger.exception(f"video read failed for {video_path}: {type(e).__name__}: {e}")
+        raise

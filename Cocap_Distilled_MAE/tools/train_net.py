@@ -78,6 +78,12 @@ def train(
             else:
                 logger.warning("Could not set phase-aware max_epochs on this PL version.")
 
+        # Phase-aware accumulate_grad_batches (Phase 1=16, Phase 2/3=8 from profile).
+        new_accum = int(phase_cfg.get("accumulate_grad_batches", 0))
+        if new_accum > 0 and getattr(trainer, "accumulate_grad_batches", 1) != new_accum:
+            trainer.accumulate_grad_batches = new_accum
+            logger.info("Phase %s: set accumulate_grad_batches=%d", phase, new_accum)
+
         new_patience = int(phase_cfg.get("early_stopping_patience", 7))
         for cb in trainer.callbacks:
             if isinstance(cb, EarlyStopping) and cb.monitor == "train_loss":
