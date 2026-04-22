@@ -115,6 +115,14 @@ python tools/train_net.py --config-name exp/train/vatex_captioning \
 python tools/train_net.py --config-name exp/train/vatex_captioning \
 	++model.phase=2
 
+better way to do this is :
+phase2/align_loss           → starts ~1.4 (log(4)), should drop to ~0.3–0.8
+phase2/batch_retrieval_acc  → starts ~0.25, should rise to 0.5–0.9
+phase2/pos_cosine_mean      → should rise
+phase2/neg_cosine_mean      → should stay near 0 or below
+phase2/coverage_loss        → should trend toward 0 as selector learns minimum counts
+phase2/selector_entropy     → watch for collapse (too low = mode collapse)
+
 # Resume Phase 2 fully
 python tools/train_net.py --config-name exp/train/vatex_captioning \
 	++model.phase=2 \
