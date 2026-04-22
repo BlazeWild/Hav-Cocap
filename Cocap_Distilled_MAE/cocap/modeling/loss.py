@@ -65,35 +65,48 @@ class LabelSmoothingLoss(LossBase):
 
 class PhaseAwareLoss(LossBase):
     def __init__(
-        self, 
-        label_smoothing: float = 0.1, 
-        target_vocab_size: int = 50257, 
-        ignore_index: int = -100,       
-        l_mse_scale_factor: float = 5.0, # Brings MSE up to Cosine scale
-        lambda_delta: float = 0.5,       # Phase 1 delta weight
-        rho_min_tokens: float = 4.0,     # Phase 2 min tokens per GOP
-        lambda_coverage: float = 0.5,    # Phase 2 coverage weight
-        lambda_reg: float = 0.05         # Phase 3 distillation regularizer weight
+        self,
+        label_smoothing: float = 0.1,
+        target_vocab_size: int = 50257,
+        ignore_index: int = -100,
+        l_mse_scale_factor: float = 5.0,  # Phase 3 distill only; Phase 1 uses Kendall
+        lambda_delta: float = 0.5,        # Phase 1 L_recon weight on L_delta
+        rho_min_tokens: float = 6.0,      # Phase 2 L_coverage floor (K=96 → floor=6)
+        lambda_coverage: float = 0.5,     # Phase 2 coverage weight
+        lambda_reg: float = 0.05          # Phase 3 distillation regularizer weight
     ):
         super().__init__()
-        
+
         self.ce_loss_fn = LabelSmoothingLoss(label_smoothing, target_vocab_size, ignore_index)
-        
+
         self.l_mse_scale = l_mse_scale_factor
         self.lambda_delta = lambda_delta
         self.rho_min_tokens = rho_min_tokens
         self.lambda_coverage = lambda_coverage
         self.lambda_reg = lambda_reg
 
+        # Phase 1: Kendall uncertainty weighting for L_delta components.
+        # Replaces the fixed 5.0× MSE scale factor. Each scalar learns to balance
+        # the cosine and MSE loss components by their natural uncertainty.
+        self.log_var_cos = nn.Parameter(torch.zeros(1))
+        self.log_var_mse = nn.Parameter(torch.zeros(1))
+
         # Filled on each forward pass for logging only (no gradient usage).
         self.latest_loss_components = {}
+
+    def _kendall_delta(self, l_cos: Tensor, l_mse: Tensor) -> Tensor:
+        """Kendall multi-task weighting: exp(-s)*L + s for each (cos, mse) component."""
+        return (
+            torch.exp(-self.log_var_cos) * l_cos + self.log_var_cos
+            + torch.exp(-self.log_var_mse) * l_mse + self.log_var_mse
+        )
 
     def forward(self, target, output, phase: int) -> Tensor:
         """
         Expects `output` dictionary from the model to contain specific tensors based on phase.
         G = number of GOPs (usually 8)
         """
-        
+
         # ==========================================================
         # PHASE 1: Motion Distillation Pretraining (GOP-Wise)
         # ==========================================================
@@ -135,15 +148,18 @@ class PhaseAwareLoss(LossBase):
 
                 cos_per = 1.0 - F.cosine_similarity(z_pred.mean(dim=1), z_tgt.mean(dim=1), dim=-1)
                 l_delta_cos = (cos_per * valid_mask).sum() / denom
-
                 l_delta_mse = l_recon
-                l_delta = l_delta_cos + (self.l_mse_scale * l_delta_mse)
+
+                # Kendall uncertainty weighting (replaces fixed 5.0× scale)
+                l_delta = self._kendall_delta(l_delta_cos, l_delta_mse)
                 total_loss = l_recon + (self.lambda_delta * l_delta)
 
                 self.latest_loss_components = {
                     "phase1/delta_mse_loss": l_delta_mse.detach(),
                     "phase1/delta_cosine_loss": l_delta_cos.detach(),
                     "phase1/regenerative_loss": l_recon.detach(),
+                    "phase1/kendall_log_var_cos": self.log_var_cos.detach(),
+                    "phase1/kendall_log_var_mse": self.log_var_mse.detach(),
                     "phase1/total_loss": total_loss.detach(),
                 }
                 return total_loss
@@ -153,18 +169,18 @@ class PhaseAwareLoss(LossBase):
             i_spatial = output["i_spatial"]                 # [B, G, 196, 768]
             motion_tokens = output["motion_tokens"]         # [B, G, 8, 768]
             valid_mask = output["valid_mask"]               # [B, G]
-            
+
             B, G = valid_mask.shape
-            
+
             l_recon_per_gop = []
             l_delta_per_gop = []
             l_delta_mse_per_gop = []
             l_delta_cos_per_gop = []
 
             for g in range(G):
-                pred_g = predicted_spatial[:, g]        
-                target_g = p_spatial[:, g]        
-                valid_g = valid_mask[:, g].float()  
+                pred_g = predicted_spatial[:, g]
+                target_g = p_spatial[:, g]
+                valid_g = valid_mask[:, g].float()
                 n_valid = valid_g.sum() + 1e-6
 
                 # --- 1. Reconstruction Loss (MSE) ---
@@ -172,7 +188,7 @@ class PhaseAwareLoss(LossBase):
                 loss_recon_g = (diff_g * valid_g).sum() / n_valid
                 l_recon_per_gop.append(loss_recon_g)
 
-                # --- 2. Delta Distillation (Hybrid) ---
+                # --- 2. Delta Distillation (Kendall-weighted) ---
                 m_mean_g = motion_tokens[:, g].mean(dim=1)             # [B, 768]
                 dt_g = (target_g - i_spatial[:, g]).mean(dim=1)        # [B, 768]
 
@@ -184,7 +200,8 @@ class PhaseAwareLoss(LossBase):
                 l_mse_g = (mse_g * valid_g).sum() / n_valid
                 l_delta_mse_per_gop.append(l_mse_g)
 
-                l_delta_g = l_cos_g + (self.l_mse_scale * l_mse_g)
+                # Kendall uncertainty weighting per GOP
+                l_delta_g = self._kendall_delta(l_cos_g, l_mse_g)
                 l_delta_per_gop.append(l_delta_g)
 
             l_recon = torch.stack(l_recon_per_gop).mean()
@@ -194,45 +211,93 @@ class PhaseAwareLoss(LossBase):
 
             total_loss = l_recon + (self.lambda_delta * l_delta)
 
-            # For plotting/logging only. Total-loss math is unchanged.
             self.latest_loss_components = {
                 "phase1/delta_mse_loss": l_delta_mse.detach(),
                 "phase1/delta_cosine_loss": l_delta_cos.detach(),
                 "phase1/regenerative_loss": l_recon.detach(),
+                "phase1/kendall_log_var_cos": self.log_var_cos.detach(),
+                "phase1/kendall_log_var_mse": self.log_var_mse.detach(),
                 "phase1/total_loss": total_loss.detach(),
             }
 
             return total_loss
 
         # ==========================================================
-        # PHASE 2: SpatialTokenSelector Warmup (MG-DTR)
+        # PHASE 2: SpatialTokenSelector Warmup (MS-DTR)
+        # L_align = InfoNCE contrastive over the batch.
+        # K,V now includes CLS token for scene-aware selection.
         # ==========================================================
         elif phase == 2:
-            # Assumes model computes per-GOP patch means and counts internally and passes them
-            patches_g_mean = output["patches_g_mean"] # [B, G, 768]
-            cls_tokens = output["cls_tokens"]         # [B, G, 768]
-            coverage_counts = output["coverage_counts"] # [B, G]
-            valid_mask = output.get("valid_mask", torch.ones_like(coverage_counts))
+            # selected_mean_512: L2-normalized [B, 512] mean of selected patches
+            #   projected to CLIP joint embedding space via visual.proj
+            # text_target: L2-normalized [B, 512] CLIP text embedding (one caption sampled per step)
+            selected_mean_512 = output["selected_mean_512"]   # [B, 512]
+            text_target = output["text_target"]               # [B, 512]
+            coverage_counts = output["coverage_counts"]       # [B, G]
+            valid_mask = output.get("valid_mask", torch.ones(
+                coverage_counts.shape[0], coverage_counts.shape[1],
+                device=coverage_counts.device))
             valid_mask = valid_mask.float()
             denom = valid_mask.sum().clamp_min(1.0)
-            
-            # --- 1. Alignment Loss (Cosine) ---
-            cos_loss = 1.0 - F.cosine_similarity(patches_g_mean, cls_tokens, dim=-1) # [B, G]
-            l_align = (cos_loss * valid_mask).sum() / denom
 
-            # --- 2. Coverage Penalty ---
+            B = selected_mean_512.shape[0]
+
+            # --- 1. InfoNCE Alignment Loss ---
+            # Similarity matrix: [B, B] — diagonal = positives, off-diagonal = negatives.
+            # Temperature = 0.07 (fixed, CLIP-family standard).
+            TEMPERATURE = 0.07
+            sim = (selected_mean_512 @ text_target.T) / TEMPERATURE   # [B, B]
+            labels = torch.arange(B, device=sim.device)
+            l_align = F.cross_entropy(sim, labels)
+
+            # --- 2. Coverage Penalty (floor = rho_min_tokens = 6.0 for K=96) ---
             l_coverage = (F.relu(self.rho_min_tokens - coverage_counts.float()) * valid_mask).sum() / denom
 
             total_loss = l_align + (self.lambda_coverage * l_coverage)
+
+            # --- Instrumentation ---
+            with torch.no_grad():
+                # Batch top-1 retrieval accuracy: fraction where closest text is own caption
+                pred_indices = sim.argmax(dim=-1)                      # [B]
+                retrieval_acc = (pred_indices == labels).float().mean()
+
+                # Positive cosine similarities (diagonal)
+                pos_cosine = torch.diag(sim) * TEMPERATURE             # undo temp scaling
+                pos_cosine_mean = pos_cosine.mean()
+
+                # Negative cosine similarities (off-diagonal)
+                mask_neg = ~torch.eye(B, dtype=torch.bool, device=sim.device)
+                neg_cosine = (sim * TEMPERATURE)[mask_neg]             # undo temp scaling
+                neg_cosine_mean = neg_cosine.mean() if neg_cosine.numel() > 0 else torch.zeros((), device=sim.device)
+
+                # Selector attention entropy (how spread the selector probabilities are)
+                selector_prob = output.get("selector_prob", None)
+                attn_entropy = torch.zeros((), device=sim.device)
+                if selector_prob is not None:
+                    # selector_prob: [B, G, N] — sigmoid probabilities
+                    p = selector_prob.clamp(1e-6, 1 - 1e-6)
+                    entropy = -(p * p.log() + (1 - p) * (1 - p).log())
+                    attn_entropy = entropy.mean()
+
+                # Mean count_g per valid GOP
+                count_g_mean = (coverage_counts * valid_mask).sum() / denom
+
             self.latest_loss_components = {
                 "phase2/align_loss": l_align.detach(),
                 "phase2/coverage_loss": l_coverage.detach(),
                 "phase2/total_loss": total_loss.detach(),
+                "phase2/batch_retrieval_acc": retrieval_acc,
+                "phase2/pos_cosine_mean": pos_cosine_mean,
+                "phase2/neg_cosine_mean": neg_cosine_mean,
+                "phase2/selector_entropy": attn_entropy,
+                "phase2/count_g_mean": count_g_mean,
             }
             return total_loss
 
         # ==========================================================
         # PHASE 3: Full Captioning SFT
+        # L_phase3 = L_CE + 0.05 × L_distill (fixed, not Kendall)
+        # L_align dropped — CE is the strictly stronger signal.
         # ==========================================================
         elif phase == 3:
             # --- 1. Cross Entropy (Language) ---
@@ -253,13 +318,8 @@ class PhaseAwareLoss(LossBase):
                     "phase3/total_loss": total_loss.detach(),
                 }
                 return total_loss
-            
-            # --- 2. Distillation Regularizer (GOP-Wise) ---
-            p_spatial = p_spatial                             # [B, G, 196, 768]
-            i_spatial = i_spatial                             # [B, G, 196, 768]
-            motion_tokens = motion_tokens                     # [B, G, 8, 768]
-            valid_mask = valid_mask                           # [B, G]
-            
+
+            # --- 2. Distillation Regularizer (GOP-Wise, fixed l_mse_scale=5.0) ---
             B, G = valid_mask.shape
             l_distill_per_gop = []
 
@@ -275,8 +335,9 @@ class PhaseAwareLoss(LossBase):
                 mse_g = F.mse_loss(m_mean_g, dt_g, reduction='none').mean(dim=-1)
                 l_mse_g = (mse_g * valid_g).sum() / n_valid
 
+                # Fixed scale (not Kendall) — this is a leash, not equal-status balancing
                 l_distill_per_gop.append(l_cos_g + (self.l_mse_scale * l_mse_g))
-            
+
             l_distill = torch.stack(l_distill_per_gop).mean()
 
             total_loss = l_ce + (self.lambda_reg * l_distill)
@@ -286,7 +347,7 @@ class PhaseAwareLoss(LossBase):
                 "phase3/total_loss": total_loss.detach(),
             }
             return total_loss
-        
+
         else:
             raise ValueError(f"Unknown training phase: {phase}")
 
